@@ -1,3 +1,24 @@
+@import "~@ng-select/ng-select/themes/default.theme.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Phone Input Css */
+@media (min-width: 1024px) {
+    ngx-intl-tel-input input.custom {
+        width: 149% !important;
+    }
+
+    .grad {
+        background: linear-gradient(160.99deg, #043D69 0%, #5D0440 100%);
+    }
+
+    .white-bg {
+        --tw-bg-opacity: 1;
+        background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+    }
+
+    .box-shadow {
+        box-shadow: 0px 4px 55px 1px rgb(171 171 171 / 25%);
+    }
+}

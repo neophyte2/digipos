@@ -8,18 +8,19 @@ import { VALIDEMAILREGEX } from 'src/app/shared/utils/utils';
 import { ClientService } from '../../service/client.service';
 
 @Component({
-  selector: 'card-sign-in',
+  selector: 'dp-sign-in',
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.css']
 })
 export class SignInomponent implements OnInit, OnDestroy {
 
-  loginForm!: FormGroup;
   loader: any = {
     btn: {
       login: false,
     },
   };
+  hidePassword = true;
+  loginForm!: FormGroup;
   private unsubcribe = new Subject<void>();
 
   constructor(
