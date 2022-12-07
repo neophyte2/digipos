@@ -21,4 +21,18 @@
     .box-shadow {
         box-shadow: 0px 4px 55px 1px rgb(171 171 171 / 25%);
     }
+
+    .ng-otp-input-wrapper .otp-input:not(:last-child) {
+        margin-right: 50px !important;
+    }
+}
+
+/* OTP */
+.otp-input{
+    width: 50px !important;
+    height: 50px;
+    border-radius: 4px;
+    border: solid 1px #c5c5c5;
+    text-align: center;
+    font-size: 32px;
 }
