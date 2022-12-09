@@ -3,7 +3,7 @@
         <div class="w-[98%] h-full mx-auto md:w-[85%] pt-[45px] lg:w-[70%]">
 
             <a class="flex items-center justify-center digipos_cont">
-                <img src='../../../../../../assets/images/digipos_logo.png' alt="billerone-logo" class="digiposlogo" />
+                <img src='../../../../../../assets/images/digipos_logo.png' alt="digipos-logo" class="digiposlogo" />
             </a>
 
             <div class=" w-full h-fit mt-[40px]">
@@ -48,47 +48,52 @@
                         </div>
 
                         <div class="h-[69vh] sm:overflow-y-scroll">
-                            <form>
+                            <form [formGroup]="signupForm">
                                 <div>
                                     <div class="flex flex-col input-wrap relative mb-7 mt-[22px]">
-                                        <input type="text" id="full-name"
-                                            class="brd  h-[52px] mt-2  w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0 relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)]"
+                                        <input type="text" id="full-name" formControlName="customerFullName" class="brd peer h-[52px] mt-2  w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0 relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)] invalid:border-rose-700 invalid:text-rose-700
+                                            focus:invalid:border-rose-700 focus:invalid:ring-rose-700"
                                             placeholder="Jane Doe" />
                                         <label htmlFor="full-name"
                                             class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
                                             Full Name
                                         </label>
+                                        <div class="mt-2"
+                                            *ngIf="(sf['customerFullName'].dirty || sf['customerFullName'].touched) && sf['customerFullName'].invalid">
+                                            <span class="text-rose-700" style="font-size: 13px;"
+                                                *ngIf="sf['customerFullName'].errors?.['required']">
+                                                Full Name is required.
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div>
                                     <div class="flex flex-col input-wrap relative mb-7">
-                                        <input type="text" id="business-name"
-                                            class="brd  h-[52px] mt-2  w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0 relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)]"
-                                            placeholder="example business" />
-                                        <label htmlFor="business-name"
-                                            class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
-                                            Business Name
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <div>
-                                    <div class="flex flex-col input-wrap relative mb-7">
-                                        <input type="email" id="email-address"
-                                            class="brd  h-[52px] mt-2  w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0 relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)]"
-                                            placeholder="example@billerone.com" />
-                                        <label htmlFor="email-address"
-                                            class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
+                                        <input type="email" id="emailaddress" formControlName="customerEmail" class="brd h-[52px] mt-2 w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0 relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)] invalid:border-rose-700 invalid:text-rose-700
+                                            focus:invalid:border-rose-700 focus:invalid:ring-rose-700"
+                                            placeholder="example@digipos.com" />
+                                        <label htmlFor="emailaddress"
+                                            class="font-normal form-label ease-in-out duration-300 px-1  whitespace-nowrap text-[14px]">
                                             Email Address
                                         </label>
+                                        <div class="mt-2"
+                                            *ngIf="(sf['customerEmail'].dirty || sf['customerEmail'].touched) && sf['customerEmail'].invalid">
+                                            <span class="text-rose-700" style="font-size: 13px;"
+                                                *ngIf="sf['customerEmail'].errors?.['required']">
+                                                Email Address is required.
+                                            </span>
+                                            <span class="text-rose-700" *ngIf="sf['customerEmail'].errors?.['pattern']">
+                                                Email Address is invalid.
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <div>
                                     <div class="flex flex-col input-wrap relative mb-7">
-                                        <ngx-intl-tel-input
-                                            [cssClass]="'custom brd  h-[52px] mt-2  w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0 relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)]'"
+                                        <ngx-intl-tel-input formControlName="customerPhone"
+                                            [cssClass]="'custom brd  h-[52px] mt-2  w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0 relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)] invalid:border-rose-700 invalid:text-rose-700 focus:invalid:border-rose-700 focus:invalid:ring-rose-700'"
                                             [preferredCountries]="preferredCountries" [enableAutoCountrySelect]="true"
                                             [enablePlaceholder]="true" [searchCountryFlag]="true" [searchCountryField]="[
                                           SearchCountryField.Iso2, SearchCountryField.Name]"
@@ -96,24 +101,57 @@
                                             [maxLength]="15" [phoneValidation]="true" [separateDialCode]="true"
                                             name="phone">
                                         </ngx-intl-tel-input>
-                                        <label htmlFor="email-address"
+                                        <label htmlFor="phone-number"
                                             class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
                                             Phone Number
                                         </label>
+                                        <!-- <div class="mt-2" *ngIf="sf['customerPhone'].invalid && (sf['customerPhone'].dirty || sf['customerPhone'].touched) ">
+                                                <span class="text-rose-700" style="font-size: 13px;" *ngIf="sf['customerPhone'].errors?.['required']">
+                                                  Phone Number is required.
+                                                </span>
+                                            </div> -->
                                     </div>
                                 </div>
 
                                 <div>
                                     <div class="flex flex-col input-wrap relative mb-7">
-                                        <ng-select [items]="accountType" bindLabel="name" bindValue="value">
+                                        <ng-select formControlName="customerAccountType"
+                                            (change)="onChangeAcctType($event)" [items]="accountType" bindLabel="name"
+                                            bindValue="value">
                                         </ng-select>
-                                        <label htmlFor="email-address"
-                                            class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
+                                        <label htmlFor="account-type"
+                                            class="font-normal form-label ease-in-out duration-300 px-1 whitespace-nowrap text-[14px]">
                                             Account Type
                                         </label>
+                                        <div class="mt-2"
+                                            *ngIf="sf['customerAccountType'].invalid && (sf['customerAccountType'].dirty || sf['customerAccountType'].touched) ">
+                                            <span class="text-rose-700" style="font-size: 13px;"
+                                                *ngIf="sf['customerAccountType'].errors?.['required']">
+                                                Account Type is required.
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
 
+                                <div *ngIf="sf['customerAccountType'].value === 'BUSINESS'">
+                                    <div class="flex flex-col input-wrap relative mb-7">
+                                        <input type="text" id="business-name" formControlName="customerBusinessName"
+                                            class="brd  h-[52px] mt-2  w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0 relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)] invalid:border-rose-700 invalid:text-rose-700
+                                            focus:invalid:border-rose-700 focus:invalid:ring-rose-700"
+                                            placeholder="example business" />
+                                        <label htmlFor="business-name"
+                                            class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
+                                            Business Name
+                                        </label>
+                                        <div class="mt-2"
+                                            *ngIf="sf['customerBusinessName'].invalid && (sf['customerBusinessName'].dirty || sf['customerBusinessName'].touched) ">
+                                            <span class="text-rose-700" style="font-size: 13px;"
+                                                *ngIf="sf['customerBusinessName'].errors?.['required']">
+                                                Business Namne is required.
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <div class="flex flex-col input-wrap relative mb-7">
                                     <span class="absolute right-[24px] top-[23px] z-20"
@@ -122,12 +160,20 @@
                                         <i *ngIf="!hidePassword" class="fa fa-eye-slash" aria-hidden="true"></i>
                                     </span>
                                     <input [type]="hidePassword ? 'password' : 'text'" id="pwd"
-                                        class="brd  h-[52px] mt-2 input-control w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0  relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)]"
+                                        formControlName="customerPassword" class="brd  h-[52px] mt-2 input-control w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0  relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)] invalid:border-rose-700 invalid:text-rose-700
+                                        focus:invalid:border-rose-700 focus:invalid:ring-rose-700"
                                         placeholder="*******" />
                                     <label htmlFor="pwd"
                                         class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
                                         Password
                                     </label>
+                                    <div class="mt-2"
+                                        *ngIf="sf['customerPassword'].invalid && (sf['customerPassword'].dirty || sf['customerPassword'].touched) ">
+                                        <span class="text-rose-700" style="font-size: 13px;"
+                                            *ngIf="sf['customerPassword'].errors?.['required']">
+                                            Password is required.
+                                        </span>
+                                    </div>
                                 </div>
 
                                 <div class="flex flex-col input-wrap relative mb-7">
@@ -136,30 +182,60 @@
                                         <i *ngIf="hideCPassword" class="fa fa-eye" aria-hidden="true"></i>
                                         <i *ngIf="!hideCPassword" class="fa fa-eye-slash" aria-hidden="true"></i>
                                     </span>
-                                    <input [type]="hideCPassword ? 'password' : 'text'" id="pwd"
-                                        class="brd  h-[52px] mt-2 input-control w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0  relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)]"
+                                    <input [type]="hideCPassword ? 'password' : 'text'" id="cpwd"
+                                        formControlName="customerConfirmPassword" class="brd  h-[52px] mt-2 input-control w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0  relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)] invalid:border-rose-700 invalid:text-rose-700
+                                        focus:invalid:border-rose-700 focus:invalid:ring-rose-700"
                                         placeholder="*******" />
-                                    <label htmlFor="pwd"
+                                    <label htmlFor="cpwd"
                                         class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
                                         Confirm Password
                                     </label>
+                                    <span id="matchPassworError" class="text-rose-700 mt-2" *ngIf="matchPassword">
+                                        Password does not match
+                                    </span>
+                                    <div class="mt-2"
+                                        *ngIf="sf['customerConfirmPassword'].invalid && (sf['customerConfirmPassword'].dirty || sf['customerConfirmPassword'].touched) ">
+                                        <span class="text-rose-700" style="font-size: 13px;"
+                                            *ngIf="sf['customerConfirmPassword'].errors?.['required']">
+                                            Confirm Password is required.
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <div class="flex flex-col input-wrap relative mb-7">
+                                        <ng-select formControlName="customerVerificationType" [items]="verificationType"
+                                            bindLabel="name" bindValue="value">
+                                        </ng-select>
+                                        <label htmlFor="Verification-Type"
+                                            class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
+                                            Verification Type
+                                        </label>
+                                        <div class="mt-2"
+                                            *ngIf="sf['customerVerificationType'].invalid && (sf['customerVerificationType'].dirty || sf['customerVerificationType'].touched) ">
+                                            <span class="text-rose-700" style="font-size: 13px;"
+                                                *ngIf="sf['customerVerificationType'].errors?.['required']">
+                                                Verification Type is required.
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="mx-auto w-full flex justify-center items-center">
                                     <p class="text-sm text-center text-[rgba(0,0,0,0.5)] ">
                                         By clicking the “Create My Account” button, you agree to
-                                        <br />
-                                        DigiPos
+                                        <br /> DigiPos
                                         <a href="/" class="text-[#64154A] font-semibold ml-1">
-                                           <strong> terms and condition </strong> 
+                                            <strong> terms and condition </strong>
                                         </a>
                                     </p>
                                 </div>
 
                                 <div class=" w-full mx-auto mt-10">
-                                    <button
+                                    <button (click)="signup()"
+                                        [disabled]="(signupForm.invalid || disableBtn) || loader.btn.signup"
                                         class=" bil-btn-gradient text-base font-normal grad3 w-full h-[52px] first-letter text-[#F0F0F0] rounded-[5px]">
-                                        Create my account
+                                        Create my account <span *ngIf="loader.btn.signup"><i class="fa fa-spinner fa-spin"></i></span>
                                     </button>
                                 </div>
 

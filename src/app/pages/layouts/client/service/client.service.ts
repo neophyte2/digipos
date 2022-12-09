@@ -20,4 +20,13 @@ export class ClientService {
     login(payload: any) {
         return this.http.post(`${this.api}/user/login`, payload);
     }
+
+    /**
+     * signup
+     * @param payload
+     * @returns data
+     */
+     signup(payload: any) {
+        return this.http.post(`${this.api}/authentication/initiate-enrollment`, payload);
+    }
 }

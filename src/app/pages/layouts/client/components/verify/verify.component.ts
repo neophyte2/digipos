@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgOtpInputConfig } from 'ng-otp-input';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -15,6 +15,7 @@ import { ClientService } from '../../service/client.service';
 })
 export class VerifyComponent implements OnInit, OnDestroy {
 
+  name = ''
   loader: any = {
     btn: {
       login: false,
@@ -25,7 +26,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
   private unsubcribe = new Subject<void>();
 
   //OTP
-  config :NgOtpInputConfig = {
+  config: NgOtpInputConfig = {
     allowNumbersOnly: true,
     length: 4,
     isPasswordInput: false,
@@ -34,11 +35,13 @@ export class VerifyComponent implements OnInit, OnDestroy {
   };
 
   constructor(
-    private fb: FormBuilder,
     private router: Router,
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
     private gustSrv: ClientService,
     private genSrv: GeneralService,
   ) {
+    this.name = this.route.snapshot.params['name'];
   }
 
   ngOnInit(): void {
@@ -63,7 +66,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
     });
   }
 
-  onOtpChange(otp:any) {
+  onOtpChange(otp: any) {
     this.otp = otp;
   }
 
