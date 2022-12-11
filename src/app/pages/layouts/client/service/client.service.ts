@@ -29,4 +29,22 @@ export class ClientService {
      signup(payload: any) {
         return this.http.post(`${this.api}/authentication/initiate-enrollment`, payload);
     }
+
+     /**
+     * resetOtp
+     * @param payload
+     * @returns data
+     */
+      resetOtp(payload: any) {
+        return this.http.post(`${this.api}/authentication/resend-otp`, payload);
+    }
+
+    /**
+    * completeEnrollment
+    * @param payload
+    * @returns data
+    */
+     completeEnrollment(payload: any) {
+       return this.http.post(`${this.api}/authentication/complete-enrollment`, payload);
+   }
 }

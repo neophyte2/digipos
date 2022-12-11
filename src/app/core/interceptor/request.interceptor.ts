@@ -22,7 +22,7 @@ export class RequestInterceptor implements HttpInterceptor {
     if (this.genSer.userDetails) {
       this.currentUser = this.genSer.userDetails;
       token = this.currentUser && this.currentUser.token ? this.currentUser.token.token : null;
-      url = '/sign-in'
+      url = '/'
     }
 
     if (this.isValidUrl(req.url) && token) {
@@ -50,7 +50,7 @@ export class RequestInterceptor implements HttpInterceptor {
   }
 
   isValidUrl(url: string) {
-    if (url.includes('expression') || url.includes('localhost') || url.includes('digipos')) {
+    if (url.includes('localhost') || url.includes('digipos')) {
       return true
     } else {
       return false

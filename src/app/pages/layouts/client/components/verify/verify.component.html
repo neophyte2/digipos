@@ -36,34 +36,44 @@
                     class="lg:w-[462px] md:w-[462px] sm:w-[462px] w-[90%] relative z-20 bg-white h-[100%] rounde-xl mx-auto rounded-[10px] forgot-pwd">
                     <div class="lg:px-8 md:px-8 sm:px-8 px-4 ">
                         <div class="sign-details w-full">
-                            <div class="mb-[50px] flex items-center mt-[70px] justify-center welcome_txt">
+                            <div class="mb-[50px] flex items-center mt-[40px] justify-center welcome_txt">
                                 <p style="margin-top: inherit;"
                                     class="lg:text-3xl md:text-3xl m:text-3xl text-2xl mr-[10px] text-[#64154A] font-normal text-sans">
                                     Verify your account
                                 </p>
                             </div>
 
-                            <div *ngIf="name === 'enroll'">
-                                <form>
-
+                            <div *ngIf="name.includes('enroll')">
+                                <form [formGroup]="veriftyEnrollForm">
                                     <div>
                                         <div class="flex flex-col input-wrap relative lg:mb-14 md:mb-14 sm:mb-12 mb-12">
-                                            <input type="text" id="email-address"
+                                            <input type="text" id="emailaddress" formControlName="customerEmail"
                                                 class="brd  h-[52px] mt-2  w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0 relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)]"
                                                 placeholder="example@digipos.com" />
-                                            <label htmlFor="email-address"
+                                            <label htmlFor="email-ddress"
                                                 class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
                                                 Email Address
                                             </label>
+                                            <div class="mt-2"
+                                                *ngIf="(vef['customerEmail'].dirty || vef['customerEmail'].touched) && vef['customerEmail'].invalid">
+                                                <span class="text-rose-700" style="font-size: 13px;"
+                                                    *ngIf="vef['customerEmail'].errors?.['required']">
+                                                    Email Address is required.
+                                                </span>
+                                                <span class="text-rose-700"
+                                                    *ngIf="vef['customerEmail'].errors?.['pattern']">
+                                                    Email Address is invalid.
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
 
                                     <div>
                                         <div class="flex flex-col input-wrap relative lg:mb-14 md:mb-14 sm:mb-12 mb-12">
-                                            <input type="text" id="email-address"
+                                            <input type="text" id="referral-code"
                                                 class="brd  h-[52px] mt-2  w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0 relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)]"
-                                                placeholder="example@digipos.com" />
-                                            <label htmlFor="email-address"
+                                                placeholder="Enter Referral Code" />
+                                            <label htmlFor="referral-code"
                                                 class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
                                                 Referral Code
                                             </label>
@@ -81,14 +91,22 @@
                                         </div>
                                     </div>
 
-                                    <a href="/dashboard"
-                                        class="flex items-center justify-center bil-btn-gradient text-base font-normal grad3 w-full h-[52px] first-letter text-[#F0F0F0] rounded-[5px]">
-                                        Login
+                                    <a (click)="resendotp()" style="cursor:pointer;"
+                                        class="text-sm font-medium text-sans text-[#000] flex mt-[10px] lg:mb-[15px] md:mb-[15px] sm:mb-[35px] mb-[35px] justify-end ">
+                                        Resend OTP <span *ngIf="loader.btn.ro"><i
+                                                class="fa fa-spinner fa-spin"></i></span>
                                     </a>
+
+                                    <button (click)="verifyEnroll()"
+                                        [disabled]="(veriftyEnrollForm.invalid || !otp) || loader.btn.vef"
+                                        class=" bil-btn-gradient text-base font-normal grad3 w-full h-[52px] first-letter text-[#F0F0F0] rounded-[5px]">
+                                        Verify <span *ngIf="loader.btn.vef"><i class="fa fa-spinner fa-spin"></i></span>
+                                    </button>
+
                                 </form>
                             </div>
 
-                            <div *ngIf="name === 'reset'">
+                            <div *ngIf="name.includes('reset')">
                                 <form>
 
                                     <div>
@@ -134,8 +152,9 @@
                             </div>
 
                         </div>
-                        <div class="flex justify-center mt-[35px] items-center">
-                            <a href="/signup" class="text-sm font-normal mr-1 text-sans text-[#000000]">
+                        <div class="flex justify-center mt-[35px] mb-[30px] items-center">
+                            <a href="/signup" style="margin-bottom:inherts;"
+                                class="text-sm font-normal mr-1 text-sans text-[#000000]">
                                 New to digipos? <strong class="text-[#7A3F63]">Create an account</strong>
                             </a>
                         </div>

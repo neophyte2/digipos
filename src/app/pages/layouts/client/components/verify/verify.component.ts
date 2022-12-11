@@ -15,14 +15,17 @@ import { ClientService } from '../../service/client.service';
 })
 export class VerifyComponent implements OnInit, OnDestroy {
 
+  otp = '';
   name = ''
   loader: any = {
     btn: {
-      login: false,
+      vef: false, //verify enroll form
+      vrf: false, //verify reset form
+      ro: false //reset otp
     },
   };
-  otp = '';
-  loginForm!: FormGroup;
+  veriftyEnrollForm!: FormGroup;
+  veriftyResetForm!: FormGroup;
   private unsubcribe = new Subject<void>();
 
   //OTP
@@ -41,7 +44,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
     private gustSrv: ClientService,
     private genSrv: GeneralService,
   ) {
-    this.name = this.route.snapshot.params['name'];
+    this.name = window.location.pathname;
   }
 
   ngOnInit(): void {
@@ -49,32 +52,95 @@ export class VerifyComponent implements OnInit, OnDestroy {
   }
 
   // Get login Form Value
-  get lf() {
-    return this.loginForm.controls;
+  get vef() {
+    return this.veriftyEnrollForm.controls;
   }
 
   ngOnForms() {
-    this.loginForm = this.fb.group({
-      username: [
+    this.veriftyEnrollForm = this.fb.group({
+      customerEmail: [
         "",
         Validators.compose([
           Validators.required,
           Validators.pattern(VALIDEMAILREGEX),
         ]),
       ],
-      password: ["", Validators.required],
+      customerOtp: [""],
+      referralCode: ['']
     });
   }
 
   onOtpChange(otp: any) {
-    this.otp = otp;
+    if (otp.length === 4) {
+      this.otp = otp;
+    } else {
+      this.otp = ''
+    }
+  }
+
+  verifyEnroll() {
+    let payload = {
+      customerEmail: this.vef['customerEmail'].value,
+      customerOtp: this.otp,
+      referralCode: this.vef['referralCode'].value,
+    }
+    this.loader.btn.vef = true;
+    this.gustSrv.completeEnrollment(payload).pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
+      if (data.responseCode === '00') {
+        setTimeout(() => {
+          this.genSrv.sweetAlertSuccess(data.responseMessage);
+          this.router.navigate(["/"]);
+          this.loader.btn.vef = false;
+        }, 1000);
+      } else {
+        let msg = data.responseMessage
+        this.genSrv.sweetAlertError(msg);
+        this.loader.btn.vef = false;
+      }
+    }, (err) => {
+      console.log(err);
+      let msg = err
+      this.genSrv.sweetAlertError(msg);
+      this.loader.btn.vef = false;
+    })
+  }
+
+  resendotp() {
+    let name = this.vef['customerEmail'].value
+    if (!name) {
+      this.genSrv.sweetAlertError('Kindly Input Your Email');
+    } else {
+      this.loader.btn.ro = true;
+      let payload = {
+        customerEmail: name
+      }
+      this.gustSrv.resetOtp(payload).pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
+        console.log(data);
+        if (data.responseCode === '00') {
+          this.genSrv.sweetAlertSuccess(data.responseMessage);
+          this.loader.btn.ro = false;
+        } else {
+          let msg = data.responseMessage
+          this.genSrv.sweetAlertError(msg);
+          this.loader.btn.ro = false;
+        }
+      }, (err) => {
+        console.log(err);
+        let msg = err
+        this.genSrv.sweetAlertError(msg);
+        this.loader.btn.ro = false;
+      })
+    }
+
+  }
+
+  verifyReset() {
+
   }
 
   ngOnDestroy() {
     this.unsubcribe.next();
     this.unsubcribe.complete();
   }
-
-
 
 }

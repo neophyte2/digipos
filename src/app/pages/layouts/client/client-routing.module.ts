@@ -14,7 +14,7 @@ const routes: Routes = [
     component: SignUpomponent
   },
   {
-    path: "verify/:name",
+    path: "verify-enroll",
     component: VerifyComponent
   },
 ];

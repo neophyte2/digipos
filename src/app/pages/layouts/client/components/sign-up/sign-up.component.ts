@@ -95,20 +95,18 @@ export class SignUpomponent implements OnInit, OnDestroy {
     }
     this.loader.btn.signup = true;
     this.gustSrv.signup(payload).pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
-      console.log(data);
       if (data.responseCode === '00') {
-        this.genSrv.storeUser(data.response)
         setTimeout(() => {
           this.router.navigate(["/verify/enroll"]);
+          this.genSrv.sweetAlertSuccess(data.responseMessage);
           this.loader.btn.signup = false;
         }, 1000);
-      }else{
+      } else {
         let msg = data.responseMessage
         this.genSrv.sweetAlertError(msg);
         this.loader.btn.signup = false;
       }
     }, (err) => {
-      console.log(err);
       let msg = err
       this.genSrv.sweetAlertError(msg);
       this.loader.btn.signup = false;
