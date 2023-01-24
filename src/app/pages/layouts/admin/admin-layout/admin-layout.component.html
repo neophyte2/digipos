@@ -1,0 +1,17 @@
+<div>
+    <dp-header></dp-header>
+    <div class="flex h-[100%]">
+        <div class='sidebar-overlay'>
+            <div class="w-[300px] h-[100%] min-h-[100vh] dash-sidebar relative">
+                <dp-aside></dp-aside>
+            </div>
+        </div>
+
+        <div class=" z-5 bg-grey dash-content  bg-[#FCFCFC] h-[100vh] w-[100%]">
+            <div class="pt-[6rem] px-8">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+
+    </div>
+</div>

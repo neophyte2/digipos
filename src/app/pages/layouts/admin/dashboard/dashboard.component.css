@@ -1,0 +1,72 @@
+/* .badge-warning {
+    color: #F5A623 !important;
+    background-color: rgba(245, 166, 35, 0.1) !important;
+} */
+
+.card-img {
+    width: 20%;
+    display: initial;
+}
+
+.card-title {
+    font-family: 'Barlow';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 23px !important;
+    color: white !important;
+}
+
+.card-title2 {
+    margin-top: 14px !important;
+    color: #063148;
+    font-family: 'Barlow';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 28px !important;
+}
+
+.card-subtext {
+    font-family: 'Barlow';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: rgba(6, 49, 72, 0.5) !important;
+}
+
+.tr-head {
+    font-family: 'Barlow';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #063148;
+}
+
+.tb-head {
+    font-family: 'Barlow';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #063148;
+}
+
+.table-title {
+    width: 178px;
+    height: 19px;
+    left: 328px;
+    top: 574px;
+    font-family: 'Barlow';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 19px;
+    color: #063148;
+}
+
+.badge-warning {
+    color: #F5A623 !important;
+    background-color: rgba(245, 166, 35, 0.1) !important;
+}
