@@ -1,5 +1,5 @@
 <div>
-    <div class="w-[100%] min-h-[100vh]  block md:flex wb-bg">
+    <div class="w-[100%] min-h-[100vh] block md:flex wb-bg">
         <div class="w-[60%]  hidden lg:flex">
             <div class="w-[98%] h-full mx-auto md:w-[85%] pt-[45px] lg:w-[70%]">
 
@@ -33,27 +33,79 @@
         <div class="w-[100%] md:w-[80%] mx-auto pl-[110px] grad input_wrap">
             <div class="w-[80%] lg:mt-[170px] md:mt-[80px] sm:mt-[0px]  input_cont">
                 <div
-                    class="lg:w-[462px] md:w-[462px] sm:w-[462px] w-[90%] relative z-20 bg-white h-[570px] rounde-xl mx-auto rounded-[10px] forgot-pwd">
+                    class="lg:w-[462px] md:w-[462px] sm:w-[462px] w-[90%] relative z-20 bg-white h-fit rounde-xl mx-auto rounded-[10px] forgot-pwd">
                     <div class="lg:px-8 md:px-8 sm:px-8 px-4 ">
                         <div class="sign-details w-full">
-                            <div class="mb-[50px] flex items-center mt-[70px] justify-center welcome_txt">
+                            <div class="mb-[29px] flex items-center mt-[70px] justify-center welcome_txt">
                                 <p style="margin-top: inherit;"
                                     class="lg:text-3xl md:text-3xl m:text-3xl text-2xl mr-[10px] text-[#64154A] font-normal text-sans">
                                     Login to your account
                                 </p>
                             </div>
 
-                            <form>
+                            <form [formGroup]="loginForm">
 
-                                <div>
+                                <div class="flex mb-[37px] items-center justify-center">
+                                    <div class="flex items-center mr-4" (click)="changeLoginType()">
+                                        <input [(ngModel)]="loginType" [ngModelOptions]="{standalone: true}"
+                                            id="inline-radio" type="radio" value="email" name="email"
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label [ngClass]="loginType === 'email' ? 'text-[#64154A]': 'text-[gray]' "
+                                            for="inline-radio" class="ml-2 text-sm  font-medium ">Login with Email
+                                            Address</label>
+                                    </div>
+                                    <div class="flex items-center mr-4" (click)="changeLoginType()">
+                                        <input [(ngModel)]="loginType" [ngModelOptions]="{standalone: true}"
+                                            id="inline-2-radio" type="radio" value="phone" name="phone"
+                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label [ngClass]="loginType === 'phone' ? 'text-[#64154A]': 'text-[gray]' "
+                                            for="inline-radio" class="ml-2 text-sm  font-medium ">Login with Phone
+                                            Number</label>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="loginType === 'email'">
                                     <div class="flex flex-col input-wrap relative lg:mb-14 md:mb-14 sm:mb-12 mb-12">
-                                        <input type="text" id="email-address"
-                                            class="brd  h-[52px] mt-2  w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0 relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)]"
+                                        <input type="text" id="email-address" formControlName="username" class="brd peer h-[52px] mt-2  w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0 relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)] invalid:border-rose-700 invalid:text-rose-700
+                                        focus:invalid:border-rose-700 focus:invalid:ring-rose-700"
                                             placeholder="example@digipos.com" />
                                         <label htmlFor="email-address"
                                             class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
                                             Email Address
                                         </label>
+                                        <div class="mt-2"
+                                            *ngIf="(lf['username'].dirty || lf['username'].touched) && lf['username'].invalid">
+                                            <span class="text-rose-700" style="font-size: 13px;"
+                                                *ngIf="lf['username'].errors?.['required']">
+                                                Email Address is required.
+                                            </span>
+                                            <span class="text-rose-700" *ngIf="lf['username'].errors?.['pattern']">
+                                                Email Address is invalid.
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div *ngIf="loginType === 'phone'">
+                                    <div class="flex flex-col input-wrap relative mb-7">
+                                        <ngx-intl-tel-input formControlName="username2"
+                                            [cssClass]="'custom brd  h-[52px] mt-2  w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0 relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)] invalid:border-rose-700 invalid:text-rose-700 focus:invalid:border-rose-700 focus:invalid:ring-rose-700'"
+                                            [preferredCountries]="preferredCountries" [enableAutoCountrySelect]="true"
+                                            [enablePlaceholder]="true" [searchCountryFlag]="true" [searchCountryField]="[
+                                          SearchCountryField.Iso2, SearchCountryField.Name]"
+                                            [selectFirstCountry]="false" [selectedCountryISO]="CountryISO.Nigeria"
+                                            [maxLength]="15" [phoneValidation]="true" [separateDialCode]="true"
+                                            name="phone">
+                                        </ngx-intl-tel-input>
+                                        <label htmlFor="phone-number"
+                                            class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
+                                            Phone Number
+                                        </label>
+                                        <!-- <div class="mt-2" *ngIf="lf['username2'].invalid && (lf['username2'].dirty || lf['username2'].touched) ">
+                                                <span class="text-rose-700" style="font-size: 13px;" *ngIf="lf['username2'].errors?.['required']">
+                                                  Phone Number is required.
+                                                </span>
+                                            </div> -->
                                     </div>
                                 </div>
 
@@ -64,26 +116,36 @@
                                         <i *ngIf="hidePassword" class="fa fa-eye" aria-hidden="true"></i>
                                         <i *ngIf="!hidePassword" class="fa fa-eye-slash" aria-hidden="true"></i>
                                     </span>
-                                    <input [type]="hidePassword ? 'password' : 'text'" id="pwd"
-                                        class="brd  h-[52px] mt-2 input-control w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0  relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)]"
-                                        placeholder="*******" />
+                                    <input formControlName="password" [type]="hidePassword ? 'password' : 'text'"
+                                        id="pwd" class="brd peer h-[52px] mt-2  w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0 relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)] invalid:border-rose-700 invalid:text-rose-700
+                                    focus:invalid:border-rose-700 focus:invalid:ring-rose-700" placeholder="*******" />
                                     <label htmlFor="pwd"
                                         class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
                                         Password
                                     </label>
+                                    <div class="mt-2"
+                                        *ngIf="lf['password'].invalid && (lf['password'].dirty || lf['password'].touched) ">
+                                        <span class="text-rose-700" style="font-size: 13px;"
+                                            *ngIf="lf['password'].errors?.['required']">
+                                            Password is required.
+                                        </span>
+                                    </div>
                                 </div>
 
-                                <a href="/forgot-password"
+                                <a href="/forget-password"
                                     class="text-sm font-medium text-sans text-[#000] flex mt-[10px] lg:mb-[15px] md:mb-[15px] sm:mb-[35px] mb-[35px] justify-end ">
                                     Forgot Password?
                                 </a>
 
-                                <a href="/dashboard"
-                                    class="flex items-center justify-center bil-btn-gradient text-base font-normal grad3 w-full h-[52px] first-letter text-[#F0F0F0] rounded-[5px]">
-                                    Login
-                                </a>
+                                <div class=" w-full mx-auto mt-10">
+                                    <button (click)="login()" [disabled]="(loginForm.invalid ) || loader.btn.login"
+                                        class=" bil-btn-gradient text-base font-normal grad3 w-full h-[52px] first-letter text-[#F0F0F0] rounded-[5px]">
+                                        Login <span *ngIf="loader.btn.login"><i
+                                                class="fa fa-spinner fa-spin"></i></span>
+                                    </button>
+                                </div>
                             </form>
-                            
+
                         </div>
                         <div class="flex justify-center mb-[10px] mt-[35px] items-center">
                             <a href="/signup" class="text-sm font-normal mr-1 text-sans text-[#000000]">
@@ -93,7 +155,7 @@
                     </div>
                 </div>
                 <div class="flex justify-center mt-[35px] items-center">
-                    <a href="mailto:support@DigiPos.com" class="text-sm font-normal mr-1 text-sans text-[#ffffff]">
+                    <a href="mailto:support@DigiPos.com" class="text-sm font-normal mr-1 text-sans lg:text-[#ffffff] md:text-black">
                         Having issues? Contact <strong class="text-[#EDA8D2]"> support@DigiPos.com </strong>
                     </a>
                 </div>

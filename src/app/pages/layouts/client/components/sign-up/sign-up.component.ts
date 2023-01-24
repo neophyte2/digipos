@@ -14,7 +14,7 @@ import { ClientService } from '../../service/client.service';
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css']
 })
-export class SignUpomponent implements OnInit, OnDestroy {
+export class SignUpComponent implements OnInit, OnDestroy {
 
   loader: any = {
     btn: {
@@ -97,7 +97,7 @@ export class SignUpomponent implements OnInit, OnDestroy {
     this.gustSrv.signup(payload).pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
       if (data.responseCode === '00') {
         setTimeout(() => {
-          this.router.navigate(["/verify/enroll"]);
+          this.router.navigate(["/verify-enroll"]);
           this.genSrv.sweetAlertSuccess(data.responseMessage);
           this.loader.btn.signup = false;
         }, 1000);

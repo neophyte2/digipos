@@ -3,13 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-@layer components{
-    .input-style{
-       
-    }
-}
-
 /* Phone Input Css */
 @media (min-width: 1024px) {
     ngx-intl-tel-input input.custom {

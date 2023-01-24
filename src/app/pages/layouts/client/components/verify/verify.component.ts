@@ -24,8 +24,10 @@ export class VerifyComponent implements OnInit, OnDestroy {
       ro: false //reset otp
     },
   };
-  veriftyEnrollForm!: FormGroup;
-  veriftyResetForm!: FormGroup;
+  hidePassword = true;
+  hideCPassword = true;
+  verifyEnrollForm!: FormGroup;
+  verifyResetForm!: FormGroup;
   private unsubcribe = new Subject<void>();
 
   //OTP
@@ -53,11 +55,16 @@ export class VerifyComponent implements OnInit, OnDestroy {
 
   // Get login Form Value
   get vef() {
-    return this.veriftyEnrollForm.controls;
+    return this.verifyEnrollForm.controls;
+  }
+
+  // Get login Form Value
+  get vrf() {
+    return this.verifyResetForm.controls;
   }
 
   ngOnForms() {
-    this.veriftyEnrollForm = this.fb.group({
+    this.verifyEnrollForm = this.fb.group({
       customerEmail: [
         "",
         Validators.compose([
@@ -67,6 +74,18 @@ export class VerifyComponent implements OnInit, OnDestroy {
       ],
       customerOtp: [""],
       referralCode: ['']
+    });
+    this.verifyResetForm = this.fb.group({
+      customerEmail: [
+        "",
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(VALIDEMAILREGEX),
+        ]),
+      ],
+      customerPassword: ["", Validators.required],
+      customerPasswordConfirmation: ["", Validators.required],
+      customerOtp: [""],
     });
   }
 
@@ -91,6 +110,8 @@ export class VerifyComponent implements OnInit, OnDestroy {
           this.genSrv.sweetAlertSuccess(data.responseMessage);
           this.router.navigate(["/"]);
           this.loader.btn.vef = false;
+          this.verifyEnrollForm.reset();
+          this.otp = '';
         }, 1000);
       } else {
         let msg = data.responseMessage
@@ -98,7 +119,6 @@ export class VerifyComponent implements OnInit, OnDestroy {
         this.loader.btn.vef = false;
       }
     }, (err) => {
-      console.log(err);
       let msg = err
       this.genSrv.sweetAlertError(msg);
       this.loader.btn.vef = false;
@@ -106,7 +126,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
   }
 
   resendotp() {
-    let name = this.vef['customerEmail'].value
+    let name = this.vef['customerEmail'].value || this.vrf['customerEmail'].value
     if (!name) {
       this.genSrv.sweetAlertError('Kindly Input Your Email');
     } else {
@@ -115,7 +135,6 @@ export class VerifyComponent implements OnInit, OnDestroy {
         customerEmail: name
       }
       this.gustSrv.resetOtp(payload).pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
-        console.log(data);
         if (data.responseCode === '00') {
           this.genSrv.sweetAlertSuccess(data.responseMessage);
           this.loader.btn.ro = false;
@@ -125,7 +144,6 @@ export class VerifyComponent implements OnInit, OnDestroy {
           this.loader.btn.ro = false;
         }
       }, (err) => {
-        console.log(err);
         let msg = err
         this.genSrv.sweetAlertError(msg);
         this.loader.btn.ro = false;
@@ -135,7 +153,50 @@ export class VerifyComponent implements OnInit, OnDestroy {
   }
 
   verifyReset() {
+    let payload = {
+      customerEmail: this.vrf['customerEmail'].value,
+      customerOtp: this.otp,
+      customerPassword: this.vrf['customerPassword'].value,
+      customerPasswordConfirmation: this.vrf['customerPasswordConfirmation'].value,
+    }
+    this.loader.btn.vrf = true;
+    this.gustSrv.confirmPasswordReset(payload).pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
+      if (data.responseCode === '00') {
+        setTimeout(() => {
+          this.genSrv.sweetAlertSuccess(data.responseMessage);
+          this.router.navigate(["/"]);
+          this.loader.btn.vef = false;
+          this.verifyResetForm.reset();
+          this.otp = ''
+        }, 1000);
+     
+      } else {
+        let msg = data.responseMessage
+        this.genSrv.sweetAlertError(msg);
+        this.loader.btn.vrf = false;
+      }
+    }, (err) => {
+      let msg = err
+      this.genSrv.sweetAlertError(msg);
+      this.loader.btn.vrf = false;
+    })
+  }
 
+  /**
+* password match validations
+*/
+  get matchPassword() {
+    const vaildPasswordInput = this.vrf['customerPassword'].value !== this.vrf['customerPasswordConfirmation'].value;
+    return vaildPasswordInput && this.vrf['customerPassword'].value && this.vrf['customerPasswordConfirmation'].value;
+  }
+
+  /**
+   * disble button for submission
+   */
+  get disableBtn() {
+    const validState = this.vrf['customerPassword'].value && this.vrf['customerPasswordConfirmation'].value;
+    const vaildMatchPassword = this.vrf['customerPassword'].value === this.vrf['customerPasswordConfirmation'].value;
+    return !(vaildMatchPassword && validState);
   }
 
   ngOnDestroy() {
