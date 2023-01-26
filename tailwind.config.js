@@ -5,6 +5,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      colors: {
+        bg1: "rgba(100, 21, 74, 0.1);",
+        bg2: "#FECEEB",
+        secondary: '#7A3F63'
+      }
       
     },
   },

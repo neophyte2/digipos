@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ClientGuard } from '../client/service/client-guard.service';
 import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { KycComponent } from './kyc/kyc.component';
 
 const routes: Routes = [
   {
@@ -13,6 +14,10 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardComponent,
+      },
+      {
+        path: 'kyc',
+        component: KycComponent,
       },
     ]
   },
