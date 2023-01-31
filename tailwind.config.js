@@ -8,6 +8,7 @@ module.exports = {
       colors: {
         bg1: "rgba(100, 21, 74, 0.1);",
         bg2: "#FECEEB",
+        background: "#64154A",
         secondary: '#7A3F63'
       }
       
