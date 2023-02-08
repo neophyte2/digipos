@@ -7,17 +7,17 @@ import { Component, OnInit, TemplateRef } from '@angular/core';
 })
 export class KycComponent implements OnInit {
 
-  ClickLinkAccount:boolean = true; 
   visible:boolean = false;
+  ClickLinkAccount:boolean = true; 
 
   constructor() { }
 
   ngOnInit(): void {
   }
-  onLinkAccount(){
-    this.ClickLinkAccount = !this.ClickLinkAccount;
-    this.visible= !this.visible;
 
+  onLinkAccount(){
+    this.visible= !this.visible;
+    this.ClickLinkAccount = !this.ClickLinkAccount;
   }
   
 }
