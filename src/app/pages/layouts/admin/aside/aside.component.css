@@ -1,3 +1,19 @@
 li {
     color: #fff !important;
 }
+
+.p-header{
+    padding: 12px 70px 12px 17px;
+}
+
+.active-menu{
+    background-color: white !important;
+}
+
+.active-menu span {
+    color: #64154A;
+}
+
+.active-menu svg {
+    color: #64154A;
+}
