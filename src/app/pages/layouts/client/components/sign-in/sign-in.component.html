@@ -44,27 +44,7 @@
                             </div>
 
                             <form [formGroup]="loginForm">
-
-                                <div class="flex mb-[37px] items-center justify-center">
-                                    <div class="flex items-center mr-4" (click)="changeLoginType()">
-                                        <input [(ngModel)]="loginType" [ngModelOptions]="{standalone: true}"
-                                            id="inline-radio" type="radio" value="email" name="email"
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                        <label [ngClass]="loginType === 'email' ? 'text-[#64154A]': 'text-[gray]' "
-                                            for="inline-radio" class="ml-2 text-sm  font-medium ">Login with Email
-                                            Address</label>
-                                    </div>
-                                    <div class="flex items-center mr-4" (click)="changeLoginType()">
-                                        <input [(ngModel)]="loginType" [ngModelOptions]="{standalone: true}"
-                                            id="inline-2-radio" type="radio" value="phone" name="phone"
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                        <label [ngClass]="loginType === 'phone' ? 'text-[#64154A]': 'text-[gray]' "
-                                            for="inline-radio" class="ml-2 text-sm  font-medium ">Login with Phone
-                                            Number</label>
-                                    </div>
-                                </div>
-
-                                <div *ngIf="loginType === 'email'">
+                                <div class="mt-10">
                                     <div class="flex flex-col input-wrap relative lg:mb-14 md:mb-14 sm:mb-12 mb-12">
                                         <input type="text" id="email-address" formControlName="username" class="brd peer h-[52px] mt-2  w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0 relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)] invalid:border-rose-700 invalid:text-rose-700
                                         focus:invalid:border-rose-700 focus:invalid:ring-rose-700"
@@ -83,29 +63,6 @@
                                                 Email Address is invalid.
                                             </span>
                                         </div>
-                                    </div>
-                                </div>
-
-                                <div *ngIf="loginType === 'phone'">
-                                    <div class="flex flex-col input-wrap relative mb-7">
-                                        <ngx-intl-tel-input formControlName="username2"
-                                            [cssClass]="'custom brd  h-[52px] mt-2  w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0 relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)] invalid:border-rose-700 invalid:text-rose-700 focus:invalid:border-rose-700 focus:invalid:ring-rose-700'"
-                                            [preferredCountries]="preferredCountries" [enableAutoCountrySelect]="true"
-                                            [enablePlaceholder]="true" [searchCountryFlag]="true" [searchCountryField]="[
-                                          SearchCountryField.Iso2, SearchCountryField.Name]"
-                                            [selectFirstCountry]="false" [selectedCountryISO]="CountryISO.Nigeria"
-                                            [maxLength]="15" [phoneValidation]="true" [separateDialCode]="true"
-                                            name="phone">
-                                        </ngx-intl-tel-input>
-                                        <label htmlFor="phone-number"
-                                            class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
-                                            Phone Number
-                                        </label>
-                                        <!-- <div class="mt-2" *ngIf="lf['username2'].invalid && (lf['username2'].dirty || lf['username2'].touched) ">
-                                                <span class="text-rose-700" style="font-size: 13px;" *ngIf="lf['username2'].errors?.['required']">
-                                                  Phone Number is required.
-                                                </span>
-                                            </div> -->
                                     </div>
                                 </div>
 
@@ -155,7 +112,8 @@
                     </div>
                 </div>
                 <div class="flex justify-center mt-[35px] items-center">
-                    <a href="mailto:support@DigiPos.com" class="text-sm font-normal mr-1 text-sans lg:text-[#ffffff] md:text-black">
+                    <a href="mailto:support@DigiPos.com"
+                        class="text-sm font-normal mr-1 text-sans lg:text-[#ffffff] md:text-black">
                         Having issues? Contact <strong class="text-[#EDA8D2]"> support@DigiPos.com </strong>
                     </a>
                 </div>

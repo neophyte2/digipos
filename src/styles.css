@@ -41,3 +41,9 @@
 .bg-coralpay {
     background-color: #64154A;
 }
+
+/* Dashboard */
+
+.bg-wallet{
+    background: rgba(100, 21, 74, 0.1);
+}

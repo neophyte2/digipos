@@ -93,22 +93,6 @@ export class SignInomponent implements OnInit, OnDestroy {
 
   result(): any {
     let payload
-    if (this.loginType === 'phone') {
-      payload = {
-        password: this.lf['password'].value,
-        username: this.lf['username2'].value.e164Number,
-        appVersion: '',
-        customerPushId: '',
-        countryCode: this.location.calling_code,
-        latitude: this.location.latitude,
-        ipAddress: this.location.ip,
-        source: 'Web',
-        devicePlatform: this.deviceInfo.deviceType,
-        deviceId: '',
-        deviceName: this.deviceInfo.device,
-        longitude: this.location.longitude,
-      }
-    } else if (this.loginType === 'email') {
       payload = {
         password: this.lf['password'].value,
         username: this.lf['username'].value,
@@ -122,7 +106,6 @@ export class SignInomponent implements OnInit, OnDestroy {
         deviceId: '',
         deviceName: this.deviceInfo.device,
         longitude: this.location.longitude,
-      }
     }
     return payload
   }
@@ -136,7 +119,7 @@ export class SignInomponent implements OnInit, OnDestroy {
       this.loader.btn.login = true;
       this.gustSrv.login(payload).pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
         if (data.responseCode === '00') {
-          this.genSrv.storeUser(data.token)
+          this.genSrv.storeUser(data)
           setTimeout(() => {
             this.router.navigate(["/auth/dashboard"]);
             this.loader.btn.login = false;

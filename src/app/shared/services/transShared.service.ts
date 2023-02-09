@@ -6,11 +6,13 @@ import { environment } from 'src/environments/environment';
 @Injectable({
     providedIn: 'root'
 })
-export class AdminService {
+export class TransactionSharedService {
 
     private api = environment.baseApiUrl;
 
     constructor(private http: HttpClient) { }
 
-   
+    transactionList(params: any){
+        return this.http.post(`${this.api}/payment/read-transaction`, params);
+    }
 }

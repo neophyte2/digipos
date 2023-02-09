@@ -19,11 +19,10 @@ export class RequestInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let token, url: string
 
-    if (this.genSer.userDetails) {
-      this.currentUser = this.genSer.userDetails;
-      token = this.currentUser && this.currentUser.token ? this.currentUser.token.token : null;
-      url = '/'
-    }
+    this.currentUser = this.genSer.userDetails;
+    token = this.currentUser && this.currentUser.token ? this.currentUser.token : null;
+    url = '/'
+
 
     if (this.isValidUrl(req.url) && token) {
       req = req.clone({
@@ -33,6 +32,7 @@ export class RequestInterceptor implements HttpInterceptor {
         },
       });
     }
+
     return next.handle(req)
       .pipe(catchError(err => {
         let error = err.error?.message || err.error?.error || err.statusText || err.message;
@@ -50,7 +50,7 @@ export class RequestInterceptor implements HttpInterceptor {
   }
 
   isValidUrl(url: string) {
-    if (url.includes('localhost') || url.includes('digipos')) {
+    if (url.includes('localhost') || url.includes('digipos') || url.includes('https://ys898230m6.execute-api.us-east-1.amazonaws.com/')) {
       return true
     } else {
       return false

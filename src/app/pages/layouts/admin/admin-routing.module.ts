@@ -9,7 +9,7 @@ const routes: Routes = [
   {
     path: '',
     component: AdminLayoutComponent,
-    //  canActivate: [ClientGuard],
+     canActivate: [ClientGuard],
     children: [
       {
         path: 'dashboard',
