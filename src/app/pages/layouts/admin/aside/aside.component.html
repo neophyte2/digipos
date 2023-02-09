@@ -10,7 +10,7 @@
     <ul class="space-y-2">
       <p class="text-white text-[12px]">BASE ANALYTICS</p>
       <li>
-        <a [ngClass]="{'active-menu': this.router.url.includes('dashboard')}" routerLink="dashboard"
+        <div [ngClass]="{'active-menu': this.router.url.includes('dashboard')}" routerLink="dashboard"
           class="flex p-header items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-white hover:text-[#64154A] ">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
             stroke="currentColor" class="w-6 h-6">
@@ -18,7 +18,7 @@
               d="M13.5 16.875h3.375m0 0h3.375m-3.375 0V13.5m0 3.375v3.375M6 10.5h2.25a2.25 2.25 0 002.25-2.25V6a2.25 2.25 0 00-2.25-2.25H6A2.25 2.25 0 003.75 6v2.25A2.25 2.25 0 006 10.5zm0 9.75h2.25A2.25 2.25 0 0010.5 18v-2.25a2.25 2.25 0 00-2.25-2.25H6a2.25 2.25 0 00-2.25 2.25V18A2.25 2.25 0 006 20.25zm9.75-9.75H18a2.25 2.25 0 002.25-2.25V6A2.25 2.25 0 0018 3.75h-2.25A2.25 2.25 0 0013.5 6v2.25a2.25 2.25 0 002.25 2.25z" />
           </svg>
           <span class="ml-3">Dashboard</span>
-        </a>
+        </div>
       </li>
       <li>
         <a [ngClass]="{'active-menu': this.router.url.includes('wallet')}" routerLink="wallet"
@@ -32,7 +32,7 @@
         </a>
       </li>
       <li>
-        <a [ngClass]="{'active-menu': this.router.url.includes('transaction')}" routerLink="transaction"
+        <a [ngClass]="{'active-menu': this.router.url.includes('transactions')}" routerLink="transactions"
           class="flex p-header items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-white hover:text-[#64154A] ">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
             stroke="currentColor" class="w-6 h-6">

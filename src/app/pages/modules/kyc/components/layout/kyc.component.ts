@@ -1,7 +1,7 @@
 import { Component, OnInit, TemplateRef } from '@angular/core';
 
 @Component({
-  selector: 'app-kyc',
+  selector: 'dp-kyc',
   templateUrl: './kyc.component.html',
   styleUrls: ['./kyc.component.css']
 })

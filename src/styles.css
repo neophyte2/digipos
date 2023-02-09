@@ -44,6 +44,15 @@
 
 /* Dashboard */
 
-.bg-wallet{
+.bg-wallet {
     background: rgba(100, 21, 74, 0.1);
+}
+
+.bg-wallet2 {
+    background: rgba(202, 255, 235, 0.5);
+}
+
+
+.bg-download-report {
+    background: rgba(73, 170, 57, 1);
 }

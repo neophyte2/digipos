@@ -1,0 +1,121 @@
+<!-- Wallet -->
+<div class="grid grid-cols-1 md:grid-cols-3">
+  <!-- Balance -->
+  <div
+    class="p-7 relative bg-wallet2 fund-shadow rounded-lg flex flex-col sm:flex-row justify-center items-center sm:justify-between sm:w-[344px] my-6">
+    <div class="">
+      <svg width="28" height="24" viewBox="0 0 28 24" class="md:block hidden" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M27.3334 10.6667V22.6667C27.3334 23.0203 27.1929 23.3594 26.9428 23.6095C26.6928 23.8595 26.3536 24 26 24H2.00002C1.6464 24 1.30726 23.8595 1.05721 23.6095C0.807163 23.3594 0.666687 23.0203 0.666687 22.6667V10.6667H27.3334ZM27.3334 5.33333H0.666687V1.33333C0.666687 0.979711 0.807163 0.640573 1.05721 0.390524C1.30726 0.140476 1.6464 0 2.00002 0H26C26.3536 0 26.6928 0.140476 26.9428 0.390524C27.1929 0.640573 27.3334 0.979711 27.3334 1.33333V5.33333Z"
+          fill="#64154A" />
+      </svg>
+    </div>
+    <div class="flex sm:block flex-col justify-center items-center">
+      <p class="text-[#677189]">Balance</p>
+      <div class="flex items-center my-4">
+        <svg width="26" height="20" viewBox="0 0 26 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M21.5716 24.5H19.343L6.143 2.84375V24.5H4.42871V0.5H6.65728L19.8573 22.1562V0.5H21.5716V24.5Z"
+            fill="black" stroke="black"></path>
+          <path d="M1 9.5H25V11H1V9.5ZM1 14H25V15.5H1V14Z" fill="black" stroke="black">
+          </path>
+        </svg>
+        <span style="word-break: break-all;" class="text-[31px] text-[#1B2A4E] sm:mr-9 mr-4">
+          <b class="font-extrabold">1,000,000.00</b>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Wallet -->
+
+<!-- Filter -->
+<div class="grid grid-cols-3 gap-4">
+  <div class="col-start-1 col-end-3 mt-8">
+    <form [formGroup]="dateRangeForm">
+      <div class="md:flex my-3 hidden items-end flex-wrap ">
+        <div class="mr-3">
+          <label for="" class="block text-sm text-gray-400 regularfont">Filter By</label>
+          <select
+            class="w-[140px] text-xs py-[15px] text-gray-400 text-center border border-gray-300 rounded focus:outline-0 focus:ring-0 brd">
+            <option>Filter by Biller</option>
+          </select>
+        </div>
+        <div class="mr-3">
+          <label for="from" class="block text-sm text-gray-400 regularfont">From</label>
+          <input type="date" formControlName="start"
+            class="lg:w-[150px] text-gray-400 py-[15px] text-xs border border-gray-300 rounded  focus:outline-0 focus:ring-0 brd">
+        </div>
+        <div class="mr-3"><label for="from" class="block text-sm text-gray-400 regularfont">To</label>
+          <input type="date" formControlName="end"
+            class="lg:w-[150px] text-gray-400 py-[15px] text-xs border border-gray-300 rounded focus:outline-0 focus:ring-0 brd">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="col-end-7 col-span-2 mt-10">
+    <div>
+      <button class="block w-[150px] py-[15px] rounded  text-white bg-download-report text-sm mx-4 text-center ">
+        Download Report
+      </button>
+    </div>
+  </div>
+</div>
+<!-- Filter -->
+
+<!-- TABLE -->
+<div class="relative overflow-x-auto mt-10 mb-10">
+  <table class="w-full text-sm text-left text-gray-500">
+    <thead class="text-xs text-gray-400 uppercase bg-gray-50">
+      <tr>
+        <th scope="col" class="px-6 py-3">
+          AMOUNT
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Customer
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Transaction Reference
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Payment Method
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Date
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Time
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Status
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="bg-white border-b  hover:bg-gray-100">
+        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+          Apple MacBook Pro 17"
+        </th>
+        <td class="px-6 py-4">
+          Sliver
+        </td>
+        <td class="px-6 py-4">
+          Laptop
+        </td>
+        <td class="px-6 py-4">
+          $2999
+        </td>
+        <td class="px-6 py-4">
+          $2999
+        </td>
+        <td class="px-6 py-4">
+          $2999
+        </td>
+        <td class="px-6 py-4">
+          $2999
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- TABLE -->
