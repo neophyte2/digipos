@@ -100,9 +100,11 @@
 
 <!-- Charts Section -->
 <div style="display: block;">
-  <canvas baseChart style="height: 500px !important; width: 80% !important" [options]="lineChartOptions"
+  <!-- <canvas baseChart style="height: 500px !important; width: 80% !important" [options]="lineChartOptions"
     [datasets]="lineChartData" [labels]="lineChartLabels" [colors]="lineChartColors" [legend]="lineChartLegend"
-    [chartType]="'line'" [plugins]="lineChartPlugins">
+    [chartType]="'bar'" [plugins]="lineChartPlugins">
+  </canvas> -->
+  <canvas baseChart style="height: 500px !important; width: 80% !important" [options]="barChartOptions" [datasets]="barChartData" [labels]="barChartLabels" [colors]="barChartColors" [legend]="barChartLegend" [chartType]="'bar'" [plugins]="barChartPlugins">
   </canvas>
 </div>
 <!-- Charts Section -->

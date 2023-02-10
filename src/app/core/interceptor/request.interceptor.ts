@@ -27,8 +27,8 @@ export class RequestInterceptor implements HttpInterceptor {
     if (this.isValidUrl(req.url) && token) {
       req = req.clone({
         setHeaders: {
-          Authorization: `Bearer ${token}`,
-          'Access-Control-Allow-Origin': '*'
+          Authorization: `${token}`,
+          // 'Access-Control-Allow-Origin': '*'
         },
       });
     }

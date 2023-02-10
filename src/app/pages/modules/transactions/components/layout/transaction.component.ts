@@ -1,12 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { ChartDataSets, ChartOptions } from 'chart.js';
 import * as moment from 'moment';
-import { Label, Color } from 'ng2-charts';
 import { Subject } from 'rxjs';
 import { takeUntil } from "rxjs/operators";
 import { TransactionSharedService } from 'src/app/shared/services/transShared.service';
-import { tableCurrency } from 'src/app/shared/utils/utils';
 
 @Component({
   selector: 'dp-transaction',
