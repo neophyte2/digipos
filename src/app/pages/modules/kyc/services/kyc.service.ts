@@ -28,4 +28,9 @@ export class KycService {
         return this.http.post(`${this.api}/kyc/complete-bvn-verification`, param);
     }
 
+    getAllCards() {
+        let param = { request: "ID_CARDS_TYPES" };
+        return this.http.post(`${this.api}/kyc/id-card-types`, param);
+    }
+
 }

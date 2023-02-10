@@ -51,7 +51,7 @@
       <p class="text-[#677189]">Total Transaction</p>
       <div class="flex items-center my-4">
         <span class="text-[31px] text-[#1B2A4E] sm:mr-9 mr-4">
-          <b class="font-extrabold">50</b>
+          <b class="font-extrabold">{{transactionList?.length}}</b>
         </span>
       </div>
     </div>
@@ -111,16 +111,11 @@
 
 <!-- TABLE -->
 <div class="relative overflow-x-auto mt-10 mb-10">
-  <h1 class="py-3 font-extrabold">Recent Transactions</h1>
-
   <table class="w-full text-sm text-left text-gray-500">
     <thead class="text-xs text-gray-400 uppercase bg-gray-50">
       <tr>
         <th scope="col" class="px-6 py-3">
           AMOUNT
-        </th>
-        <th scope="col" class="px-6 py-3">
-          Customer
         </th>
         <th scope="col" class="px-6 py-3">
           Transaction Reference
@@ -129,10 +124,10 @@
           Payment Method
         </th>
         <th scope="col" class="px-6 py-3">
-          Date
+          Description
         </th>
         <th scope="col" class="px-6 py-3">
-          Time
+          Date\Time
         </th>
         <th scope="col" class="px-6 py-3">
           Status
@@ -140,27 +135,54 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="bg-white border-b  hover:bg-gray-100">
-        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
-          Apple MacBook Pro 17"
-        </th>
+      <tr class="bg-white border-b  hover:bg-gray-100 " *ngFor="let item of transactionList">
         <td class="px-6 py-4">
-          Sliver
+          <div class="flex p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+            <div class="flex items-center h-5">
+              <!-- success -->
+              <svg *ngIf="item?.trnResponseCode === '09' || item?.trnResponseCode === '25'"  width="11" height="11"
+                viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="5.5" cy="5.5" r="5.5" fill="#35B172" />
+              </svg>
+              <!-- pending
+              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="5.5" cy="5.5" r="5.5" fill="#FF8A00" /> -->
+              <!-- </svg> -->
+              <!-- failed
+              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="5.5" cy="5.5" r="5.5" fill="#FF0000" />
+              </svg> -->
+
+            </div>
+            <div class="ml-2 text-sm">
+              {{formatAmt(item?.trnAmount)}}
+            </div>
+          </div>
         </td>
         <td class="px-6 py-4">
-          Laptop
+          {{item?.trnReference}}
         </td>
         <td class="px-6 py-4">
-          $2999
+          <span class="inline-block bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+            {{item?.trnService}}
+          </span>
         </td>
         <td class="px-6 py-4">
-          $2999
+          {{item?.trnNarration}}
         </td>
         <td class="px-6 py-4">
-          $2999
+          {{item?.trnCreatedAt}}
         </td>
         <td class="px-6 py-4">
-          $2999
+          <span *ngIf="item?.trnResponseCode === '09' || item?.trnResponseCode === '25'" class="inline-block bg-[#DBFFED] px-3 py-1 text-sm font-semibold text-[#35B172] mr-2 mb-2">
+            Successful
+          </span>
+          <!-- <span  class="inline-block bg-[#FFDBDA] px-3 py-1 text-sm font-semibold text-[#FF0000] mr-2 mb-2">
+            Failed
+          </span>
+          <span  class="inline-block bg-[#FFEDD7] px-3 py-1 text-sm font-semibold text-[#FF8A00] mr-2 mb-2">
+            Pending
+          </span> -->
         </td>
       </tr>
     </tbody>

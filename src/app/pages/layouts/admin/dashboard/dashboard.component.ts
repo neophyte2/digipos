@@ -63,9 +63,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
   // public lineChartPlugins = [];
 
   public barChartData: ChartDataSets[] = [
-    { data: [180, 480, 770, 90, 1000, 270, 400,770, 90, 1000, 270, 400], label: 'SuccessFul' },
+    { data: [180, 480, 770, 90, 1000, 270, 400, 770, 90, 1000, 270, 400], label: 'SuccessFul' },
     { data: [28, 48, 40, 19, 86, 27, 90, 180, 480, 770, 90, 1000,], label: 'Pending' },
-    { data: [65, 59, 80, 81, 56, 55, 40,  28, 48, 40, 19, 86,], label: 'Failed' },
+    { data: [65, 59, 80, 81, 56, 55, 40, 28, 48, 40, 19, 86,], label: 'Failed' },
   ];
   public barChartLabels: Label[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
   public barChartOptions: ChartOptions = {
@@ -116,6 +116,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   //dates
   query: any
+  transactionList: any
   dateRangeForm!: FormGroup;
   year = new Date().getFullYear()
 
@@ -153,8 +154,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
       endDate: this.dateRangeForm.value.end,
     }
     this.transShrdService.transactionList(payload).pipe(takeUntil(this.unsubcribe)).subscribe((trans: any) => {
-      console.log({ trans });
+      this.transactionList = trans.data.slice(0, 10);
     })
+  }
+
+  formatAmt(val: any) {
+    return tableCurrency(val);
   }
 
   ngOnDestroy() {

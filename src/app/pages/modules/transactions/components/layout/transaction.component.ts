@@ -4,6 +4,7 @@ import * as moment from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from "rxjs/operators";
 import { TransactionSharedService } from 'src/app/shared/services/transShared.service';
+import { tableCurrency } from 'src/app/shared/utils/utils';
 
 @Component({
   selector: 'dp-transaction',
@@ -14,6 +15,7 @@ export class TransactionComponent implements OnInit, OnDestroy {
 
   //dates
   query: any
+  transactionList: any
   dateRangeForm!: FormGroup;
   year = new Date().getFullYear()
   private unsubcribe = new Subject<void>();
@@ -31,7 +33,8 @@ export class TransactionComponent implements OnInit, OnDestroy {
       if (data?.start && data?.end) {
         this.query = { startDate: moment(data?.start).format("YYYY-MM-DD"), endDate: moment(data?.end).format("YYYY-MM-DD") }
         this.allTransactionList();
-      }}
+      }
+    }
     );
   }
 
@@ -51,8 +54,12 @@ export class TransactionComponent implements OnInit, OnDestroy {
       endDate: this.dateRangeForm.value.end,
     }
     this.transShrdService.transactionList(payload).pipe(takeUntil(this.unsubcribe)).subscribe((trans: any) => {
-      console.log({ trans });
+      this.transactionList = trans.data;
     })
+  }
+
+  formatAmt(val: any) {
+    return tableCurrency(val);
   }
 
   ngOnDestroy() {

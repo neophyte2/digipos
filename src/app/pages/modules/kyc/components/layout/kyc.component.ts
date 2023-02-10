@@ -14,6 +14,7 @@ import { NgOtpInputConfig } from 'ng-otp-input';
 export class KycComponent implements OnInit {
 
   otp = ''
+  cardList:any
   verifyList: any
   accountType: any
   bvnForm: FormGroup;
@@ -65,6 +66,7 @@ export class KycComponent implements OnInit {
     let acctType: any = this.genSrv.userDetails;
     this.accountType = acctType.customerAccountType
     this.getVerification();
+    this.getCards();
   }
 
   getVerification() {
@@ -72,6 +74,13 @@ export class KycComponent implements OnInit {
       console.log(data);
       this.verifyList = data;
       this.bvnForm.controls['bvn'].patchValue(this.verifyList.bvn);
+    })
+  }
+
+  getCards() {
+    this.kycSrv.getAllCards().pipe(takeUntil(this.unsubcribe)).subscribe(data => {
+      console.log(data);
+      this.cardList = data;
     })
   }
 
