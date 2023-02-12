@@ -116,6 +116,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   //dates
   query: any
+  translength:any
   transactionList: any
   dateRangeForm!: FormGroup;
   year = new Date().getFullYear()
@@ -154,6 +155,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       endDate: this.dateRangeForm.value.end,
     }
     this.transShrdService.transactionList(payload).pipe(takeUntil(this.unsubcribe)).subscribe((trans: any) => {
+      this.translength = trans.data.length
       this.transactionList = trans.data.slice(0, 10);
     })
   }

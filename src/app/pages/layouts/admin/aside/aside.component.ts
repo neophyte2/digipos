@@ -13,7 +13,7 @@ export class AsideComponent implements OnInit {
 
   constructor(
     public router: Router,
-    private genSrv : GeneralService
+    public genSrv : GeneralService
   ) {
   }
 
