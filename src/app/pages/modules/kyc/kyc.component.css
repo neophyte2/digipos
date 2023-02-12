@@ -1,0 +1,10 @@
+input::-webkit-input-placeholder {
+  padding-left: 5%;
+  font-weight: 700 !important;
+}
+.upload {
+  display: none;
+}
+label{
+    cursor: pointer;
+}
