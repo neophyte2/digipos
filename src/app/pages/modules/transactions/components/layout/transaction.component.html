@@ -91,7 +91,7 @@
     <tbody>
       <tr class="bg-white border-b  hover:bg-gray-100 " *ngFor="let item of transactionList">
         <td class="px-6 py-4">
-          <div class="flex p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600">
+          <div class="flex p-2 rounded hover:bg-gray-100">
             <div class="flex items-center h-5">
               <!-- success -->
               <svg *ngIf="item?.trnResponseCode === '09' || item?.trnResponseCode === '25'"  width="11" height="11"

@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { Label, Color } from 'ng2-charts';
 import { Subject } from 'rxjs';
 import { takeUntil } from "rxjs/operators";
+import { GeneralService } from 'src/app/shared/services/general.service';
 import { TransactionSharedService } from 'src/app/shared/services/transShared.service';
 import { tableCurrency } from 'src/app/shared/utils/utils';
 
@@ -116,13 +117,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   //dates
   query: any
-  translength:any
+  translength: any
   transactionList: any
   dateRangeForm!: FormGroup;
   year = new Date().getFullYear()
 
   constructor(
     private readonly fb: FormBuilder,
+    private genService: GeneralService,
     private transShrdService: TransactionSharedService
   ) {
     this.dateRangeForm = new FormGroup({
@@ -155,8 +157,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
       endDate: this.dateRangeForm.value.end,
     }
     this.transShrdService.transactionList(payload).pipe(takeUntil(this.unsubcribe)).subscribe((trans: any) => {
-      this.translength = trans.data.length
-      this.transactionList = trans.data.slice(0, 10);
+      if (trans.responseCode === '00') {
+        this.translength = trans.data ? trans.data.length : 0
+        this.transactionList = trans.data ? trans.data.slice(0, 10) : []
+      }
+    }, (err) => {
     })
   }
 
