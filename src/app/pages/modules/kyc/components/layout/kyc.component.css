@@ -8,3 +8,9 @@ input::-webkit-input-placeholder {
 label{
     cursor: pointer;
 }
+
+
+.ptr-5 {
+  padding-top: 1.25rem;
+  padding-right: 1.25rem;
+}

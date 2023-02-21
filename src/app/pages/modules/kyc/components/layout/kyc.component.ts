@@ -14,10 +14,12 @@ import { NgOtpInputConfig } from 'ng-otp-input';
 export class KycComponent implements OnInit {
 
   otp = ''
-  cardList:any
+  govtPhoto: any
+  cardList: any
   verifyList: any
   accountType: any
-  bvnForm: FormGroup;
+  businessName: any
+  bvnForm!: FormGroup;
   visible: boolean = false;
   ClickLinkAccount: boolean = true;
 
@@ -57,16 +59,21 @@ export class KycComponent implements OnInit {
     private kycSrv: KycService,
     private genSrv: GeneralService
   ) {
-    this.bvnForm = new FormGroup({
-      bvn: new FormControl('', Validators.maxLength(11))
-    });
   }
 
   ngOnInit(): void {
+    this.onInitForm();
     let acctType: any = this.genSrv.userDetails;
     this.accountType = acctType.customerAccountType
+    this.businessName = acctType.customerBusinessName
     this.getVerification();
     this.getCards();
+  }
+
+  onInitForm() {
+    this.bvnForm = new FormGroup({
+      bvn: new FormControl('', Validators.maxLength(11))
+    });
   }
 
   getVerification() {
@@ -78,9 +85,8 @@ export class KycComponent implements OnInit {
   }
 
   getCards() {
-    this.kycSrv.getAllCards().pipe(takeUntil(this.unsubcribe)).subscribe(data => {
-      console.log(data);
-      this.cardList = data;
+    this.kycSrv.getAllCards().pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
+      this.cardList = data.data;
     })
   }
 
@@ -160,6 +166,18 @@ export class KycComponent implements OnInit {
       this.genSrv.sweetAlertError(msg);
       this.loader.btn.bvnloader = false;
     })
+  }
+
+  //Upload
+  browseGovtFile(event:any) {
+    console.log(event);
+    
+    const size = 5 * 1024 * 1024;
+    if (event.target.files[0].size > size) {
+      this.genSrv.sweetAlertSuccess('File is Larger Than 5MB')
+    } else {
+      this.govtPhoto = event.target.files[0];
+    }
   }
 
   onLinkAccount() {

@@ -1,4 +1,4 @@
-<h1 class="font-medium">Hi User, Take a minute to set up your account</h1>
+<h1 class="font-medium">Hi {{businessName}} 👋, Take a minute to set up your account</h1>
 
 <div class="mt-4 text-[#677189] text-sm font-medium">
   <p>
@@ -56,14 +56,14 @@
                   fill="#8D005F" />
               </svg>
             </div>
-            <input type="text" id="email-address-icon" (focusout)="onFocusLostBvn($event)"
+            <input style="padding-left: 55px;" type="text" id="email-address-icon" (focusout)="onFocusLostBvn($event)"
               oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
               onkeydown="if(event.key==='.'){event.preventDefault();}" formControlName="bvn"
               class="p-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 placeholder-black"
               placeholder="Bank Verification Number" />
             <div
               class="text-white absolute right-2.5 bottom-2.5 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">
-              <svg *ngIf="verifyList?.bvnVerified" width="25" height="25" viewBox="0 0 25 25" fill="none"
+              <svg *ngIf="verifyList?.bvnVerified === 'YES'" width="25" height="25" viewBox="0 0 25 25" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <circle cx="12.5" cy="12.5" r="12.5" fill="#64154A" />
                 <path
@@ -89,11 +89,48 @@
             <p class="pl-8 font-bold">Upload a Goverment ID</p>
           </div>
 
+          <div class="order-last float-right">
+            <svg *ngIf="verifyList?.idCardVerified === 'YES'" width="25" height="25" viewBox="0 0 25 25" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12.5" cy="12.5" r="12.5" fill="#64154A" />
+              <path d="M10.16 14.8734L7.05673 11.7702L6 12.8195L10.16 16.9794L19.0901 8.04929L18.0408 7L10.16 14.8734Z"
+                fill="white" />
+            </svg>
+            <span *ngIf="loader.btn.bvnloader"><i style="color:black" class="fa fa-spinner fa-spin"></i></span>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2">
+            <div class="ptr-5">
+              <div class="flex flex-col input-wrap relative mb-7 mt-[22px]">
+                <ng-select [items]="cardList" bindLabel="name" bindValue="name">
+                </ng-select>
+                <label htmlFor="full-name"
+                  class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
+                  Full Name
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex flex-col input-wrap relative mb-7 mt-[22px]">
+                <input type="text" id="full-name" class="brd peer h-[52px] mt-2  w-[94%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0 relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)] invalid:border-rose-700 invalid:text-rose-700
+                focus:invalid:border-rose-700 focus:invalid:ring-rose-700" placeholder="Jane Doe" />
+                <label htmlFor="full-name"
+                  class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
+                  Full Name
+                </label>
+              </div>
+            </div>
+
+          </div>
+
           <div class="border-dotted border-2 p-3 border-indigo-600 rounded">
             <label for="file">
-              <span class="font-bold text-[#64154A] flex justify-center">Choose file</span>
+              <span class="font-bold text-[#64154A] flex justify-center">
+                {{ govtPhoto ? govtPhoto.name : 'Choose file'}}
+              </span>
             </label>
-            <input
+            <input (change)="browseGovtFile($event)"
               class="upload block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50"
               id="file" type="file" accept="image/*" />
           </div>
@@ -389,10 +426,12 @@
 
     <!-- Verify BVN -->
     <div class="flex items-center mb-4">
-      <svg *ngIf="verifyList?.bvnVerified === 'NO'" width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg *ngIf="verifyList?.bvnVerified === 'NO'" width="25" height="25" viewBox="0 0 25 25" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
         <circle cx="12.5" cy="12.5" r="12" stroke="#737B8B"></circle>
       </svg>
-      <svg *ngIf="verifyList?.bvnVerified === 'YES'" width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg *ngIf="verifyList?.bvnVerified === 'YES'" width="25" height="25" viewBox="0 0 25 25" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
         <circle cx="12.5" cy="12.5" r="12.5" fill="#27AE60"></circle>
       </svg>
       <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-900">Bank verification number</label>
@@ -405,7 +444,8 @@
         xmlns="http://www.w3.org/2000/svg">
         <circle cx="12.5" cy="12.5" r="12" stroke="#737B8B"></circle>
       </svg>
-      <svg *ngIf="verifyList?.idCardVerified === 'YES'" width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg *ngIf="verifyList?.idCardVerified === 'YES'" width="25" height="25" viewBox="0 0 25 25" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
         <circle cx="12.5" cy="12.5" r="12.5" fill="#27AE60"></circle>
       </svg>
       <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-900">Upload a Goverment ID</label>

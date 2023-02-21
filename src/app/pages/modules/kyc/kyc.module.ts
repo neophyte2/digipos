@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { KycComponent } from './components/layout/kyc.component';
 import { NgOtpInputModule } from 'ng-otp-input';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 const routes: Routes = [
   {
@@ -18,6 +19,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    NgSelectModule,
     NgOtpInputModule,
     ReactiveFormsModule,
     RouterModule.forChild(routes)
