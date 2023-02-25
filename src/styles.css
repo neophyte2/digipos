@@ -56,3 +56,7 @@
 .bg-download-report {
     background: rgba(73, 170, 57, 1);
 }
+
+.bg-download-report:disabled {
+    background: gray !important;
+}

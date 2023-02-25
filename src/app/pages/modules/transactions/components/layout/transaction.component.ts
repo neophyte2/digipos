@@ -6,7 +6,9 @@ import { takeUntil } from "rxjs/operators";
 import { TransactionSharedService } from 'src/app/shared/services/transShared.service';
 import { tableCurrency } from 'src/app/shared/utils/utils';
 import { paymentMethods, responsesType } from 'src/app/shared/utils/data';
-
+import { TransactionService } from '../../services/transcation.service';
+import { GeneralService } from 'src/app/shared/services/general.service';
+import swal from 'sweetalert2';
 @Component({
   selector: 'dp-transaction',
   templateUrl: './transaction.component.html',
@@ -14,9 +16,14 @@ import { paymentMethods, responsesType } from 'src/app/shared/utils/data';
 })
 export class TransactionComponent implements OnInit, OnDestroy {
 
-  //dates
+  loader: any = {
+    btn: {
+      download: false,
+      pageLoader: false,
+    },
+  };
   query: any
-  filter : any[]= [];
+  filter: any[] = [];
   transactionList: any
   dateRangeForm!: FormGroup;
   method = paymentMethods
@@ -32,6 +39,8 @@ export class TransactionComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly fb: FormBuilder,
+    private genSrv: GeneralService,
+    private transSrvService: TransactionService,
     private transShrdService: TransactionSharedService
   ) {
     this.dateRangeForm = new FormGroup({
@@ -68,6 +77,48 @@ export class TransactionComponent implements OnInit, OnDestroy {
     }
     this.transShrdService.transactionList(payload).pipe(takeUntil(this.unsubcribe)).subscribe((trans: any) => {
       this.transactionList = trans.data;
+    })
+  }
+
+  download() {
+    this.loader.download = true
+    console.log(this.loader.download);
+    swal.fire({
+      icon: 'info',
+      title: 'Transaction Download',
+      html: 'Processing Datatable Download to Excel',
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      allowEnterKey: false,
+      didOpen: () => {
+        swal.showLoading(swal.getDenyButton());
+      }
+    })
+
+    let payload = {
+      trnReference: this.dateRangeForm.value.trnReference,
+      trnService: this.dateRangeForm.value.trnService,
+      trnResponseCode: this.dateRangeForm.value.trnResponseCode,
+      trnResponseMessage: '',
+      trnAmount: this.dateRangeForm.value.trnAmount,
+    }
+    console.log(payload);
+    this.transSrvService.transactionDownload(payload).pipe(takeUntil(this.unsubcribe)).subscribe((trans: any) => {
+      if (trans.responseCode === '00') {
+        swal.close()
+        this.genSrv.sweetAlertSuccess(trans.responseMessage);
+      } else {
+        let msg = trans.responseMessage
+    swal.close()
+    this.genSrv.sweetAlertError(msg);
+        this.loader.btn.download = false;
+      }
+    }, (err) => {
+      let msg = err
+    swal.close()
+    this.genSrv.sweetAlertError(msg);
+      this.loader.btn.download = false;
     })
   }
 

@@ -71,7 +71,7 @@
         </div>
         <div class="mr-3 mt-3" *ngIf="filter.includes('Reference')">
           <label for="amt" class="block text-sm text-gray-400 regularfont">Filter By Reference</label>
-          <input formControlName="trnAmount" decimalOnly style="padding-left: 10px;"
+          <input formControlName="trnReference" decimalOnly style="padding-left: 10px;"
             class="lg:w-[150px] h-[39px] text-gray-400 py-[15px] text-xs border border-gray-300 rounded focus:outline-0 focus:ring-0 brd">
         </div>
         <div class="mr-3 mt-3 w-[25%]" *ngIf="filter.includes('Payment Method')">
@@ -84,8 +84,8 @@
   </div>
   <div class="col-end-6 col-span-2 mt-10">
     <div>
-      <button class="block w-[150px] py-[15px] rounded  text-white bg-download-report text-sm mx-4 text-center ">
-        Download Report
+      <button  [disabled]="loader.btn.download" (click)="download()" class="block w-[150px] py-[15px] rounded  text-white bg-download-report text-sm mx-4 text-center ">
+        Download Report <span *ngIf="loader.btn.download === true"><i class="fa fa-spinner fa-spin"></i></span>
       </button>
     </div>
   </div>
