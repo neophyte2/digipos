@@ -31,29 +31,58 @@
 
 <!-- Filter -->
 <div class="grid grid-cols-3 gap-4">
-  <div class="col-start-1 col-end-3 mt-8">
+  <div class="col-start-1 col-end-4 mt-8">
     <form [formGroup]="dateRangeForm">
       <div class="md:flex my-3 hidden items-end flex-wrap ">
-        <div class="mr-3">
+        <div class="mr-3 w-[33%]">
           <label for="" class="block text-sm text-gray-400 regularfont">Filter By</label>
-          <select
-            class="w-[140px] text-xs py-[15px] text-gray-400 text-center border border-gray-300 rounded focus:outline-0 focus:ring-0 brd">
-            <option>Filter by Biller</option>
-          </select>
+          <ng-select [multiple]="true" [(ngModel)]="filter" [ngModelOptions]="{ standalone: true }"
+            [items]="filterList">
+            <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+              <div class="ng-value" *ngFor="let item of items | slice: 0:2">
+                <span class="ng-value-label">{{ item }}</span>
+                <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+              </div>
+              <div class="ng-value" *ngIf="items.length > 2">
+                <span class="ng-value-label">{{ items.length - 2 }} more...</span>
+              </div>
+            </ng-template>
+          </ng-select>
         </div>
         <div class="mr-3">
           <label for="from" class="block text-sm text-gray-400 regularfont">From</label>
           <input type="date" formControlName="start"
-            class="lg:w-[150px] text-gray-400 py-[15px] text-xs border border-gray-300 rounded  focus:outline-0 focus:ring-0 brd">
+            class="lg:w-[150px] h-[39px] text-gray-400 py-[15px] text-xs border border-gray-300 rounded  focus:outline-0 focus:ring-0 brd">
         </div>
         <div class="mr-3"><label for="from" class="block text-sm text-gray-400 regularfont">To</label>
           <input type="date" formControlName="end"
-            class="lg:w-[150px] text-gray-400 py-[15px] text-xs border border-gray-300 rounded focus:outline-0 focus:ring-0 brd">
+            class="lg:w-[150px] h-[39px] text-gray-400 py-[15px] text-xs border border-gray-300 rounded focus:outline-0 focus:ring-0 brd">
+        </div>
+        <br>
+        <div class="mr-3 mt-3 w-[20%]" *ngIf="filter.includes('Status')">
+          <label for="" class="block text-sm text-gray-400 regularfont">Filter By Staus</label>
+          <ng-select formControlName="trnResponseCode" [items]="responseList" bindLabel="name" bindValue="value">
+          </ng-select>
+        </div>
+        <div class="mr-3 mt-3 " *ngIf="filter.includes('Amount')">
+          <label for="amt" class="block text-sm text-gray-400 regularfont">Filter By Amount</label>
+          <input formControlName="trnAmount" decimalOnly style="padding-left: 10px;"
+            class="lg:w-[150px] h-[39px] text-gray-400 py-[15px] text-xs border border-gray-300 rounded focus:outline-0 focus:ring-0 brd">
+        </div>
+        <div class="mr-3 mt-3" *ngIf="filter.includes('Reference')">
+          <label for="amt" class="block text-sm text-gray-400 regularfont">Filter By Reference</label>
+          <input formControlName="trnAmount" decimalOnly style="padding-left: 10px;"
+            class="lg:w-[150px] h-[39px] text-gray-400 py-[15px] text-xs border border-gray-300 rounded focus:outline-0 focus:ring-0 brd">
+        </div>
+        <div class="mr-3 mt-3 w-[25%]" *ngIf="filter.includes('Payment Method')">
+          <label for="" class="block text-sm text-gray-400 regularfont">Filter By Payment Method</label>
+          <ng-select formControlName="trnService" [items]="method" bindLabel="name" bindValue="value">
+          </ng-select>
         </div>
       </div>
     </form>
   </div>
-  <div class="col-end-7 col-span-2 mt-10">
+  <div class="col-end-6 col-span-2 mt-10">
     <div>
       <button class="block w-[150px] py-[15px] rounded  text-white bg-download-report text-sm mx-4 text-center ">
         Download Report
@@ -94,18 +123,20 @@
           <div class="flex p-2 rounded hover:bg-gray-100">
             <div class="flex items-center h-5">
               <!-- success -->
-              <svg *ngIf="item?.trnResponseCode === '09' || item?.trnResponseCode === '25'"  width="11" height="11"
-                viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg *ngIf="item?.trnResponseCode === '00'" width="11" height="11" viewBox="0 0 11 11" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
                 <circle cx="5.5" cy="5.5" r="5.5" fill="#35B172" />
               </svg>
-              <!-- pending
-              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="5.5" cy="5.5" r="5.5" fill="#FF8A00" /> -->
-              <!-- </svg> -->
-              <!-- failed
-              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- pending -->
+              <svg *ngIf="item?.trnResponseCode === '09'" width="11" height="11" viewBox="0 0 11 11" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="5.5" cy="5.5" r="5.5" fill="#FF8A00" />
+              </svg>
+              <!-- failed -->
+              <svg *ngIf="item?.trnResponseCode === '25'" width="11" height="11" viewBox="0 0 11 11" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
                 <circle cx="5.5" cy="5.5" r="5.5" fill="#FF0000" />
-              </svg> -->
+              </svg>
 
             </div>
             <div class="ml-2 text-sm">
@@ -128,15 +159,18 @@
           {{item?.trnCreatedAt}}
         </td>
         <td class="px-6 py-4">
-          <span *ngIf="item?.trnResponseCode === '09' || item?.trnResponseCode === '25'" class="inline-block bg-[#DBFFED] px-3 py-1 text-sm font-semibold text-[#35B172] mr-2 mb-2">
+          <span *ngIf="item?.trnResponseCode === '00'"
+            class="inline-block bg-[#DBFFED] px-3 py-1 text-sm font-semibold text-[#35B172] mr-2 mb-2">
             Successful
           </span>
-          <!-- <span  class="inline-block bg-[#FFDBDA] px-3 py-1 text-sm font-semibold text-[#FF0000] mr-2 mb-2">
+          <span *ngIf="item?.trnResponseCode === '25'"
+            class="inline-block bg-[#FFDBDA] px-3 py-1 text-sm font-semibold text-[#FF0000] mr-2 mb-2">
             Failed
           </span>
-          <span  class="inline-block bg-[#FFEDD7] px-3 py-1 text-sm font-semibold text-[#FF8A00] mr-2 mb-2">
+          <span *ngIf="item?.trnResponseCode === '09'"
+            class="inline-block bg-[#FFEDD7] px-3 py-1 text-sm font-semibold text-[#FF8A00] mr-2 mb-2">
             Pending
-          </span> -->
+          </span>
         </td>
       </tr>
     </tbody>

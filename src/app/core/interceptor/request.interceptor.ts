@@ -4,7 +4,6 @@ import { Observable, throwError, of } from "rxjs";
 import { catchError } from "rxjs/operators";
 import { GeneralService } from 'src/app/shared/services/general.service';
 
-
 @Injectable()
 export class RequestInterceptor implements HttpInterceptor {
 
@@ -13,8 +12,7 @@ export class RequestInterceptor implements HttpInterceptor {
 
   constructor(
     private genSer: GeneralService,
-  ) {
-  }
+  ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let token, url: string
@@ -28,6 +26,7 @@ export class RequestInterceptor implements HttpInterceptor {
       req = req.clone({
         setHeaders: {
           Authorization: `${token}`,
+          // 'Access-Control-Allow-Origin': '*'
         },
       });
     }

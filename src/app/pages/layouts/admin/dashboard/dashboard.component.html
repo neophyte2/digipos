@@ -76,13 +76,13 @@
   <div class="col-end-7 col-span-2">
     <form [formGroup]="dateRangeForm">
       <div class="md:flex my-3 hidden items-end flex-wrap ">
-        <div class="mr-3">
+        <!-- <div class="mr-3">
           <label for="" class="block text-sm text-gray-400 regularfont">Filter By</label>
           <select
             class="w-[140px] text-xs py-[15px] text-gray-400 text-center border border-gray-300 rounded focus:outline-0 focus:ring-0 brd">
             <option>Filter by Biller</option>
           </select>
-        </div>
+        </div> -->
         <div class="mr-3">
           <label for="from" class="block text-sm text-gray-400 regularfont">From</label>
           <input type="date" formControlName="start"
@@ -104,7 +104,9 @@
     [datasets]="lineChartData" [labels]="lineChartLabels" [colors]="lineChartColors" [legend]="lineChartLegend"
     [chartType]="'bar'" [plugins]="lineChartPlugins">
   </canvas> -->
-  <canvas baseChart style="height: 500px !important; width: 80% !important" [options]="barChartOptions" [datasets]="barChartData" [labels]="barChartLabels" [colors]="barChartColors" [legend]="barChartLegend" [chartType]="'bar'" [plugins]="barChartPlugins">
+  <canvas baseChart style="height: 500px !important; width: 80% !important" [options]="barChartOptions"
+    [datasets]="barChartData" [labels]="barChartLabels" [colors]="barChartColors" [legend]="barChartLegend"
+    [chartType]="'bar'" [plugins]="barChartPlugins">
   </canvas>
 </div>
 <!-- Charts Section -->
@@ -141,18 +143,20 @@
           <div class="flex p-2 rounded hover:bg-gray-100">
             <div class="flex items-center h-5">
               <!-- success -->
-              <svg *ngIf="item?.trnResponseCode === '09' || item?.trnResponseCode === '25'"  width="11" height="11"
-                viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg *ngIf="item?.trnResponseCode === '00'" width="11" height="11" viewBox="0 0 11 11" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
                 <circle cx="5.5" cy="5.5" r="5.5" fill="#35B172" />
               </svg>
-              <!-- pending
-              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="5.5" cy="5.5" r="5.5" fill="#FF8A00" /> -->
-              <!-- </svg> -->
-              <!-- failed
-              <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- pending -->
+              <svg *ngIf="item?.trnResponseCode === '09'" width="11" height="11" viewBox="0 0 11 11" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="5.5" cy="5.5" r="5.5" fill="#FF8A00" />
+              </svg>
+              <!-- failed -->
+              <svg *ngIf="item?.trnResponseCode === '25'" width="11" height="11" viewBox="0 0 11 11" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
                 <circle cx="5.5" cy="5.5" r="5.5" fill="#FF0000" />
-              </svg> -->
+              </svg>
 
             </div>
             <div class="ml-2 text-sm">
@@ -175,15 +179,18 @@
           {{item?.trnCreatedAt}}
         </td>
         <td class="px-6 py-4">
-          <span *ngIf="item?.trnResponseCode === '09' || item?.trnResponseCode === '25'" class="inline-block bg-[#DBFFED] px-3 py-1 text-sm font-semibold text-[#35B172] mr-2 mb-2">
+          <span *ngIf="item?.trnResponseCode === '00'"
+            class="inline-block bg-[#DBFFED] px-3 py-1 text-sm font-semibold text-[#35B172] mr-2 mb-2">
             Successful
           </span>
-          <!-- <span  class="inline-block bg-[#FFDBDA] px-3 py-1 text-sm font-semibold text-[#FF0000] mr-2 mb-2">
+          <span *ngIf="item?.trnResponseCode === '25'"
+            class="inline-block bg-[#FFDBDA] px-3 py-1 text-sm font-semibold text-[#FF0000] mr-2 mb-2">
             Failed
           </span>
-          <span  class="inline-block bg-[#FFEDD7] px-3 py-1 text-sm font-semibold text-[#FF8A00] mr-2 mb-2">
+          <span *ngIf="item?.trnResponseCode === '09'"
+            class="inline-block bg-[#FFEDD7] px-3 py-1 text-sm font-semibold text-[#FF8A00] mr-2 mb-2">
             Pending
-          </span> -->
+          </span>
         </td>
       </tr>
     </tbody>

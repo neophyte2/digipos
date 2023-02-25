@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from "rxjs/operators";
 import { TransactionSharedService } from 'src/app/shared/services/transShared.service';
 import { tableCurrency } from 'src/app/shared/utils/utils';
+import { paymentMethods, responsesType } from 'src/app/shared/utils/data';
 
 @Component({
   selector: 'dp-transaction',
@@ -15,8 +16,17 @@ export class TransactionComponent implements OnInit, OnDestroy {
 
   //dates
   query: any
+  filter : any[]= [];
   transactionList: any
   dateRangeForm!: FormGroup;
+  method = paymentMethods
+  filterList = [
+    'Status',
+    'Amount',
+    'Reference',
+    'Payment Method',
+  ]
+  responseList = responsesType
   year = new Date().getFullYear()
   private unsubcribe = new Subject<void>();
 
@@ -27,6 +37,10 @@ export class TransactionComponent implements OnInit, OnDestroy {
     this.dateRangeForm = new FormGroup({
       start: new FormControl(`${this.year}-01-01`),
       end: new FormControl(`${this.year}-12-31`),
+      trnResponseCode: new FormControl(null),
+      trnService: new FormControl(null),
+      trnAmount: new FormControl(''),
+      trnReference: new FormControl(''),
     });
 
     this.dateRangeForm.valueChanges.subscribe((data) => {
@@ -34,8 +48,7 @@ export class TransactionComponent implements OnInit, OnDestroy {
         this.query = { startDate: moment(data?.start).format("YYYY-MM-DD"), endDate: moment(data?.end).format("YYYY-MM-DD") }
         this.allTransactionList();
       }
-    }
-    );
+    });
   }
 
   ngOnInit(): void {
@@ -45,11 +58,11 @@ export class TransactionComponent implements OnInit, OnDestroy {
 
   allTransactionList() {
     let payload = {
-      trnReference: "",
-      trnService: '',
-      trnResponseCode: '',
+      trnReference: this.dateRangeForm.value.trnReference,
+      trnService: this.dateRangeForm.value.trnService,
+      trnResponseCode: this.dateRangeForm.value.trnResponseCode,
       trnResponseMessage: '',
-      trnAmount: '',
+      trnAmount: this.dateRangeForm.value.trnAmount,
       startDate: this.dateRangeForm.value.start,
       endDate: this.dateRangeForm.value.end,
     }
