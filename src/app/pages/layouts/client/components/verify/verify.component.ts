@@ -42,7 +42,6 @@ export class VerifyComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private route: ActivatedRoute,
     private gustSrv: ClientService,
     private genSrv: GeneralService,
   ) {
@@ -169,7 +168,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
           this.verifyResetForm.reset();
           this.otp = ''
         }, 1000);
-     
+
       } else {
         let msg = data.responseMessage
         this.genSrv.sweetAlertError(msg);
@@ -183,8 +182,8 @@ export class VerifyComponent implements OnInit, OnDestroy {
   }
 
   /**
-* password match validations
-*/
+    * password match validations
+    */
   get matchPassword() {
     const vaildPasswordInput = this.vrf['customerPassword'].value !== this.vrf['customerPasswordConfirmation'].value;
     return vaildPasswordInput && this.vrf['customerPassword'].value && this.vrf['customerPasswordConfirmation'].value;

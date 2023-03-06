@@ -82,7 +82,6 @@ export class TransactionComponent implements OnInit, OnDestroy {
 
   download() {
     this.loader.download = true
-    console.log(this.loader.download);
     swal.fire({
       icon: 'info',
       title: 'Transaction Download',
@@ -103,21 +102,20 @@ export class TransactionComponent implements OnInit, OnDestroy {
       trnResponseMessage: '',
       trnAmount: this.dateRangeForm.value.trnAmount,
     }
-    console.log(payload);
     this.transSrvService.transactionDownload(payload).pipe(takeUntil(this.unsubcribe)).subscribe((trans: any) => {
       if (trans.responseCode === '00') {
         swal.close()
         this.genSrv.sweetAlertSuccess(trans.responseMessage);
       } else {
         let msg = trans.responseMessage
-    swal.close()
-    this.genSrv.sweetAlertError(msg);
+        swal.close()
+        this.genSrv.sweetAlertError(msg);
         this.loader.btn.download = false;
       }
     }, (err) => {
       let msg = err
-    swal.close()
-    this.genSrv.sweetAlertError(msg);
+      swal.close()
+      this.genSrv.sweetAlertError(msg);
       this.loader.btn.download = false;
     })
   }

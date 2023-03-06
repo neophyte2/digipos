@@ -20,6 +20,10 @@ export class KycService {
         return this.http.post(`${this.api}/kyc/create-address`, param);
     }
 
+    verifyIdCard(param: any) {
+        return this.http.post(`${this.api}/kyc/create-id-card`, param);
+    }
+
     initiateBvn(param: any) {
         return this.http.post(`${this.api}/kyc/initial-bvn-verification`, param);
     }

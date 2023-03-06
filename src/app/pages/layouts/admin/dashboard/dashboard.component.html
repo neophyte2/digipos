@@ -32,14 +32,9 @@
     <div class="flex sm:block flex-col justify-center items-center">
       <p class="text-[#677189]">Balance</p>
       <div class="flex items-center my-4">
-        <svg width="26" height="20" viewBox="0 0 26 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M21.5716 24.5H19.343L6.143 2.84375V24.5H4.42871V0.5H6.65728L19.8573 22.1562V0.5H21.5716V24.5Z"
-            fill="black" stroke="black"></path>
-          <path d="M1 9.5H25V11H1V9.5ZM1 14H25V15.5H1V14Z" fill="black" stroke="black">
-          </path>
-        </svg>
+     
         <span style="word-break: break-all;" class="text-[31px] text-[#1B2A4E] sm:mr-9 mr-4">
-          <b class="font-extrabold">1,000,000.00</b>
+          <b class="font-extrabold">{{formatAmt(cardDataList?.transactionVolume || 0)}}</b>
         </span>
       </div>
     </div>
@@ -51,7 +46,7 @@
       <p class="text-[#677189]">Total Transaction</p>
       <div class="flex items-center my-4">
         <span class="text-[31px] text-[#1B2A4E] sm:mr-9 mr-4">
-          <b class="font-extrabold">{{translength || 0}}</b>
+          <b class="font-extrabold">{{cardDataList?.transactionCount || 0}}</b>
         </span>
       </div>
     </div>

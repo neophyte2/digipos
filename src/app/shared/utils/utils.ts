@@ -95,7 +95,7 @@ export const getPageCountUtil = (data: { pageNumber: number; pageSize: number; d
 };
 
 
-export const getBase64Image =(imgUrl: any): Promise<string>  =>{
+export const getBase64ImageUrl = (imgUrl: any): Promise<string> => {
     return new Promise<string>(resolve => {
         var img = new Image();
         img.src = imgUrl;

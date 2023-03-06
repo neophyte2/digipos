@@ -20,8 +20,10 @@ export class KycComponent implements OnInit {
   accountType: any
   businessName: any
   bvnForm!: FormGroup;
+  idCardForm!: FormGroup;
   visible: boolean = false;
   ClickLinkAccount: boolean = true;
+  base64Contents: string | undefined;
 
   //Verification
   verifyCac: boolean = false;
@@ -74,11 +76,15 @@ export class KycComponent implements OnInit {
     this.bvnForm = new FormGroup({
       bvn: new FormControl('', Validators.maxLength(11))
     });
+    this.idCardForm = new FormGroup({
+      idCardType: new FormControl('', Validators.required),
+      idCardNumber: new FormControl('', Validators.required),
+      idCardImageUrl: new FormControl('', Validators.required),
+    });
   }
 
   getVerification() {
     this.kycSrv.verificatin().pipe(takeUntil(this.unsubcribe)).subscribe(data => {
-      console.log(data);
       this.verifyList = data;
       this.bvnForm.controls['bvn'].patchValue(this.verifyList.bvn);
     })
@@ -90,7 +96,7 @@ export class KycComponent implements OnInit {
     })
   }
 
-  //verify Address
+  //verify Address 
   onFocusLost(event: any) {
     let value = { address: event.target.value }
     if (value.address.trim() != '') {
@@ -119,11 +125,9 @@ export class KycComponent implements OnInit {
   //verify Bvn
   onFocusLostBvn(event: any) {
     let value = { bvn: event.target.value }
-    console.log(value.bvn);
     if (value.bvn.trim() != '') {
       this.loader.btn.bvnloader = true;
       this.kycSrv.initiateBvn(value).subscribe((data: any) => {
-        console.log(data);
         if (data.responseCode === '00') {
           $(`#bvn`).click();
           this.genSrv.sweetAlertSuccess("An OTP was sent to your mail for Verification");
@@ -148,6 +152,14 @@ export class KycComponent implements OnInit {
     }
   }
 
+  //form verification 
+  //id card verify
+  onComplete() {
+    if (this.idCardForm.valid && this.base64Contents) {
+      this.completeIdCard()
+    }
+  }
+
   // complete verification
   completeBvnOtp() {
     let otp = { otp: this.otp }
@@ -168,15 +180,46 @@ export class KycComponent implements OnInit {
     })
   }
 
+  completeIdCard() {
+    let data = {
+      idCardType: this.idCardForm.controls['idCardType'].value,
+      idCardNumber: this.idCardForm.controls['idCardNumber'].value,
+      idCardImageUrl: this.base64Contents,
+    }
+    this.kycSrv.verifyIdCard(data).subscribe((data: any) => {
+      if (data.responseCode === '00') {
+        this.genSrv.sweetAlertSuccess(data.responseMessage);
+        this.loader.btn.bvnloader = false;
+        this.getVerification()
+      } else {
+        let msg = data.responseMessage
+        this.genSrv.sweetAlertError(msg);
+        this.loader.btn.bvnloader = false;
+      }
+    }, (err) => {
+      let msg = err
+      this.genSrv.sweetAlertError(msg);
+      this.loader.btn.bvnloader = false;
+    })
+  }
+
   //Upload
-  browseGovtFile(event:any) {
-    console.log(event);
-    
+  browseGovtFile(event: any) {
     const size = 5 * 1024 * 1024;
     if (event.target.files[0].size > size) {
       this.genSrv.sweetAlertSuccess('File is Larger Than 5MB')
     } else {
       this.govtPhoto = event.target.files[0];
+      const reader: FileReader = new FileReader();
+      reader.onload = (e: any) => {
+        const contents: string = e.target.result;
+        this.base64Contents = contents.replace(/^data:image\/(png|jpg);base64,/, "");
+        if (this.base64Contents) {
+          this.idCardForm.controls['idCardImageUrl'].patchValue(this.base64Contents);
+          this.onComplete()
+        }
+      };
+      reader.readAsDataURL(this.govtPhoto);
     }
   }
 

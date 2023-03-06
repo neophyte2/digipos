@@ -77,7 +77,8 @@
       </form>
       <!-- BVN VERIFICATION -->
 
-      <!-- BVN VERIFICATION -->
+      <!-- Id card VERIFICATION -->
+    <form [formGroup]="idCardForm">
       <div class="mt-5">
         <div class="border border-600 p-5 rounded">
           <div class="flex mb-3">
@@ -86,7 +87,7 @@
                 d="M21 2.5H20V1.5C20 0.9 19.6 0.5 19 0.5C18.4 0.5 18 0.9 18 1.5V2.5H17C16.4 2.5 16 2.9 16 3.5C16 4.1 16.4 4.5 17 4.5H18V5.5C18 6.1 18.4 6.5 19 6.5C19.6 6.5 20 6.1 20 5.5V4.5H21C21.6 4.5 22 4.1 22 3.5C22 2.9 21.6 2.5 21 2.5ZM10 11.5C8.9 11.5 8 12.4 8 13.5C8 14.6 8.9 15.5 10 15.5C11.1 15.5 12 14.6 12 13.5C12 12.4 11.1 11.5 10 11.5ZM17 7.5H15.7L15.4 6.6C15.3 6.3 15.2 6.1 15 5.8C15 5.8 15 5.8 15 5.7L14.9 5.6C14.3 4.9 13.5 4.5 12.6 4.5H7.4C6.9 4.5 6.3 4.7 5.9 5C5.8 5 5.8 5.1 5.7 5.1C5.2 5.5 4.8 6 4.6 6.6L4.3 7.5H3C1.3 7.5 0 8.8 0 10.5V18.5C0 20.2 1.3 21.5 3 21.5H17C18.7 21.5 20 20.2 20 18.5V10.5C20 8.8 18.7 7.5 17 7.5ZM10 17.5C7.8 17.5 6 15.7 6 13.5C6 11.3 7.8 9.5 10 9.5C12.2 9.5 14 11.3 14 13.5C14 15.7 12.2 17.5 10 17.5Z"
                 fill="#8D005F" />
             </svg>
-            <p class="pl-8 font-bold">Upload a Goverment ID</p>
+            <p class="pl-8 font-bold">Upload a Goverment ID</p><small class="ml-5 text-red-700"> Note: All fields are Compulsory</small>
           </div>
 
           <div class="order-last float-right">
@@ -96,28 +97,28 @@
               <path d="M10.16 14.8734L7.05673 11.7702L6 12.8195L10.16 16.9794L19.0901 8.04929L18.0408 7L10.16 14.8734Z"
                 fill="white" />
             </svg>
-            <span *ngIf="loader.btn.bvnloader"><i style="color:black" class="fa fa-spinner fa-spin"></i></span>
+            <span *ngIf="loader.btn.gvtIDloader"><i style="color:black" class="fa fa-spinner fa-spin"></i></span>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2">
             <div class="ptr-5">
               <div class="flex flex-col input-wrap relative mb-7 mt-[22px]">
-                <ng-select [items]="cardList" bindLabel="name" bindValue="name">
+                <ng-select formControlName="idCardType" (change)="onComplete()" placeholder="Identity Type" [items]="cardList" bindLabel="name" bindValue="name">
                 </ng-select>
                 <label htmlFor="full-name"
                   class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
-                  Full Name
+                  Identity Type
                 </label>
               </div>
             </div>
 
             <div>
               <div class="flex flex-col input-wrap relative mb-7 mt-[22px]">
-                <input type="text" id="full-name" class="brd peer h-[52px] mt-2  w-[94%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0 relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)] invalid:border-rose-700 invalid:text-rose-700
+                <input (focusout)="onComplete()" formControlName="idCardNumber" type="text" id="full-name" class="brd peer h-[52px] mt-2  w-[94%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0 relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)] invalid:border-rose-700 invalid:text-rose-700
                 focus:invalid:border-rose-700 focus:invalid:ring-rose-700" placeholder="Jane Doe" />
                 <label htmlFor="full-name"
                   class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
-                  Full Name
+                  Identity Number
                 </label>
               </div>
             </div>
@@ -139,7 +140,8 @@
           </div>
         </div>
       </div>
-      <!-- BVN VERIFICATION -->
+    </form>
+      <!-- id card  VERIFICATION -->
 
       <!-- Upload Picture -->
       <!-- <div class="mt-5" *ngIf="accountType === 'BUSINESS'">

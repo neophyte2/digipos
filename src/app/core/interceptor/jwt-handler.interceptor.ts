@@ -24,7 +24,6 @@ export class JwtExpiryInterceptor implements HttpInterceptor {
         return event;
       }),
       catchError((error) => {
-        // console.error(error);
         return throwError(error);
       })
     );
