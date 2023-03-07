@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { GeneralService } from 'src/app/shared/services/general.service';
 
 @Component({
   selector: 'dp-aside',
@@ -8,13 +9,17 @@ import { Router } from '@angular/router';
 })
 export class AsideComponent implements OnInit {
 
+  accountType: any
 
   constructor(
     public router: Router,
+    public genSrv : GeneralService
   ) {
   }
 
   ngOnInit(): void {
+    let acctType: any = this.genSrv.userDetails;
+    this.accountType = acctType.customerAccountType
   }
 
 }

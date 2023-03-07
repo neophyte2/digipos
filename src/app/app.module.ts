@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { JwtExpiryInterceptor } from './core/interceptor/jwt-handler.interceptor';
 import { RequestInterceptor } from './core/interceptor/request.interceptor';
 import { SharedModule } from './shared/shared.module';
 
@@ -26,6 +27,11 @@ import { SharedModule } from './shared/shared.module';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: RequestInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtExpiryInterceptor,
       multi: true,
     },
   ],

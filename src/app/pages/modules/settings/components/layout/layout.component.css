@@ -1,0 +1,5 @@
+.active-tab {
+    --tw-border-opacity: 1;
+    border-color: #64154A !important;
+    color: #64154A;
+}

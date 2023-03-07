@@ -1,0 +1,199 @@
+<h1 class="font-medium text-[20px] text-[#1B212D]">Account Information</h1>
+
+<div class="mt-1 text-[#677189] text-sm font-medium">
+  <p>
+    Update your account information
+  </p>
+</div>
+
+<div>
+  <h1 class="font-medium text-[20px] text-[#1B212D] mt-16">
+    Personal Information
+  </h1>
+
+  <form [formGroup]="profileForm">
+    <div class=" grid grid-cols-1 gap-4 mt-6 md:grid-cols-2 sm:grid-cols-3">
+      <div>
+        <div class="mt-5">
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <img src="./../../../../../../assets/svgs/Avatar.svg" />
+            </div>
+            <input style="padding-left: 60px;" type="text" id="email-address-icon" id="first"
+              formControlName="firstName"
+              class="p-5 bg-gray-50 border border-gray-300 cursor-not-allowed text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 placeholder-black" />
+            <label htmlFor="first"
+              class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
+              First Name
+            </label>
+            <div
+              class="text-white absolute right-2.5 bottom-2.5 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">
+              <img src="./../../../../../../assets/svgs/lock-slash.svg" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="mt-5">
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <img src="./../../../../../../assets/svgs/Avatar.svg" />
+            </div>
+            <input style="padding-left: 60px;" type="text" id="email-address-icon" id="last" formControlName="lastName"
+              class="p-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm cursor-not-allowed rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 placeholder-black" />
+            <label htmlFor="last"
+              class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
+              Last Name
+            </label>
+            <div
+              class="text-white absolute right-2.5 bottom-2.5 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">
+              <img src="./../../../../../../assets/svgs/lock-slash.svg" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="mt-10">
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+
+            </div>
+            <input style="padding-left: 60px;" type="text" id="email-address-icon" id="number" formControlName="phone"
+              class="p-5 bg-gray-50 border border-gray-300 cursor-not-allowed text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 placeholder-black" />
+            <label htmlFor="number"
+              class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
+              Phone Number
+            </label>
+            <div
+              class="text-white absolute right-2.5 bottom-2.5 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">
+              <img src="./../../../../../../assets/svgs/lock-slash.svg" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="mt-10">
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <img src="./../../../../../../assets/svgs/email.svg" />
+            </div>
+            <input style="padding-left: 60px;" type="text" id="email-address-icon" id="email" formControlName="email"
+              class=" brd input-control p-5 bg-gray-50 cursor-not-allowed border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 placeholder-black" />
+            <label htmlFor="email"
+              class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
+              Email Address
+            </label>
+            <div
+              class="text-white absolute right-2.5 bottom-2.5 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">
+              <img src="./../../../../../../assets/svgs/lock-slash.svg" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-span-2">
+        <h1 class="font-medium text-[20px] text-[#1B212D] mt-4">
+          Change Password
+        </h1>
+      </div>
+      <div>
+        <div class="mt-10">
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <img src="./../../../../../../assets/svgs/Lock.svg" />
+            </div>
+            <input [type]="hideOPassword ? 'password' : 'text'" style="padding-left: 60px;" type="text" id="opass"
+              placeholder="*******" formControlName="customerOldPassword"
+              class="p-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 placeholder-black" />
+            <label htmlFor="opass"
+              class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
+              Current Password
+            </label>
+            <div (click)="hideOPassword = !hideOPassword"
+              class="text-white absolute right-2.5 bottom-2.5 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">
+              <i *ngIf="hideOPassword" style="color: #5D0440; font-size:20px;" class="fa fa-eye" aria-hidden="true"></i>
+              <i *ngIf="!hideOPassword" style="color: #5D0440; font-size:20px;" class="fa fa-eye-slash"
+                aria-hidden="true"></i>
+            </div>
+          </div>
+          <div class="mt-2"
+            *ngIf="pf['customerOldPassword'].invalid && (pf['customerOldPassword'].dirty || pf['customerOldPassword'].touched) ">
+            <span class="text-rose-700" style="font-size: 13px;" *ngIf="pf['customerOldPassword'].errors?.['required']">
+              Current Password is required.
+            </span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="mt-10">
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <img src="./../../../../../../assets/svgs/Lock.svg" />
+            </div>
+            <input [type]="hidePassword ? 'password' : 'text'" style="padding-left: 60px;" type="text" id="pass"
+              formControlName="customerPassword" placeholder="*******"
+              class="p-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 placeholder-black" />
+            <label htmlFor="pass"
+              class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
+              New Password
+            </label>
+            <div (click)="hidePassword = !hidePassword"
+              class="text-white absolute right-2.5 bottom-2.5 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">
+              <i *ngIf="hidePassword" style="color: #5D0440; font-size:20px;" class="fa fa-eye" aria-hidden="true"></i>
+              <i *ngIf="!hidePassword" style="color: #5D0440; font-size:20px;" class="fa fa-eye-slash"
+                aria-hidden="true"></i>
+            </div>
+          </div>
+          <div class="mt-2"
+            *ngIf="pf['customerPassword'].invalid && (pf['customerPassword'].dirty || pf['customerPassword'].touched) ">
+            <span class="text-rose-700" style="font-size: 13px;" *ngIf="pf['customerPassword'].errors?.['required']">
+              New Password is required.
+            </span>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="mt-10">
+          <div class="relative">
+            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+              <img src="./../../../../../../assets/svgs/Lock.svg" />
+            </div>
+            <input [type]="hideCPassword ? 'password' : 'text'" style="padding-left: 60px;" type="text" id="cpass"
+              placeholder="*******" formControlName="customerPasswordConfirmation"
+              class=" brd input-control p-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 placeholder-black" />
+            <label htmlFor="cpass"
+              class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
+              Confirm New Password
+            </label>
+            <div (click)="hideCPassword = !hideCPassword"
+              class="text-white absolute right-2.5 bottom-2.5 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2">
+              <i *ngIf="hideCPassword" style="color: #5D0440; font-size:20px;" class="fa fa-eye" aria-hidden="true"></i>
+              <i *ngIf="!hideCPassword" style="color: #5D0440; font-size:20px;" class="fa fa-eye-slash"
+                aria-hidden="true"></i>
+            </div>
+          </div>
+          <span id="matchPassworError" class="text-rose-700 mt-2" *ngIf="matchPassword">
+            Password does not match
+        </span>
+          <div class="mt-2"
+            *ngIf="pf['customerPasswordConfirmation'].invalid && (pf['customerPasswordConfirmation'].dirty || pf['customerPasswordConfirmation'].touched) ">
+            <span class="text-rose-700" style="font-size: 13px;"
+              *ngIf="pf['customerPasswordConfirmation'].errors?.['required']">
+              Confirm New Password is required.
+            </span>
+          </div>
+        </div>
+      </div>
+      <div>
+
+      </div>
+      <div>
+        <div class="w-[190px] mx-auto mt-10">
+          <button (click)="changePassword()"  [disabled]="(profileForm.invalid || disableBtn) || loader.btn.pass"
+            class=" bil-btn-gradient text-base font-normal grad3 w-full h-[52px] first-letter text-[#F0F0F0] rounded-[5px]">
+            Update <span *ngIf="loader.btn.pass"><i class="fa fa-spinner fa-spin"></i></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
