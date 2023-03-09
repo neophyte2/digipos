@@ -1,0 +1,226 @@
+<!-- Filter -->
+<div class="grid grid-cols-3 gap-4">
+  <div class="col-start-1 col-end-4 mt-8">
+    <!-- <form [formGroup]="dateRangeForm">
+      <div class="md:flex my-3 hidden items-end flex-wrap ">
+        <div class="mr-3 w-[33%]">
+          <label for="" class="block text-sm text-gray-400 regularfont">Filter By</label>
+          <ng-select [multiple]="true" [(ngModel)]="filter" [ngModelOptions]="{ standalone: true }"
+            [items]="filterList">
+            <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+              <div class="ng-value" *ngFor="let item of items | slice: 0:2">
+                <span class="ng-value-label">{{ item }}</span>
+                <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+              </div>
+              <div class="ng-value" *ngIf="items.length > 2">
+                <span class="ng-value-label">{{ items.length - 2 }} more...</span>
+              </div>
+            </ng-template>
+          </ng-select>
+        </div>
+        <div class="mr-3">
+          <label for="from" class="block text-sm text-gray-400 regularfont">From</label>
+          <input type="date" formControlName="start"
+            class="lg:w-[150px] h-[39px] text-gray-400 py-[15px] text-xs border border-gray-300 rounded  focus:outline-0 focus:ring-0 brd">
+        </div>
+        <div class="mr-3"><label for="from" class="block text-sm text-gray-400 regularfont">To</label>
+          <input type="date" formControlName="end"
+            class="lg:w-[150px] h-[39px] text-gray-400 py-[15px] text-xs border border-gray-300 rounded focus:outline-0 focus:ring-0 brd">
+        </div>
+        <br>
+        <div class="mr-3 mt-3 w-[20%]" *ngIf="filter.includes('Status')">
+          <label for="" class="block text-sm text-gray-400 regularfont">Filter By Staus</label>
+          <ng-select formControlName="trnResponseCode" [items]="responseList" bindLabel="name" bindValue="value">
+          </ng-select>
+        </div>
+        <div class="mr-3 mt-3 " *ngIf="filter.includes('Amount')">
+          <label for="amt" class="block text-sm text-gray-400 regularfont">Filter By Amount</label>
+          <input formControlName="trnAmount" decimalOnly style="padding-left: 10px;"
+            class="lg:w-[150px] h-[39px] text-gray-400 py-[15px] text-xs border border-gray-300 rounded focus:outline-0 focus:ring-0 brd">
+        </div>
+        <div class="mr-3 mt-3" *ngIf="filter.includes('Reference')">
+          <label for="amt" class="block text-sm text-gray-400 regularfont">Filter By Reference</label>
+          <input formControlName="trnReference" decimalOnly style="padding-left: 10px;"
+            class="lg:w-[150px] h-[39px] text-gray-400 py-[15px] text-xs border border-gray-300 rounded focus:outline-0 focus:ring-0 brd">
+        </div>
+        <div class="mr-3 mt-3 w-[25%]" *ngIf="filter.includes('Payment Method')">
+          <label for="" class="block text-sm text-gray-400 regularfont">Filter By Payment Method</label>
+          <ng-select formControlName="trnService" [items]="method" bindLabel="name" bindValue="value">
+          </ng-select>
+        </div>
+      </div>
+    </form> -->
+  </div>
+  <div class="col-end-6 col-span-2 mt-10">
+    <div class="grid grid-cols-2 gap-4">
+      <div>
+        <button (click)="goToManageRole()"
+          class="block w-[150px] py-[15px] rounded text-white bg-download-report text-sm mx-4 text-center ">
+          Manage Role(s)
+        </button>
+      </div>
+      <div>
+        <button (click)="toggleModal()"
+          class="block w-[150px] py-[15px] rounded text-white bg-[#64154A] text-sm mx-4 text-center ">
+          Invite Team Member
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Filter -->
+
+<!-- TABLE -->
+<div class="relative overflow-x-auto mt-10 mb-10">
+  <table class="w-full text-sm text-left text-gray-500">
+    <thead class="text-xs text-gray-400 uppercase bg-gray-50">
+      <tr>
+        <th scope="col" class="px-6 py-3">
+          EMAIL
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Role
+        </th>
+        <th scope="col" class="px-6 py-3">
+          STATUS
+        </th>
+        <th scope="col" class="px-6 py-3">
+         
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="bg-white border-b  hover:bg-gray-100 " *ngFor="let item of inviteList">
+        <td class="px-6 py-4">
+          <div class="flex p-2 rounded hover:bg-gray-100">
+            <div class="flex items-center h-5">
+              <!-- success -->
+              <svg *ngIf="item?.inviteStatus === 'ACTIVE'" width="11" height="11" viewBox="0 0 11 11" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="5.5" cy="5.5" r="5.5" fill="#35B172" />
+              </svg>
+              <!-- pending -->
+              <svg *ngIf="item?.inviteStatus === 'PENDING'" width="11" height="11" viewBox="0 0 11 11" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="5.5" cy="5.5" r="5.5" fill="#FF8A00" />
+              </svg>
+              <!-- failed -->
+              <svg *ngIf="item?.inviteStatus === 'INACTIVE'" width="11" height="11" viewBox="0 0 11 11" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="5.5" cy="5.5" r="5.5" fill="#FF0000" />
+              </svg>
+            </div>
+            <div class="ml-2 text-sm">
+              {{item?.inviteCustomerEmail}}
+            </div>
+          </div>
+        </td>
+        <td class="px-6 py-4">
+          <span (click)="viewRole(item?.inviteCustomerRole)" class="inline-block bg-gray-200 px-3 py-1 text-sm font-semibold cursor-pointer text-gray-700 mr-2 mb-2">
+            {{getRoleById(item?.inviteCustomerRole)}}
+          </span>
+        </td>
+        <td class="px-6 py-4">
+          <span *ngIf="item?.inviteStatus === 'ACTIVE'"
+            class="px-3 py-1 text-sm font-semibold text-[#35B172] mr-2 mb-2">
+            {{item?.inviteStatus}}
+          </span>
+          <span *ngIf="item?.inviteStatus === 'INACTIVE'"
+            class="px-3 py-1 text-sm font-semibold text-[#FF0000] mr-2 mb-2">
+            {{item?.inviteStatus}}
+          </span>
+          <span *ngIf="item?.inviteStatus === 'PENDING'"
+            class=" px-3 py-1 text-sm font-semibold text-[#FF8A00] mr-2 mb-2">
+            {{item?.inviteStatus}}
+          </span>
+        </td>
+        <td class="px-6 py-4">
+          <div class="flex p-2 rounded hover:bg-gray-100">
+            <div class="flex items-center h-5">
+            <span class="px-3 py-1 text-sm font-semibold text-[#64154A] mt-2 mr-2">
+              Change Role
+            </span>
+            </div>
+            <div class="ml-2 text-sm">
+              <span 
+                class="inline-block bg-[#FFDBDA] px-3 py-1 text-sm font-semibold text-[#FF0000] mr-2 mb-2">
+                Remove
+              </span>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- TABLE -->
+
+<!-- Invite -->
+<div *ngIf="showModal"
+  class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+  <div class="relative w-auto my-6 mx-auto max-w-3xl">
+    <!--content-->
+    <div
+      class="border-0 rounded-lg shadow-lg relative flex flex-col w-[500px] bg-white outline-none focus:outline-none">
+      <!--header-->
+      <div class="flex items-center justify-center p-5 border-b border-solid border-slate-200 rounded-t text-center">
+        <h3 class="text-3xl font-semibold text-[#64154A]">
+          Invite Team Member
+        </h3>
+      </div>
+      <!--body-->
+      <div class="relative p-6 flex-auto">
+        <form [formGroup]="inviteForm">
+          <div class="mt-10">
+            <div class="flex flex-col input-wrap relative lg:mb-14 md:mb-14 sm:mb-12 mb-12">
+              <input type="text" id="email-address" formControlName="customerEmail" class="brd peer h-[52px] mt-2  w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0 relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)] invalid:border-rose-700 invalid:text-rose-700
+                  focus:invalid:border-rose-700 focus:invalid:ring-rose-700" placeholder="example@digipos.com" />
+              <label htmlFor="email-address"
+                class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
+                Email Address
+              </label>
+              <div class="mt-2"
+                *ngIf="(lf['customerEmail'].dirty || lf['customerEmail'].touched) && lf['customerEmail'].invalid">
+                <span class="text-rose-700" style="font-size: 13px;" *ngIf="lf['customerEmail'].errors?.['required']">
+                  Email Address is required.
+                </span>
+                <span class="text-rose-700" *ngIf="lf['customerEmail'].errors?.['pattern']">
+                  Email Address is invalid.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col input-wrap relative mb-7">
+            <ng-select placeholder="Select Role" formControlName="customerRole" [items]="roleList" bindLabel="roleName"
+              bindValue="roleId">
+            </ng-select>
+            <label htmlFor="pwd"
+              class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
+              Role
+            </label>
+            <div class="mt-2"
+              *ngIf="lf['customerRole'].invalid && (lf['customerRole'].dirty || lf['customerRole'].touched) ">
+              <span class="text-rose-700" style="font-size: 13px;" *ngIf="lf['customerRole'].errors?.['required']">
+                Role is required.
+              </span>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!--footer-->
+      <div class="flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b">
+        <button (click)="toggleModal()"
+          class="text-red-500 bg-transparent mr-1 mb-1  px-6 py-2 hover:bg-[#64154A] font-semibold hover:text-white border border-[#64154A] hover:border-transparent rounded">
+          Cancel
+        </button>
+        <button (click)="invite()" [disabled]="inviteForm.invalid  || loader.btn.invite"
+          class="bil-btn-gradient bg-[#64154A] text-base font-normal grad3 w-[120px] h-[45px] first-letter text-[#F0F0F0] rounded-[5px] mr-1 mb-1  px-6 py-2 "
+          type="button">
+          Invite <span *ngIf="loader.btn.invite"><i class="fa fa-spinner fa-spin"></i></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>

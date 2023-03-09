@@ -1,0 +1,47 @@
+<div class="">
+  <p class="text-[#64154A] cursor-pointer" (click)="goBack()">Back</p>
+  <h1 class="font-medium text-[20px] text-[#1B212D] text-center mt-16">
+    {{currentRole}}
+  </h1>
+</div>
+
+<div class="grid place-items-center mt-6">
+  <div class="inline-grid grid-cols-2 gap-4">
+    <div class="box-content min-h-[600px] w-[296px] p-4 border-2 border-[#64154A] border-solid rounded-lg m4">
+      <h1 class="font-medium text-[20px] text-[#1B212D] text-center mt-2">
+        Default roles
+      </h1>
+      <hr>
+      <div class="grid place-items-center mt-4">
+        <div class="w-48 text-sm font-medium text-gray-900 bg-white" *ngFor="let item of roleList">
+          <a [ngClass]="{'active-tab': item?.roleName === currentRole}" (click)="onClick(item)"
+            class="block w-full px-4 py-2 text-[#64154A] text-center cursor-pointer mb-6">
+            {{item?.roleName}}
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="box-content min-h-[600px] w-[402px] p-4 border-2 border-[#64154A] border-solid rounded-lg m4">
+      <h1 class="font-medium text-[18px] text-[#64154A] text-center mt-2 ">
+        What you can do
+      </h1>
+      <hr>
+      <div class="grid place-items-center mt-4">
+        <div class="w-72 text-sm font-medium text-gray-900 bg-white" *ngFor="let item of permissionList">
+          <div class="flex p-2 rounded hover:bg-gray-100">
+            <div class="flex items-center h-5">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="6" cy="6" r="6" fill="#9A0078" fill-opacity="0.15" />
+              </svg>
+            </div>
+            <div class="ml-2 text-sm">
+              {{item?.privilegeType}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -7,18 +7,32 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { LayoutComponent } from './components/layout/layout.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { TeamComponent } from './components/teams/teams.component';
+import { UsersComponent } from './components/teams/users/users.component';
+import { InvitesComponent } from './components/teams/invites/invites.component';
+import { ManageRoleComponent } from './components/teams/manage-role/manage-role.component';
+import { ViewRoleComponent } from './components/teams/view-role/view-role.component';
 
 const routes: Routes = [
   {
     path: '', component: LayoutComponent,
+  },
+  {
+    path: 'manage-roles', component: ManageRoleComponent,
+  },
+  {
+    path: 'view-role/:id', component: ViewRoleComponent,
   }
 ];
 
 @NgModule({
   declarations: [
+    TeamComponent,
+    UsersComponent,
     LayoutComponent,
+    InvitesComponent,
     ProfileComponent,
-    TeamComponent
+    ViewRoleComponent,
+    ManageRoleComponent,
   ],
   imports: [
     CommonModule,

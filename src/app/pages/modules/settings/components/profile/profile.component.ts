@@ -76,7 +76,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       customerPasswordConfirmation: this.pf['customerPasswordConfirmation'].value,
     }
     this.loader.btn.pass = true;
-    this.setSrv.chnagePassword(payload).pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
+    this.setSrv.changePassword(payload).pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
       if (data.responseCode === '00') {
         this.genSrv.sweetAlertSuccess(data.responseMessage);
         this.loader.btn.pass = false;

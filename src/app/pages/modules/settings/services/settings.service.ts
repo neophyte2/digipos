@@ -11,7 +11,7 @@ export class SettingsService {
 
     constructor(private http: HttpClient) { }
 
-    chnagePassword(payload: any) {
+    changePassword(payload: any) {
         return this.http.post(`${this.api}/authentication/change-password`, payload);
     }
 
@@ -19,5 +19,24 @@ export class SettingsService {
         return this.http.post(`${this.api}/customer/read`, payload);
     }
 
+    allInvite() {
+        return this.http.post(`${this.api}/customer/read-invite-by-organisation-id`, {});
+    }
+
+    inviteUser(user: any) {
+        return this.http.post(`${this.api}/customer/invite`, user)
+    }
+
+    getAllRoles() {
+        let data = {
+            "request": "READ_ROLE"
+        }
+        return this.http.post(`${this.api}/role/read-by-organization-id`, data);
+    }
+
+    getPermissions(data: any) {
+        return this.http.post(`${this.api}/role-privilege/read-by-role-id`, data);
+    }
+    
 
 }
