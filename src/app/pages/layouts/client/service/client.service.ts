@@ -30,6 +30,10 @@ export class ClientService {
         return this.http.post(`${this.api}/authentication/initiate-enrollment`, payload);
     }
 
+    acceptInvitation(payload: any) {
+        return this.http.post(`${this.api}/customer/accept-invite`, payload);
+    }
+
     /**
     * resetOtp
     * @param payload

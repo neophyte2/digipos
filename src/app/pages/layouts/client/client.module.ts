@@ -10,13 +10,15 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { VerifyComponent } from './components/verify/verify.component';
 import { NgOtpInputModule } from 'ng-otp-input';
 import { ForgetPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { AcceptInviteComponent } from './components/accept-invite/accept-invite.component';
 
 @NgModule({
   declarations: [
     SignInomponent,
     SignUpComponent,
     VerifyComponent,
-    ForgetPasswordComponent
+    ForgetPasswordComponent,
+    AcceptInviteComponent,
   ],
   imports: [
     FormsModule,
