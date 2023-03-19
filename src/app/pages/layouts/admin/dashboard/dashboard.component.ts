@@ -108,7 +108,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       startDate: this.dateRangeForm.value.start,
       endDate: this.dateRangeForm.value.end,
     }
-    this.adminSrv.stats(payload).pipe(takeUntil(this.unsubcribe)).subscribe((resp: any) => {
+    this.transShrdService.stats(payload).pipe(takeUntil(this.unsubcribe)).subscribe((resp: any) => {
       if (resp.responseCode === '00') {
         this.cardDataList = resp.data
       }

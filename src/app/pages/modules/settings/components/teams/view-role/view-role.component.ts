@@ -27,7 +27,6 @@ export class ViewRoleComponent implements OnInit, OnDestroy {
     window.scrollTo(0, 0);
     let id = this.route.snapshot.params['id'];
     this.getRoleById(id)
-
   }
 
 

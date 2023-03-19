@@ -1,0 +1,151 @@
+<div class="">
+  <p class="text-[#64154A] cursor-pointer" (click)="goBack()">Back</p>
+</div>
+<div class="mt-7 grid gap-6 sm:grid-cols-3 pb-10">
+  <div class="grid-2">
+    <div class="relative bg-white px-4 py-10 sm:rounded-3xl sm:px-10">
+      <div class="flex rounded">
+        <div class="text-sm">
+          Terminal Detail(s)
+        </div>
+        <div class="flex ml-2 items-center h-5">
+          <!-- success -->
+          <svg *ngIf="terminal?.terminalStatus === 'ACTIVE'" width="11" height="11" viewBox="0 0 11 11" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <circle cx="5.5" cy="5.5" r="5.5" fill="#35B172" />
+          </svg>
+          <!-- failed -->
+          <svg *ngIf="terminal?.terminalStatus === 'INACTIVE'" width="11" height="11" viewBox="0 0 11 11" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <circle cx="5.5" cy="5.5" r="5.5" fill="#FF0000" />
+          </svg>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 gap-4 mt-5">
+        <div>
+          <p class="text-sm"><b>Terminal ID</b></p>
+          <span class="text-xs">{{terminal?.terminalId}}</span>
+        </div>
+        <div>
+          <p class="text-sm"><b>Device ID</b></p>
+          <span class="text-xs">{{terminal?.terminalDeviceId}}</span>
+        </div>
+        <div>
+          <p class="text-sm"><b>Serial</b></p>
+          <span class="text-xs">{{terminal?.terminalSerial}}</span>
+        </div>
+        <div>
+          <p class="text-sm"><b>Card Acceptor ID</b></p>
+          <span class="text-xs">{{terminal?.terminalCardAcceptorId}}</span>
+        </div>
+        <div>
+          <p class="text-sm"><b>Currency Code</b></p>
+          <span class="text-xs">{{terminal?.terminalCurrencyCode}}</span>
+        </div>
+        <div>
+          <p class="text-sm"><b>Country Code</b></p>
+          <span class="text-xs">{{terminal?.terminalCountryCode}}</span>
+        </div>
+        <div>
+          <p class="text-sm"><b>Location</b></p>
+          <span class="text-xs">{{terminal?.terminalMerchantNameLocation}}</span>
+        </div>
+        <div>
+          <p class="text-sm"><b>Time-Out</b></p>
+          <span class="text-xs">{{terminal?.terminalTimeout}}</span>
+        </div>
+        <div>
+          <p class="text-sm"><b>Call Home Time In Hours</b></p>
+          <span class="text-xs">{{terminal?.terminalCallHomeTimeInHours}}</span>
+        </div>
+        <div>
+          <p class="text-sm"><b>Created At</b></p>
+          <span class="text-xs">{{terminal?.terminalCreatedAt | date:'medium'}}</span>
+        </div>
+        <div>
+          <p class="text-sm"><b>Updated At</b></p>
+          <span class="text-xs">{{terminal?.terminalUpdatedAt | date:'medium'}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-span-2">
+    <div class="relative px-4 py-10 ">
+      <h5>Terminal Transactions</h5>
+      <!-- TABLE -->
+      <div class="relative mt-10 mb-10">
+        <table class="w-full text-sm text-left text-gray-500">
+          <thead class="text-xs text-gray-400 uppercase bg-gray-50">
+            <tr>
+              <th scope="col" class="px-6 py-3">
+                Terminal ID
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Terminal User
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Serial Number
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Location
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Created At
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Status
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="bg-white border-b  hover:bg-gray-100 " *ngFor="let item of terminalList">
+              <td class="px-6 py-4">
+                <div class="flex p-2 rounded hover:bg-gray-100">
+                  <div class="flex items-center h-5">
+                    <!-- success -->
+                    <svg *ngIf="item?.terminalStatus === 'ACTIVE'" width="11" height="11" viewBox="0 0 11 11"
+                      fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="5.5" cy="5.5" r="5.5" fill="#35B172" />
+                    </svg>
+                    <!-- failed -->
+                    <svg *ngIf="item?.terminalStatus === 'INACTIVE'" width="11" height="11" viewBox="0 0 11 11"
+                      fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="5.5" cy="5.5" r="5.5" fill="#FF0000" />
+                    </svg>
+                  </div>
+                  <div class="ml-2 text-sm">
+                    {{item?.terminalId}}
+                  </div>
+                </div>
+              </td>
+              <td class="px-6 py-4">
+                {{item?.terminalCustomerName || 'N/A'}}
+              </td>
+              <td class="px-6 py-4">
+                {{item?.terminalDeviceId}}
+              </td>
+              <td class="px-6 py-4">
+                {{item?.terminalMerchantNameLocation}}
+              </td>
+              <td class="px-6 py-4">
+                {{item?.terminalCreatedAt | date:'medium'}}
+              </td>
+              <td class="px-6 py-4">
+                <span *ngIf="item?.terminalStatus === 'ACTIVE'"
+                  class="inline-block bg-[#DBFFED] px-3 py-1 text-sm font-semibold text-[#35B172] mr-2 mb-2">
+                  ACTIVE
+                </span>
+                <span *ngIf="item?.terminalStatus === 'INACTIVE'"
+                  class="inline-block bg-[#FFDBDA] px-3 py-1 text-sm font-semibold text-[#FF0000] mr-2 mb-2">
+                  INACTIVE
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- TABLE -->
+    </div>
+  </div>
+
+</div>

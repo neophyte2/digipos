@@ -1,0 +1,208 @@
+<!-- Filter -->
+<div class="grid grid-cols-3 gap-4">
+  <div class="col-start-1 col-end-4 mt-8">
+    <form [formGroup]="dateRangeForm">
+      <div class="md:flex my-3 hidden items-end flex-wrap ">
+        <div class="mr-3">
+          <label for="from" class="block text-sm text-gray-400 regularfont">From</label>
+          <input type="date" formControlName="start"
+            class="lg:w-[150px] h-[39px] text-gray-400 py-[15px] text-xs border border-gray-300 rounded  focus:outline-0 focus:ring-0 brd">
+        </div>
+        <div class="mr-3"><label for="from" class="block text-sm text-gray-400 regularfont">To</label>
+          <input type="date" formControlName="end"
+            class="lg:w-[150px] h-[39px] text-gray-400 py-[15px] text-xs border border-gray-300 rounded focus:outline-0 focus:ring-0 brd">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="col-end-6 col-span-2 mt-10">
+    <div>
+      <button (click)="toggleModal()"
+        class="block w-[150px] py-[15px] rounded text-white bg-[#64154A] text-sm mx-4 text-center ">
+        + New Teminal
+      </button>
+    </div>
+  </div>
+</div>
+<!-- Filter -->
+
+<!-- TABLE -->
+<div class="relative mt-10 mb-10">
+  <table class="w-full text-sm text-left text-gray-500">
+    <thead class="text-xs text-gray-400 uppercase bg-gray-50">
+      <tr>
+        <th scope="col" class="px-6 py-3">
+          Terminal ID
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Terminal User
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Serial Number
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Location
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Created At
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Status
+        </th>
+        <th scope="col" class="px-6 py-3">
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="bg-white border-b  hover:bg-gray-100 " *ngFor="let item of terminalList">
+        <td class="px-6 py-4">
+          <div class="flex p-2 rounded hover:bg-gray-100">
+            <div class="flex items-center h-5">
+              <!-- success -->
+              <svg *ngIf="item?.terminalStatus === 'ACTIVE'" width="11" height="11" viewBox="0 0 11 11" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="5.5" cy="5.5" r="5.5" fill="#35B172" />
+              </svg>
+              <!-- failed -->
+              <svg *ngIf="item?.terminalStatus === 'INACTIVE'" width="11" height="11" viewBox="0 0 11 11" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <circle cx="5.5" cy="5.5" r="5.5" fill="#FF0000" />
+              </svg>
+            </div>
+            <div class="ml-2 text-sm">
+              {{item?.terminalId}}
+            </div>
+          </div>
+        </td>
+        <td class="px-6 py-4">
+          {{item?.terminalCustomerName || 'N/A'}}
+        </td>
+        <td class="px-6 py-4">
+          {{item?.terminalDeviceId}}
+        </td>
+        <td class="px-6 py-4">
+          {{item?.terminalMerchantNameLocation}}
+        </td>
+        <td class="px-6 py-4">
+          {{item?.terminalCreatedAt | date:'medium'}}
+        </td>
+        <td class="px-6 py-4">
+          <span *ngIf="item?.terminalStatus === 'ACTIVE'"
+            class="inline-block bg-[#DBFFED] px-3 py-1 text-sm font-semibold text-[#35B172] mr-2 mb-2">
+            ACTIVE
+          </span>
+          <span *ngIf="item?.terminalStatus === 'INACTIVE'"
+            class="inline-block bg-[#FFDBDA] px-3 py-1 text-sm font-semibold text-[#FF0000] mr-2 mb-2">
+            INACTIVE
+          </span>
+        </td>
+        <td class="px-6 py-4">
+          <div class="relative inline-block text-left">
+            <div>
+              <button (click)="toggleDropdown()" type="button"
+                class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                id="menu-button" aria-expanded="true" aria-haspopup="true">
+                Actions
+                <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd"
+                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                    clip-rule="evenodd" />
+                </svg>
+              </button>
+            </div>
+            <div *ngIf="dropdown"
+              class=" cursor-pointer absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+              <div class="py-1" role="none">
+                <a class="text-gray-700 block px-4 py-2 text-sm" (click)="viewTerminal(item.terminalId)">View</a>
+              </div>
+              <div class="py-1" role="none">
+                <a class="text-gray-700 block px-4 py-2 text-sm">Edit</a>
+              </div>
+              <div *ngIf="item?.terminalStatus === 'ACTIVE'" (click)="confirmStatus(item,'Deactivate')" class="py-1"
+                role="none">
+                <a class="text-red-700 block px-4 py-2 text-sm">Deactivate</a>
+              </div>
+              <div *ngIf="item?.terminalStatus === 'INACTIVE'" (click)="confirmStatus(item,'Activate')" class="py-1"
+                role="none">
+                <a class="text-green-700 block px-4 py-2 text-sm">Activate</a>
+              </div>
+            </div>
+          </div>
+
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<!-- TABLE -->
+
+
+<!-- create -->
+<div *ngIf="showModal"
+  class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+  <div class="relative w-auto my-6 mx-auto max-w-3xl">
+    <!--content-->
+    <div
+      class="border-0 rounded-lg shadow-lg relative flex flex-col w-[500px] bg-white outline-none focus:outline-none">
+      <!--header-->
+      <div class="flex items-center justify-center p-5 border-b border-solid border-slate-200 rounded-t text-center">
+        <h3 class="text-3xl font-semibold text-[#64154A]">
+          Create New Terminal
+        </h3>
+      </div>
+      <!--body-->
+      <div class="relative p-6 flex-auto">
+        <form [formGroup]="terminalForm">
+          <div class="mt-10">
+            <div class="flex flex-col input-wrap relative lg:mb-14 md:mb-14 sm:mb-12 mb-12">
+              <ng-select placeholder="Select Terminal User" formControlName="terminalCustomerId" [items]="userList"
+                bindLabel="fullname" bindValue="customerId">
+              </ng-select>
+              <label htmlFor="pwd"
+                class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
+                Terminal User
+              </label>
+              <div class="mt-2"
+                *ngIf="tf['terminalCustomerId'].invalid && (tf['terminalCustomerId'].dirty || tf['terminalCustomerId'].touched) ">
+                <span class="text-rose-700" style="font-size: 13px;"
+                  *ngIf="tf['terminalCustomerId'].errors?.['required']">
+                  Terminal User is required.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col input-wrap relative mb-7">
+            <input type="text" id="serial" formControlName="terminalSerial" class="brd peer h-[52px] mt-2  w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0 relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)] invalid:border-rose-700 invalid:text-rose-700
+                focus:invalid:border-rose-700 focus:invalid:ring-rose-700" placeholder="Terminal Serial Number" />
+            <label htmlFor="serial"
+              class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
+              Terminal Serial Number
+            </label>
+            <div class="mt-2"
+              *ngIf="(tf['terminalSerial'].dirty || tf['terminalSerial'].touched) && tf['terminalSerial'].invalid">
+              <span class="text-rose-700" style="font-size: 13px;" *ngIf="tf['terminalSerial'].errors?.['required']">
+                Terminal Serial Number is required.
+              </span>
+            </div>
+          </div>
+
+        </form>
+      </div>
+      <!--footer-->
+      <div class="flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b">
+        <button (click)="toggleModal()"
+          class="text-red-500 bg-transparent mr-1 mb-1 px-6 py-2 hover:bg-[#64154A] font-semibold hover:text-white border border-[#64154A] hover:border-transparent rounded">
+          Cancel
+        </button>
+        <button (click)="createTerminal()" [disabled]="terminalForm.invalid  || loader.btn.create"
+          class="bil-btn-gradient bg-[#64154A] text-base font-normal grad3 w-[120px] h-[45px] first-letter text-[#F0F0F0] rounded-[5px] mr-1 mb-1  px-6 py-2 "
+          type="button">
+          Create <span *ngIf="loader.btn.create"><i class="fa fa-spinner fa-spin"></i></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>

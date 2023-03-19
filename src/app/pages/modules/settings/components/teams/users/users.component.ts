@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
+import { UserSharedService } from 'src/app/shared/services/userShared.service';
 import { SettingsService } from '../../../services/settings.service';
 
 @Component({
@@ -24,7 +25,8 @@ export class UsersComponent implements OnInit, OnDestroy {
   constructor(
     private setSrv: SettingsService,
     private readonly fb: FormBuilder,
-  ) {}
+    private userShdSrv: UserSharedService,
+  ) { }
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
@@ -32,17 +34,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   users() {
-    let payload = {
-      customerPhone: "",
-      customerFirstName: "",
-      customerLastName: "",
-      customerCountryCode: "",
-      customerCountry: "",
-      customerPassword: "",
-      customerConfirmPassword: "",
-      customerLink: ""
-    }
-    this.setSrv.allUsers(payload).pipe(takeUntil(this.unsubcribe)).subscribe((user: any) => {
+    this.userShdSrv.getUserByOrg().pipe(takeUntil(this.unsubcribe)).subscribe((user: any) => {
       this.userList = user.data;
     })
   }

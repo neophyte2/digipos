@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { GeneralService } from 'src/app/shared/services/general.service';
 
 @Component({
   selector: 'dp-header',

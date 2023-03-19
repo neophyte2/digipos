@@ -23,6 +23,14 @@ const routes: Routes = [
         loadChildren: () => import('../../modules/transactions/transaction.module').then(m => m.TransactionModule)
       },
       {
+        path: 'transactions',
+        loadChildren: () => import('../../modules/transactions/transaction.module').then(m => m.TransactionModule)
+      },
+      {
+        path: 'terminal',
+        loadChildren: () => import('../../modules/terminal/terminal.module').then(m => m.TerminalnModule)
+      },
+      {
         path: 'settings',
         loadChildren: () => import('../../modules/settings/settings.module').then(m => m.SettingsModule)
       },
