@@ -18,11 +18,11 @@ import { AdminService } from '../service/admin.service';
 export class DashboardComponent implements OnInit, OnDestroy {
 
   public barChartData: ChartDataSets[] = [
-    { data: [180, 480, 770, 90,], label: 'SuccessFul' },
-    { data: [28, 48, 40, 19,], label: 'Pending' },
-    { data: [65, 59, 80, 81,], label: 'Failed' },
+    { data: [], label: 'SuccessFul' },
+    { data: [], label: 'Pending' },
+    { data: [], label: 'Failed' },
   ];
-  public barChartLabels: Label[] = ['NQR', 'USSD', 'PWBT', 'CARD'];
+  public barChartLabels: Label[] = ['NQR', 'USSD', 'PWBT', 'CARD', 'WALLET'];
   public barChartOptions: ChartOptions = {
     responsive: true,
     tooltips: {
@@ -79,7 +79,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     private adminSrv: AdminService,
-    private fb: FormBuilder,
     private transShrdService: TransactionSharedService
   ) {
     this.dateRangeForm = new FormGroup({
@@ -99,8 +98,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
-    this.cardsData()
-    this.allTransactionList()
+    this.cardsData();
+    this.getChart();
+    this.allTransactionList();
   }
 
   cardsData() {
@@ -124,6 +124,56 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.adminSrv.recentTransaction(payload).pipe(takeUntil(this.unsubcribe)).subscribe((trans: any) => {
       if (trans.responseCode === '00') {
         this.transactionList = trans.data ? trans.data.slice(0, 10) : []
+      }
+    })
+  }
+
+  getChart() {
+    let payload = {
+      organisationId: '',
+      startDate: this.dateRangeForm.value.start,
+      endDate: this.dateRangeForm.value.end,
+    }
+    this.adminSrv.readChart(payload).pipe(takeUntil(this.unsubcribe)).subscribe((trans: any) => {
+      if (trans.responseCode === '00') {
+        const list = trans.data
+        const rawLabel = list.map((x: any) => x.trnChannel)
+        const label: any = [...new Set(rawLabel)].sort();
+        //cards
+        const c_sucess = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'CARD' && x.trnResponseCode === '00').map((x: any) => x.trnCount) : 0
+        const c_pen = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'CARD' && x.trnResponseCode === '09').map((x: any) => x.trnCount) : 0
+        const c_fail = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'CARD' && x.trnResponseCode === '22').map((x: any) => x.trnCount) : 0
+        //nqr
+        const n_sucess = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'NQR' && x.trnResponseCode === '00').map((x: any) => x.trnCount) : 0
+        const n_pen = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'NQR' && x.trnResponseCode === '09').map((x: any) => x.trnCount) : 0
+        const n_fail = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'NQR' && x.trnResponseCode === '22').map((x: any) => x.trnCount) : 0
+        //pwbt
+        const p_sucess = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'PWBT' && x.trnResponseCode === '00').map((x: any) => x.trnCount) : 0
+        const p_pen = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'PWBT' && x.trnResponseCode === '09').map((x: any) => x.trnCount) : 0
+        const p_fail = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'PWBT' && x.trnResponseCode === '22').map((x: any) => x.trnCount) : 0
+        //wallet
+        const W_sucess = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'USSD' && x.trnResponseCode === '00').map((x: any) => x.trnCount) : 0
+        const W_pen = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'USSD' && x.trnResponseCode === '09').map((x: any) => x.trnCount) : 0
+        const W_fail = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'USSD' && x.trnResponseCode === '22').map((x: any) => x.trnCount) : 0
+        //ussd
+        const U_sucess = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'WALLET' && x.trnResponseCode === '00').map((x: any) => x.trnCount) : 0
+        const U_pen = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'WALLET' && x.trnResponseCode === '00').map((x: any) => x.trnCount) : 0
+        const U_fail = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'WALLET' && x.trnResponseCode === '00').map((x: any) => x.trnCount) : 0
+        this.barChartLabels = label
+        this.barChartData = [
+          {
+            data: [c_sucess[0], n_sucess[0], p_sucess[0], U_sucess[0], W_sucess[0]],
+            label: 'Successfull',
+          },
+          {
+            data: [c_pen[0], n_pen[0], p_pen[0], U_pen[0], W_pen[0]],
+            label: 'Pending',
+          },
+          {
+            data: [c_fail[0], n_fail[0], p_fail[0], U_fail[0], W_fail[0]],
+            label: 'Failed',
+          },
+        ]
       }
     })
   }

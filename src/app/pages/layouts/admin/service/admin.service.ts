@@ -13,8 +13,10 @@ export class AdminService {
     constructor(private http: HttpClient) {
     }
 
+    readChart(payload: any) {
+        return this.http.post(`${this.api}/dashboard/read-chart`, payload);
+    }
     
-
     recentTransaction(payload: any) {
         return this.http.post(`${this.api}/dashboard/recent-transaction`, payload);
     }

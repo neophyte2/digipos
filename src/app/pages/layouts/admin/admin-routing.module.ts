@@ -23,8 +23,8 @@ const routes: Routes = [
         loadChildren: () => import('../../modules/transactions/transaction.module').then(m => m.TransactionModule)
       },
       {
-        path: 'transactions',
-        loadChildren: () => import('../../modules/transactions/transaction.module').then(m => m.TransactionModule)
+        path: 'settlement',
+        loadChildren: () => import('../../modules/settlement/settlement.module').then(m => m.SettlementModule)
       },
       {
         path: 'terminal',
