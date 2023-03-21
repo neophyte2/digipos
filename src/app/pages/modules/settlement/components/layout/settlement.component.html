@@ -3,7 +3,7 @@
   <div class="col-start-1 col-end-4 mt-8">
     <form [formGroup]="dateRangeForm">
       <div class="md:flex my-3 hidden items-end flex-wrap ">
-        <div class="mr-3 w-[33%]">
+        <!-- <div class="mr-3 w-[33%]">
           <label for="" class="block text-sm text-gray-400 regularfont">Filter By</label>
           <ng-select [multiple]="true" [(ngModel)]="filter" [ngModelOptions]="{ standalone: true }"
             [items]="filterList">
@@ -17,7 +17,7 @@
               </div>
             </ng-template>
           </ng-select>
-        </div>
+        </div> -->
         <div class="mr-3">
           <label for="from" class="block text-sm text-gray-400 regularfont">From</label>
           <input type="date" formControlName="start"

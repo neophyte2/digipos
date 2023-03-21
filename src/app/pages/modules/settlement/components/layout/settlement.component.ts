@@ -1,12 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from "rxjs/operators";
 import { tableCurrency } from 'src/app/shared/utils/utils';
 import { paymentMethods, responsesType } from 'src/app/shared/utils/data';
 import { SettlementService } from '../../services/settlement.service';
-import { GeneralService } from 'src/app/shared/services/general.service';
 
 @Component({
   selector: 'dp-settlement',
@@ -38,17 +37,11 @@ export class SettlementComponent implements OnInit, OnDestroy {
   private unsubcribe = new Subject<void>();
 
   constructor(
-    private readonly fb: FormBuilder,
-    private genSrv: GeneralService,
     private transSrvService: SettlementService,
   ) {
     this.dateRangeForm = new FormGroup({
       start: new FormControl(`${this.year}-01-01`),
       end: new FormControl(`${this.year}-12-31`),
-      trnResponseCode: new FormControl(null),
-      trnService: new FormControl(null),
-      trnAmount: new FormControl(''),
-      trnReference: new FormControl(''),
     });
 
     this.dateRangeForm.valueChanges.subscribe((data) => {
@@ -70,7 +63,6 @@ export class SettlementComponent implements OnInit, OnDestroy {
       endDate: this.dateRangeForm.value.end,
     }
     this.transSrvService.getAllSettlement(payload).pipe(takeUntil(this.unsubcribe)).subscribe((settle: any) => {
-      console.log(settle);
       this.settlementList = settle.data;
     })
   }
