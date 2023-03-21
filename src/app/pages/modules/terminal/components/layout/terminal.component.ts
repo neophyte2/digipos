@@ -22,6 +22,7 @@ export class TerminalComponent implements OnInit, OnDestroy {
       create: false,
     },
   };
+  selectedItem: any
   userList: any
   query: any
   showModal = false;
@@ -85,7 +86,7 @@ export class TerminalComponent implements OnInit, OnDestroy {
 
   get tf() {
     return this.terminalForm.controls;
-  } 
+  }
 
   toggleModal() {
     this.showModal = !this.showModal;
@@ -95,8 +96,9 @@ export class TerminalComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl(`/auth/terminal/${id}`)
   }
 
-  toggleDropdown() {
-    this.dropdown = !this.dropdown;
+  getItemId(id: any) {
+    this.dropdown = !this.dropdown
+    this.selectedItem = id;
   }
 
   ngOnForms() {
@@ -113,11 +115,11 @@ export class TerminalComponent implements OnInit, OnDestroy {
     }
     this.loader.btn.create = true;
     this.terminSrv.createTerminal(payload).pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
-      console.log(data);
       if (data.responseCode === '00') {
         this.genSrv.sweetAlertSuccess(data.responseMessage);
         this.allTerminals()
         this.loader.btn.create = false;
+        this.terminalForm.reset()
         this.toggleModal();
       } else {
         let msg = data.responseMessage
@@ -136,8 +138,8 @@ export class TerminalComponent implements OnInit, OnDestroy {
   // Deactivate & Activate
 
   confirmStatus(data: any, statusName: string) {
-    console.log(data, statusName);
-    this.toggleDropdown();
+    this.getItemId(0)
+    this.selectedItem = this.selectedItem
     this.genSrv.sweetAlertDecision(statusName, data.terminalId).then((result) => {
       if (result.isConfirmed) {
         if (statusName === 'Activate') {
@@ -155,7 +157,6 @@ export class TerminalComponent implements OnInit, OnDestroy {
       terminalId: id
     }
     this.terminSrv.activateTerminal(payload).pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
-      console.log(data);
       if (data.responseCode === '00') {
         this.genSrv.sweetAlertSuccess(data.responseMessage);
         this.allTerminals()
@@ -177,7 +178,6 @@ export class TerminalComponent implements OnInit, OnDestroy {
       terminalId: id
     }
     this.terminSrv.deactivateTerminal(payload).pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
-      console.log(data);
       if (data.responseCode === '00') {
         this.genSrv.sweetAlertSuccess(data.responseMessage);
         this.allTerminals()

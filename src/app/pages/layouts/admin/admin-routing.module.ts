@@ -23,12 +23,16 @@ const routes: Routes = [
         loadChildren: () => import('../../modules/transactions/transaction.module').then(m => m.TransactionModule)
       },
       {
+        path: 'chargeback',
+        loadChildren: () => import('../../modules/chargeback/chargeback.module').then(m => m.ChargenModule)
+      },
+      {
         path: 'settlement',
         loadChildren: () => import('../../modules/settlement/settlement.module').then(m => m.SettlementModule)
       },
       {
         path: 'terminal',
-        loadChildren: () => import('../../modules/terminal/terminal.module').then(m => m.TerminalnModule)
+        loadChildren: () => import('../../modules/terminal/terminal.module').then(m => m.TerminalModule)
       },
       {
         path: 'settings',

@@ -52,6 +52,8 @@
           <input type="date" formControlName="end"
             class="lg:w-[150px] h-[39px] text-gray-400 py-[15px] text-xs border border-gray-300 rounded focus:outline-0 focus:ring-0 brd">
         </div>
+      </div>
+      <div class="md:flex my-3 hidden items-end flex-wrap ">
         <br>
         <div class="mr-3 mt-3 w-[20%]" *ngIf="filter.includes('Status')">
           <label for="" class="block text-sm text-gray-400 regularfont">Filter By Staus</label>
@@ -66,7 +68,7 @@
         <div class="mr-3 mt-3" *ngIf="filter.includes('Reference')">
           <label for="amt" class="block text-sm text-gray-400 regularfont">Filter By Reference</label>
           <input formControlName="trnReference" decimalOnly style="padding-left: 10px;"
-            class="lg:w-[150px] h-[39px] text-gray-400 py-[15px] text-xs border border-gray-300 rounded focus:outline-0 focus:ring-0 brd">
+            class="lg:w-[250px] h-[39px] text-gray-400 py-[15px] text-xs border border-gray-300 rounded focus:outline-0 focus:ring-0 brd">
         </div>
         <div class="mr-3 mt-3 w-[25%]" *ngIf="filter.includes('Payment Method')">
           <label for="" class="block text-sm text-gray-400 regularfont">Filter By Payment Method</label>
@@ -131,7 +133,6 @@
                 xmlns="http://www.w3.org/2000/svg">
                 <circle cx="5.5" cy="5.5" r="5.5" fill="#FF0000" />
               </svg>
-
             </div>
             <div class="ml-2 text-sm">
               {{formatAmt(item?.trnAmount)}}
@@ -139,7 +140,9 @@
           </div>
         </td>
         <td class="px-6 py-4">
-          {{item?.trnReference}}
+          <a class="cursor-copy text-[#64154A]" (click)="copyWallet(item.trnReference)">
+            {{item?.trnReference}}
+          </a>
         </td>
         <td class="px-6 py-4">
           <span class="inline-block bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
@@ -150,7 +153,7 @@
           {{item?.trnNarration}}
         </td>
         <td class="px-6 py-4">
-          {{item?.trnCreatedAt}}
+          {{item?.trnCreatedAt | date:'medium'}}
         </td>
         <td class="px-6 py-4">
           <span *ngIf="item?.trnResponseCode === '00'"

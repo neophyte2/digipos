@@ -98,6 +98,7 @@ export class InvitesComponent implements OnInit, OnDestroy {
         this.genSrv.sweetAlertSuccess(data.responseMessage);
         this.users()
         this.loader.btn.invite = false;
+        this.inviteForm.reset()
         this.toggleModal();
       } else {
         let msg = data.responseMessage

@@ -5,6 +5,7 @@ import { takeUntil } from "rxjs/operators";
 import { TerminalService } from '../../services/terminal.service';
 import { GeneralService } from 'src/app/shared/services/general.service';
 import { ActivatedRoute } from '@angular/router';
+import { tableCurrency } from 'src/app/shared/utils/utils';
 
 @Component({
   selector: 'dp-view-terminal',
@@ -14,18 +15,9 @@ import { ActivatedRoute } from '@angular/router';
 
 export class ViewTerminalComponent implements OnInit, OnDestroy {
 
-  loader: any = {
-    btn: {
-      create: false,
-    },
-  };
-  userList: any
-  query: any
-  showModal = false;
-  dropdown = false
+
   terminal :any
   terminalList: any
-  year = new Date().getFullYear()
   private unsubcribe = new Subject<void>();
 
   constructor(
@@ -56,12 +48,13 @@ export class ViewTerminalComponent implements OnInit, OnDestroy {
       terminalId: id
     }
     this.terminSrv.getSingleTerminal(payload).pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
-      console.log(data);
       this.terminal = data;
-      console.log(this.terminal);
     })
   }
 
+  formatAmt(val: any) {
+    return tableCurrency(val);
+  }
 
   goBack() {
     this.genSrv.goBack();

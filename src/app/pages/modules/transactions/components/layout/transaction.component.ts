@@ -24,7 +24,7 @@ export class TransactionComponent implements OnInit, OnDestroy {
     },
   };
   query: any
-  cardDataList:any
+  cardDataList: any
   filter: any[] = [];
   transactionList: any
   method = paymentMethods
@@ -90,7 +90,7 @@ export class TransactionComponent implements OnInit, OnDestroy {
       startDate: this.dateRangeForm.value.start,
       endDate: this.dateRangeForm.value.end,
     }
-    this.transSrvService.transactionList(payload).pipe(takeUntil(this.unsubcribe)).subscribe((trans: any) => {
+    this.transShrdService.transactionList(payload).pipe(takeUntil(this.unsubcribe)).subscribe((trans: any) => {
       this.transactionList = trans.data;
     })
   }
@@ -137,6 +137,15 @@ export class TransactionComponent implements OnInit, OnDestroy {
 
   formatAmt(val: any) {
     return tableCurrency(val);
+  }
+
+  async copyWallet(toCopy:any) {
+    try {
+      await navigator.clipboard.writeText(toCopy);
+      this.genSrv.sweetAlertSuccess('Copied to clipboard')
+    } catch (err) {
+      this.genSrv.sweetAlertError('Failed to copy')
+    }
   }
 
   ngOnDestroy() {

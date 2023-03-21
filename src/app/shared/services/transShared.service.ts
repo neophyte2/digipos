@@ -15,4 +15,8 @@ export class TransactionSharedService {
     stats(payload: any) {
         return this.http.post(`${this.api}/dashboard/read-stats`, payload);
     }
+
+    transactionList(params: any){
+        return this.http.post(`${this.api}/payment/read-transaction`, params);
+    }
 }

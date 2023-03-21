@@ -1,0 +1,102 @@
+<div class="">
+  <p class="text-[#64154A] cursor-pointer" (click)="goBack()">Back</p>
+</div>
+
+<div class="grid place-items-center mt-6">
+  <div class="inline-grid grid-cols-1 gap-4">
+    <div class="flex rounded">
+      <div class="text-sm">
+        Chagerback Detail(s)
+      </div>
+      <div class="flex ml-2 items-center h-5">
+        <!-- success -->
+        <svg *ngIf="chargeback?.chargebackStatus === 'APPROVED'" width="11" height="11" viewBox="0 0 11 11" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <circle cx="5.5" cy="5.5" r="5.5" fill="#35B172" />
+        </svg>
+        <!-- pending -->
+        <svg *ngIf="chargeback?.chargebackStatus === 'PENDING'" width="11" height="11" viewBox="0 0 11 11" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <circle cx="5.5" cy="5.5" r="5.5" fill="#FF8A00" />
+        </svg>
+        <!-- failed -->
+        <svg *ngIf="chargeback?.chargebackStatus === 'DECLINED'" width="11" height="11" viewBox="0 0 11 11" fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <circle cx="5.5" cy="5.5" r="5.5" fill="#FF0000" />
+        </svg>
+      </div>
+    </div>
+    <hr>
+  </div>
+</div>
+<div class="h-[30rem] grid grid-cols-2 gap-4 content-evenly place-items-center">
+  <div>
+    Amount
+  </div>
+  <div>
+    <b> {{formatAmt(chargeback?.chargebackAmount)}}</b>
+  </div>
+  <div>
+    Payment Reference
+  </div>
+  <div>
+    <b>{{chargeback?.chargebackTransactionReference}}</b>
+  </div>
+  <div>
+    Transaction Type
+  </div>
+  <div>
+    <b>{{chargeback?.chargebackTransactionType}}</b>
+  </div>
+  <div>
+    Transaction Date
+  </div>
+  <div>
+    <b>{{chargeback?.chargebackTransactionDate | date: 'medium'}}</b>
+  </div>
+  <div>
+    Log Code
+  </div>
+  <div>
+    <b>{{chargeback?.chargebackReference}}</b>
+  </div>
+  <div>
+    Expiry Date
+  </div>
+  <div>
+    <b>{{chargeback?.chargebackExpiryDate | date: 'medium'}}</b>
+  </div>
+  <div>
+    Evidence
+  </div>
+  <div>
+    <b>{{chargeback?.chargebackEvidence}}</b>
+  </div>
+
+  <div>
+    Created At
+  </div>
+  <div>
+    <b>{{chargeback?.chargebackCreatedAt | date: 'medium'}}</b>
+  </div>
+
+  <div>
+    Updated At
+  </div>
+  <div>
+    <b>{{chargeback?.chargebackUpdatedAt | date: 'medium'}}</b>
+  </div>
+</div>
+
+<div *ngIf="chargeback?.chargebackStatus === 'PENDING'"
+  class="flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b">
+  <button (click)="confirmStatus(chargeback,'Declined')"
+    class="text-red-500 bg-transparent mr-1 mb-1 px-6 py-2 hover:bg-[#64154A] font-semibold hover:text-white border border-[#64154A] hover:border-transparent rounded">
+    Decline
+  </button>
+  <button (click)="confirmStatus(chargeback,'Approve')"
+    class="bil-btn-gradient bg-[#64154A] text-base font-normal grad3 w-[120px] h-[45px] first-letter text-[#F0F0F0] rounded-[5px] mr-1 mb-1  px-6 py-2 "
+    type="button">
+    Accept
+  </button>
+</div>

@@ -15,8 +15,4 @@ export class TransactionService {
     transactionDownload(params: any){
         return this.http.post(`${this.api}/payment/download-transaction`, params);
     }
-
-    transactionList(params: any){
-        return this.http.post(`${this.api}/payment/read-transaction`, params);
-    }
 }

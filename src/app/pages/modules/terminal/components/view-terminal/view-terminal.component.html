@@ -70,27 +70,30 @@
     </div>
   </div>
   <div class="col-span-2">
-    <div class="relative px-4 py-10 ">
-      <h5>Terminal Transactions</h5>
+    <div class="relative px-4 py-10 overflow-y-auto">
+      <h5 class="fixed">Terminal Transactions</h5>
       <!-- TABLE -->
       <div class="relative mt-10 mb-10">
-        <table class="w-full text-sm text-left text-gray-500">
+        <table class="w-full text-sm text-left text-gray-500 ">
           <thead class="text-xs text-gray-400 uppercase bg-gray-50">
             <tr>
               <th scope="col" class="px-6 py-3">
-                Terminal ID
+                AMOUNT
               </th>
               <th scope="col" class="px-6 py-3">
-                Terminal User
+                Transaction Reference
               </th>
               <th scope="col" class="px-6 py-3">
-                Serial Number
+                Payment Method
               </th>
               <th scope="col" class="px-6 py-3">
-                Location
+                Credit/Debit
               </th>
               <th scope="col" class="px-6 py-3">
-                Created At
+                Description
+              </th>
+              <th scope="col" class="px-6 py-3">
+                Date\Time
               </th>
               <th scope="col" class="px-6 py-3">
                 Status
@@ -103,41 +106,63 @@
                 <div class="flex p-2 rounded hover:bg-gray-100">
                   <div class="flex items-center h-5">
                     <!-- success -->
-                    <svg *ngIf="item?.terminalStatus === 'ACTIVE'" width="11" height="11" viewBox="0 0 11 11"
-                      fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg *ngIf="item?.trnResponseCode === '00'" width="11" height="11" viewBox="0 0 11 11" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
                       <circle cx="5.5" cy="5.5" r="5.5" fill="#35B172" />
                     </svg>
+                    <!-- pending -->
+                    <svg *ngIf="item?.trnResponseCode === '09'" width="11" height="11" viewBox="0 0 11 11" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <circle cx="5.5" cy="5.5" r="5.5" fill="#FF8A00" />
+                    </svg>
                     <!-- failed -->
-                    <svg *ngIf="item?.terminalStatus === 'INACTIVE'" width="11" height="11" viewBox="0 0 11 11"
-                      fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <svg *ngIf="item?.trnResponseCode === '25'" width="11" height="11" viewBox="0 0 11 11" fill="none"
+                      xmlns="http://www.w3.org/2000/svg">
                       <circle cx="5.5" cy="5.5" r="5.5" fill="#FF0000" />
                     </svg>
+
                   </div>
                   <div class="ml-2 text-sm">
-                    {{item?.terminalId}}
+                    {{formatAmt(item?.trnAmount)}}
                   </div>
                 </div>
               </td>
               <td class="px-6 py-4">
-                {{item?.terminalCustomerName || 'N/A'}}
+                {{item?.trnReference}}
               </td>
               <td class="px-6 py-4">
-                {{item?.terminalDeviceId}}
-              </td>
-              <td class="px-6 py-4">
-                {{item?.terminalMerchantNameLocation}}
-              </td>
-              <td class="px-6 py-4">
-                {{item?.terminalCreatedAt | date:'medium'}}
-              </td>
-              <td class="px-6 py-4">
-                <span *ngIf="item?.terminalStatus === 'ACTIVE'"
-                  class="inline-block bg-[#DBFFED] px-3 py-1 text-sm font-semibold text-[#35B172] mr-2 mb-2">
-                  ACTIVE
+                <span class="inline-block bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+                  {{item?.trnService}}
                 </span>
-                <span *ngIf="item?.terminalStatus === 'INACTIVE'"
+              </td>
+              <td class="px-6 py-4">
+                <span *ngIf="item?.trnDrCr === 'CR'"
+                  class="inline-block bg-[#DBFFED] px-3 py-1 text-sm font-semibold text-[#35B172] mr-2 mb-2">
+                  CREDIT
+                </span>
+                <span *ngIf="item?.trnDrCr === 'DR'"
                   class="inline-block bg-[#FFDBDA] px-3 py-1 text-sm font-semibold text-[#FF0000] mr-2 mb-2">
-                  INACTIVE
+                  DEBIT
+                </span>
+              </td>
+              <td class="px-6 py-4">
+                {{item?.trnNarration}}
+              </td>
+              <td class="px-6 py-4">
+                {{item?.trnCreatedAt | date:'medium'}}
+              </td>
+              <td class="px-6 py-4">
+                <span *ngIf="item?.trnResponseCode === '00'"
+                  class="inline-block bg-[#DBFFED] px-3 py-1 text-sm font-semibold text-[#35B172] mr-2 mb-2">
+                  Successful
+                </span>
+                <span *ngIf="item?.trnResponseCode === '25'"
+                  class="inline-block bg-[#FFDBDA] px-3 py-1 text-sm font-semibold text-[#FF0000] mr-2 mb-2">
+                  Failed
+                </span>
+                <span *ngIf="item?.trnResponseCode === '09'"
+                  class="inline-block bg-[#FFEDD7] px-3 py-1 text-sm font-semibold text-[#FF8A00] mr-2 mb-2">
+                  Pending
                 </span>
               </td>
             </tr>

@@ -39,7 +39,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       yAxes: [{
         scaleLabel: {
           display: true,
-          labelString: 'Amount (In Naira)'
+          labelString: 'Counts'
         },
         ticks: {
           callback: (value, index) => {

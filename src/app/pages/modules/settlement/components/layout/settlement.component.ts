@@ -71,7 +71,6 @@ export class SettlementComponent implements OnInit, OnDestroy {
     }
     this.transSrvService.getAllSettlement(payload).pipe(takeUntil(this.unsubcribe)).subscribe((settle: any) => {
       console.log(settle);
-
       this.settlementList = settle.data;
     })
   }
