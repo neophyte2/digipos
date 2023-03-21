@@ -35,8 +35,6 @@ export class ViewChargebackComponent implements OnInit, OnDestroy {
       chargebackId: id
     }
     this.chargeSrv.getSingleChargeback(payload).pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
-      console.log(data);
-
       this.chargeback = data;
     })
   }
