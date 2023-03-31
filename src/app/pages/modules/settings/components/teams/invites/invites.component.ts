@@ -21,10 +21,15 @@ export class InvitesComponent implements OnInit, OnDestroy {
   loader: any = {
     btn: {
       invite: false,
+      update: false,
     },
   };
+  selectedItem: any
+  dropdown = false
   showModal = false;
+  updateModal = false
   inviteForm!: FormGroup;
+  updateInviteForm!: FormGroup;
   private unsubcribe = new Subject<void>();
 
   constructor(
@@ -46,7 +51,11 @@ export class InvitesComponent implements OnInit, OnDestroy {
     return this.inviteForm.controls;
   }
 
-  ngOnForms() {
+  get ulf() {
+    return this.updateInviteForm.controls;
+  }
+
+  ngOnForms(data?: any) {
     this.inviteForm = this.fb.group({
       customerEmail: [
         "",
@@ -57,26 +66,40 @@ export class InvitesComponent implements OnInit, OnDestroy {
       ],
       customerRole: [null, Validators.required],
     });
+    this.updateInviteForm = this.fb.group({
+      inviteId: [
+        { value: data?.inviteCustomerEmail, disabled: true },
+        Validators.compose([
+          Validators.required,
+          Validators.pattern(VALIDEMAILREGEX),
+        ]),
+      ],
+      roleId: [Number(data?.inviteCustomerRole), Validators.required],
+    });
   }
 
   toggleModal() {
     this.showModal = !this.showModal;
   }
 
-  users() {
-    let payload = {
-      customerPhone: "",
-      customerFirstName: "",
-      customerLastName: "",
-      customerCountryCode: "",
-      customerCountry: "",
-      customerPassword: "",
-      customerConfirmPassword: "",
-      customerLink: ""
+  changeRoleModal(item?: any) {
+    console.log(item);
+    if (item) {
+      this.ngOnForms(item)
     }
+    this.updateModal = !this.updateModal;
+    this.getItemId(0)
+  }
+
+  users() {
     this.setSrv.allInvite().pipe(takeUntil(this.unsubcribe)).subscribe((invite: any) => {
       this.inviteList = invite.data;
     })
+  }
+
+  getItemId(id: any) {
+    this.dropdown = !this.dropdown
+    this.selectedItem = id;
   }
 
   allRoles() {
@@ -104,19 +127,71 @@ export class InvitesComponent implements OnInit, OnDestroy {
         let msg = data.responseMessage
         this.genSrv.sweetAlertError(msg);
         this.loader.btn.invite = false;
-        this.toggleModal();
       }
     }, (err) => {
       let msg = err
       this.genSrv.sweetAlertError(msg);
       this.loader.btn.invite = false;
-      this.toggleModal();
+    })
+  }
+
+  updateInvite() {
+    let payload = {
+      inviteId: this.ulf['inviteId'].value,
+      roleId: this.ulf['roleId'].value,
+    }
+    this.loader.btn.update = true;
+    this.setSrv.changeInviteRole(payload).pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
+      if (data.responseCode === '00') {
+        this.genSrv.sweetAlertSuccess(data.responseMessage);
+        this.users()
+        this.loader.btn.update = false;
+        this.inviteForm.reset()
+        this.changeRoleModal();
+      } else {
+        let msg = data.responseMessage
+        this.genSrv.sweetAlertError(msg);
+        this.loader.btn.update = false;
+      }
+    }, (err) => {
+      let msg = err
+      this.genSrv.sweetAlertError(msg);
+      this.loader.btn.update = false;
     })
   }
 
   getRoleById(id: any) {
     let role = this.roleList ? this.roleList.filter((r: any) => r.roleId == id) : '';
     return role ? role[0].roleName : ''
+  }
+
+  confirmStatus(data: any, statusName: string) {
+    this.getItemId(0)
+    this.selectedItem = this.selectedItem
+    this.genSrv.sweetAlertDecision(statusName, data.inviteCustomerEmail).then((result) => {
+      if (result.isConfirmed) {
+        this.delete(data.inviteCustomerEmail)
+      }
+    })
+  }
+
+  delete(id: any) {
+    let payload = {
+      inviteCustomerEmail: id
+    }
+    this.setSrv.deleteInvite(payload).pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
+      if (data.responseCode === '00') {
+        this.genSrv.sweetAlertSuccess(data.responseMessage);
+        this.users()
+      } else {
+        let msg = data.responseMessage
+        this.genSrv.sweetAlertError(msg);
+      }
+    }, (err) => {
+      let msg = err
+      this.genSrv.sweetAlertError(msg);
+    })
+
   }
 
   goToManageRole() {

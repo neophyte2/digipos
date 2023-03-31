@@ -71,7 +71,7 @@
 <!-- Filter -->
 
 <!-- TABLE -->
-<div class="relative overflow-x-auto mt-10 mb-10">
+<div class="relative mt-10 mb-10">
   <table class="w-full text-sm text-left text-gray-500">
     <thead class="text-xs text-gray-400 uppercase bg-gray-50">
       <tr>
@@ -85,7 +85,7 @@
           STATUS
         </th>
         <th scope="col" class="px-6 py-3">
-         
+
         </th>
       </tr>
     </thead>
@@ -116,7 +116,8 @@
           </div>
         </td>
         <td class="px-6 py-4">
-          <span (click)="viewRole(item?.inviteCustomerRole)" class="inline-block bg-gray-200 px-3 py-1 text-sm font-semibold cursor-pointer text-gray-700 mr-2 mb-2">
+          <span (click)="viewRole(item?.inviteCustomerRole)"
+            class="inline-block bg-gray-200 px-3 py-1 text-sm font-semibold cursor-pointer text-gray-700 mr-2 mb-2">
             {{getRoleById(item?.inviteCustomerRole)}}
           </span>
         </td>
@@ -135,17 +136,28 @@
           </span>
         </td>
         <td class="px-6 py-4">
-          <div class="flex p-2 rounded hover:bg-gray-100">
-            <div class="flex items-center h-5">
-            <span class="px-3 py-1 text-sm font-semibold text-[#64154A] mt-2 mr-2">
-              Change Role
-            </span>
+          <div class="relative inline-block text-left">
+            <div>
+              <button (click)="getItemId(item.inviteId);" type="button"
+                class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                id="menu-button" aria-expanded="true" aria-haspopup="true">
+                Actions
+                <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd"
+                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                    clip-rule="evenodd" />
+                </svg>
+              </button>
             </div>
-            <div class="ml-2 text-sm">
-              <span 
-                class="inline-block bg-[#FFDBDA] px-3 py-1 text-sm font-semibold text-[#FF0000] mr-2 mb-2">
-                Remove
-              </span>
+            <div *ngIf="dropdown && item.inviteId == selectedItem"
+              class=" cursor-pointer absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+              <div class="py-1" role="none">
+                <a class="text-gray-700 block px-4 py-2 text-sm" (click)="changeRoleModal(item)">Change Role</a>
+              </div>
+              <div class="py-1" role="none">
+                <a class="text-red-700 block px-4 py-2 text-sm" (click)="confirmStatus(item,'Delete')">Delete</a>
+              </div>
             </div>
           </div>
         </td>
@@ -224,3 +236,73 @@
   </div>
 </div>
 <div *ngIf="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
+
+<!-- Update Role -->
+<div *ngIf="updateModal"
+  class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+  <div class="relative w-auto my-6 mx-auto max-w-3xl">
+    <!--content-->
+    <div
+      class="border-0 rounded-lg shadow-lg relative flex flex-col w-[500px] bg-white outline-none focus:outline-none">
+      <!--header-->
+      <div class="flex items-center justify-center p-5 border-b border-solid border-slate-200 rounded-t text-center">
+        <h3 class="text-3xl font-semibold text-[#64154A]">
+          Update Invite
+        </h3>
+      </div>
+      <!--body-->
+      <div class="relative p-6 flex-auto">
+        <form [formGroup]="updateInviteForm">
+          <div class="mt-10">
+            <div class="flex flex-col input-wrap relative lg:mb-14 md:mb-14 sm:mb-12 mb-12">
+              <input type="text" id="email-address" formControlName="inviteId" class="brd peer h-[52px] mt-2  w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0 relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)] invalid:border-rose-700 invalid:text-rose-700
+                  focus:invalid:border-rose-700 focus:invalid:ring-rose-700" placeholder="example@digipos.com" />
+              <label htmlFor="email-address"
+                class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
+                Email Address
+              </label>
+              <div class="mt-2"
+                *ngIf="(ulf['inviteId'].dirty || ulf['inviteId'].touched) && ulf['inviteId'].invalid">
+                <span class="text-rose-700" style="font-size: 13px;" *ngIf="ulf['inviteId'].errors?.['required']">
+                  Email Address is required.
+                </span>
+                <span class="text-rose-700" *ngIf="ulf['inviteId'].errors?.['pattern']">
+                  Email Address is invalid.
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flex flex-col input-wrap relative mb-7">
+            <ng-select placeholder="Select Role" formControlName="roleId" [items]="roleList" bindLabel="roleName"
+              bindValue="roleId">
+            </ng-select>
+            <label htmlFor="pwd"
+              class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
+              Role
+            </label>
+            <div class="mt-2"
+              *ngIf="ulf['roleId'].invalid && (ulf['roleId'].dirty || ulf['roleId'].touched) ">
+              <span class="text-rose-700" style="font-size: 13px;" *ngIf="ulf['roleId'].errors?.['required']">
+                Role is required.
+              </span>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!--footer-->
+      <div class="flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b">
+        <button (click)="changeRoleModal()"
+          class="text-red-500 bg-transparent mr-1 mb-1  px-6 py-2 hover:bg-[#64154A] font-semibold hover:text-white border border-[#64154A] hover:border-transparent rounded">
+          Cancel
+        </button>
+        <button (click)="updateInvite()" [disabled]="updateInviteForm.invalid  || loader.btn.update"
+          class="bil-btn-gradient bg-[#64154A] text-base font-normal grad3 w-[200px] h-[45px] first-letter text-[#F0F0F0] rounded-[5px] mr-1 mb-1  px-6 py-2 "
+          type="button">
+          Update Invite <span *ngIf="loader.btn.update"><i class="fa fa-spinner fa-spin"></i></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="updateModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>

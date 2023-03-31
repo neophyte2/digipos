@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
+import { GeneralService } from 'src/app/shared/services/general.service';
 import { UserSharedService } from 'src/app/shared/services/userShared.service';
 import { SettingsService } from '../../../services/settings.service';
 
@@ -20,11 +21,14 @@ export class UsersComponent implements OnInit, OnDestroy {
     },
   };
 
+  selectedItem: any
+  dropdown = false
+
   private unsubcribe = new Subject<void>();
 
   constructor(
     private setSrv: SettingsService,
-    private readonly fb: FormBuilder,
+    private genSrv: GeneralService,
     private userShdSrv: UserSharedService,
   ) { }
 
@@ -37,6 +41,64 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.userShdSrv.getUserByOrg().pipe(takeUntil(this.unsubcribe)).subscribe((user: any) => {
       this.userList = user.data;
     })
+  }
+
+  getItemId(id: any) {
+    this.dropdown = !this.dropdown
+    this.selectedItem = id;
+  }
+
+  confirmStatus(data: any, statusName: string) {
+    this.getItemId(0)
+    this.selectedItem = this.selectedItem
+    const name = data.customerFirstName + ' ' + data.customerLastName
+    this.genSrv.sweetAlertDecision(statusName, name).then((result) => {
+      if (result.isConfirmed) {
+        if (statusName === 'Activate') {
+          this.deactivate(data.customerId)
+        } else {
+          this.deactivate(data.customerId)
+        }
+      }
+    })
+  }
+
+  deactivate(id: any) {
+    let payload = {
+      customerId: id
+    }
+    this.setSrv.deactivateUser(payload).pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
+      if (data.responseCode === '00') {
+        this.genSrv.sweetAlertSuccess(data.responseMessage);
+        this.users()
+      } else {
+        let msg = data.responseMessage
+        this.genSrv.sweetAlertError(msg);
+      }
+    }, (err) => {
+      let msg = err
+      this.genSrv.sweetAlertError(msg);
+    })
+
+  }
+
+  activate(id: any) {
+    let payload = {
+      customerId: id
+    }
+    this.setSrv.activateUser(payload).pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
+      if (data.responseCode === '00') {
+        this.genSrv.sweetAlertSuccess(data.responseMessage);
+        this.users()
+      } else {
+        let msg = data.responseMessage
+        this.genSrv.sweetAlertError(msg);
+      }
+    }, (err) => {
+      let msg = err
+      this.genSrv.sweetAlertError(msg);
+    })
+
   }
 
   ngOnDestroy() {

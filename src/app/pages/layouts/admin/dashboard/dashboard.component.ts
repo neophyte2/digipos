@@ -25,13 +25,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   public barChartLabels: Label[] = ['NQR', 'USSD', 'PWBT', 'CARD', 'WALLET'];
   public barChartOptions: ChartOptions = {
     responsive: true,
-    tooltips: {
-      callbacks: {
-        label: function (tooltipItem, data) {
-          return tableCurrency(tooltipItem.yLabel);
-        }
-      }
-    },
     scales: {
       xAxes: [{
         // stacked:true,

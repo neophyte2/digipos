@@ -1,26 +1,8 @@
-<div class="bg-bg2 rounded">
-  <div class="p-4 w-full text-sm text-secondary">
-    <div class="flex">
-      <div class="flex-initial text-center m-2">
-        <svg width="26" height="29" viewBox="0 0 26 29" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M13 0C12.6595 0 12.381 0.278571 12.381 0.619048V3.09524C12.381 3.43571 12.6595 3.71429 13 3.71429C13.3405 3.71429 13.619 3.43571 13.619 3.09524V0.619048C13.619 0.278571 13.3405 0 13 0ZM4.24667 3.62763C4.08881 3.62763 3.93095 3.68952 3.81024 3.81024C3.56881 4.05167 3.56881 4.43857 3.81024 4.68L5.56214 6.43191C5.80357 6.67334 6.19048 6.67334 6.43191 6.43191C6.67333 6.19049 6.67333 5.80358 6.43191 5.56215L4.68 3.81024C4.55929 3.68952 4.40452 3.62763 4.24667 3.62763ZM21.7533 3.62763C21.5955 3.62763 21.4376 3.68952 21.3169 3.81024L19.565 5.56215C19.3236 5.80358 19.3236 6.19049 19.565 6.43191C19.8064 6.67334 20.1933 6.67334 20.4348 6.43191L22.1867 4.68C22.4281 4.43857 22.4281 4.05167 22.1867 3.81024C22.069 3.68952 21.9112 3.62763 21.7533 3.62763ZM13 5.57143C9.22381 5.57143 5.57143 8.49953 5.57143 12.641C5.57143 17.7079 9.14952 18.9986 9.5581 22.2857H16.445C16.8536 18.9986 20.4317 17.711 20.4317 12.641C20.4286 8.49953 16.7762 5.57143 13 5.57143ZM12.3129 7.15929C12.7152 7.14072 13.0588 7.34501 13.0495 7.75049C13.0588 8.07549 12.774 8.37882 12.449 8.38811C10.14 8.65739 8.35714 10.6136 8.35714 13C8.35714 13.4767 8.42833 13.9317 8.56143 14.365C8.69143 14.6838 8.49333 15.0862 8.16524 15.1883C7.83714 15.2874 7.45024 15.0614 7.38214 14.7241C7.215 14.1762 7.12214 13.6036 7.12214 13.0031C7.11905 9.99143 9.39095 7.49976 12.3129 7.15929ZM0.619048 12.381C0.278571 12.381 0 12.6595 0 13C0 13.3405 0.278571 13.619 0.619048 13.619H3.09524C3.43571 13.619 3.71429 13.3405 3.71429 13C3.71429 12.6595 3.43571 12.381 3.09524 12.381H0.619048ZM22.9048 12.381C22.5643 12.381 22.2857 12.6595 22.2857 13C22.2857 13.3405 22.5643 13.619 22.9048 13.619H25.381C25.7214 13.619 26 13.3405 26 13C26 12.6595 25.7214 12.381 25.381 12.381H22.9048ZM9.59524 22.9048V24.1429H16.4048V22.9048H9.59524ZM9.59524 24.7619V25.381C9.59524 26.0929 10.1802 26.619 10.8333 26.619H15.1667C15.8198 26.619 16.4048 26.0929 16.4048 25.381V24.7619H9.59524ZM11.7619 27.2381C11.7619 27.9252 12.3129 28.4762 13 28.4762C13.6871 28.4762 14.2381 27.9252 14.2381 27.2381H11.7619Z"
-            fill="#7A3F63" />
-        </svg>
-      </div>
-      <div class="flex-initial text-center py-2 m-2">
-        You’re required to complete your profile update to continue to access
-        amazing features on your dashboard. Please do so now
-      </div>
-    </div>
-  </div>
-</div>
-
 <!-- Wallet -->
 <div class="grid grid-cols-1 md:grid-cols-3">
   <!-- Balance -->
   <div
-    class="p-7 relative bg-wallet fund-shadow rounded-lg flex flex-col sm:flex-row justify-center items-center sm:justify-start sm:w-[344px] my-6">
+    class="p-7 relative bg-rwallet fund-shadow rounded-lg flex flex-col sm:flex-row justify-center items-center sm:justify-start sm:w-[344px] my-6">
     <div class="">
       <svg width="28" height="24" viewBox="0 0 28 24" class="md:block hidden" fill="none"
         xmlns="http://www.w3.org/2000/svg">
@@ -30,10 +12,10 @@
       </svg>
     </div>
     <div class="flex sm:block flex-col justify-center items-center">
-      <p class="text-[#677189]">Balance</p>
+      <p class="text-[#677189]">Completed Refunds</p>
       <div class="flex items-center my-4">
      
-        <span style="word-break: break-all;" class="text-[31px] text-[#1B2A4E] sm:mr-9 mr-4 ml-3">
+        <span style="word-break: break-all;" class="text-[31px] text-[#1B2A4E] sm:mr-9 mr-4 ml-2">
           <b class="font-extrabold">{{formatAmt(cardDataList?.transactionVolume || 0)}}</b>
         </span>
       </div>
@@ -41,9 +23,9 @@
   </div>
   <!-- total trans -->
   <div
-    class="p-7 relative bg-wallet fund-shadow rounded-lg flex flex-col sm:flex-row justify-center items-center sm:justify-between sm:w-[344px] my-6">
+    class="p-7 relative bg-counts fund-shadow rounded-lg flex flex-col sm:flex-row justify-center items-center sm:justify-between sm:w-[344px] my-6">
     <div class="flex sm:block flex-col justify-center items-center">
-      <p class="text-[#677189]">Total Transaction</p>
+      <p class="text-[#677189]">Refund Counts</p>
       <div class="flex items-center my-4">
         <span class="text-[31px] text-[#1B2A4E] sm:mr-9 mr-4">
           <b class="font-extrabold">{{cardDataList?.transactionCount || 0}}</b>
@@ -93,19 +75,6 @@
 </div>
 <!-- Filter -->
 
-<!-- Charts Section -->
-<div style="display: block;">
-  <!-- <canvas baseChart style="height: 500px !important; width: 80% !important" [options]="lineChartOptions"
-    [datasets]="lineChartData" [labels]="lineChartLabels" [colors]="lineChartColors" [legend]="lineChartLegend"
-    [chartType]="'bar'" [plugins]="lineChartPlugins">
-  </canvas> -->
-  <canvas baseChart style="height: 500px !important; width: 80% !important" [options]="barChartOptions"
-    [datasets]="barChartData" [labels]="barChartLabels" [colors]="barChartColors" [legend]="barChartLegend"
-    [chartType]="'bar'" [plugins]="barChartPlugins">
-  </canvas>
-</div>
-<!-- Charts Section -->
-
 <!-- TABLE -->
 <div class="relative overflow-x-auto mt-10 mb-10">
   <h1 class="py-3 font-extrabold">Recent Transactions</h1>
@@ -133,7 +102,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr class="bg-white border-b  hover:bg-gray-100 " *ngFor="let item of transactionList">
+      <tr class="bg-white border-b  hover:bg-gray-100 " *ngFor="let item of refundList">
         <td class="px-6 py-4">
           <div class="flex p-2 rounded hover:bg-gray-100">
             <div class="flex items-center h-5">

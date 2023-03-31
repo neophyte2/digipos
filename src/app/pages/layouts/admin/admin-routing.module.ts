@@ -23,6 +23,10 @@ const routes: Routes = [
         loadChildren: () => import('../../modules/transactions/transaction.module').then(m => m.TransactionModule)
       },
       {
+        path: 'refund',
+        loadChildren: () => import('../../modules/refund/refund.module').then(m => m.RefundModule)
+      },
+      {
         path: 'chargeback',
         loadChildren: () => import('../../modules/chargeback/chargeback.module').then(m => m.ChargenModule)
       },

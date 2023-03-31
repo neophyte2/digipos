@@ -66,7 +66,7 @@
           EMAIL
         </th>
         <th scope="col" class="px-6 py-3">
-          ROLE
+          ACCOUNT TYPE
         </th>
         <th scope="col" class="px-6 py-3">
           STATUS
@@ -126,15 +126,34 @@
           </span>
         </td>
         <td class="px-6 py-4">
-          <span *ngIf="item?.customerStatus === 'INACTIVE'"
-          class="inline-block bg-[#DBFFED] px-3 py-1 text-sm font-semibold text-[#35B172] mr-2 mb-2">
-          Activate
-        </span>
-        <span *ngIf="item?.customerStatus === 'ACTIVE'"
-          class="inline-block bg-[#FFDBDA] px-3 py-1 text-sm font-semibold text-[#FF0000] mr-2 mb-2">
-          Deactivate
-        </span>
-          
+          <div class="relative inline-block text-left">
+            <div>
+              <button (click)="getItemId(item.customerId);" type="button"
+                class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                id="menu-button" aria-expanded="true" aria-haspopup="true">
+                Actions
+                <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd"
+                    d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                    clip-rule="evenodd" />
+                </svg>
+              </button>
+            </div>
+            <div *ngIf="dropdown && item.customerId == selectedItem"
+              class=" cursor-pointer absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+              role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+              <div class="py-1" role="none" *ngIf="item?.customerStatus === 'INACTIVE' || item?.customerStatus === 'PENDING'" >
+                <a class="text-green-700 block px-4 py-2 text-sm"  (click)="confirmStatus(item,'Activate')" >
+                  Activate
+                </a>
+              </div>
+              <div class="py-1" role="none" *ngIf="item?.customerStatus === 'ACTIVE'" >
+                <a class="text-red-700 block px-4 py-2 text-sm" (click)="confirmStatus(item,'Deactivate')"  >
+                  Deactivate
+                </a>
+              </div>
+            </div>
+          </div>
         </td>
       </tr>
     </tbody>

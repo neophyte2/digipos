@@ -37,6 +37,27 @@ export class SettingsService {
     getPermissions(data: any) {
         return this.http.post(`${this.api}/role-privilege/read-by-role-id`, data);
     }
-    
+
+    deleteInvite(data: any) {
+        return this.http.post(`${this.api}/customer/delete-invite`, data);
+    }
+
+    deactivateUser(data: any) {
+        return this.http.post(`${this.api}/customer/deactivate`, data);
+    }
+
+    activateUser(data: any) {
+        return this.http.post(`${this.api}/customer/activate`, data);
+    }
+
+    changeInviteRole(data: any) {
+        return this.http.post(`${this.api}/customer/change-invite-role`, data);
+    }
+
+    changeUserRole(data: any) {
+        return this.http.post(`${this.api}/customer/update-role`, data);
+
+    }
+
 
 }

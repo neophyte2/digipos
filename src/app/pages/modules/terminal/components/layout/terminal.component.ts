@@ -160,16 +160,13 @@ export class TerminalComponent implements OnInit, OnDestroy {
       if (data.responseCode === '00') {
         this.genSrv.sweetAlertSuccess(data.responseMessage);
         this.allTerminals()
-        this.loader.btn.create = false;
       } else {
         let msg = data.responseMessage
         this.genSrv.sweetAlertError(msg);
-        this.loader.btn.create = false;
       }
     }, (err) => {
       let msg = err
       this.genSrv.sweetAlertError(msg);
-      this.loader.btn.create = false;
     })
   }
 
@@ -181,16 +178,13 @@ export class TerminalComponent implements OnInit, OnDestroy {
       if (data.responseCode === '00') {
         this.genSrv.sweetAlertSuccess(data.responseMessage);
         this.allTerminals()
-        this.loader.btn.create = false;
       } else {
         let msg = data.responseMessage
         this.genSrv.sweetAlertError(msg);
-        this.loader.btn.create = false;
       }
     }, (err) => {
       let msg = err
       this.genSrv.sweetAlertError(msg);
-      this.loader.btn.create = false;
     })
 
   }

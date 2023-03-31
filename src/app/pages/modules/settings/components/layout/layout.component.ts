@@ -8,7 +8,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 
 export class LayoutComponent implements OnInit {
 
-  title = 'Teams'
+  title = 'Profile'
 
   constructor() { };
 
