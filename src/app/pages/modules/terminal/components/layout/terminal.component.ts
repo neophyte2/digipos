@@ -90,6 +90,7 @@ export class TerminalComponent implements OnInit, OnDestroy {
 
   toggleModal() {
     this.showModal = !this.showModal;
+    if(this.showModal)  this.generateReference()
   }
 
   viewTerminal(id: any) {
@@ -104,7 +105,7 @@ export class TerminalComponent implements OnInit, OnDestroy {
   ngOnForms() {
     this.terminalForm = this.fb.group({
       terminalCustomerId: [null, Validators.required,],
-      terminalSerial: ['', Validators.required],
+      terminalSerial: [{ value: '', disabled: true },  Validators.required],
     });
   }
 
@@ -135,6 +136,13 @@ export class TerminalComponent implements OnInit, OnDestroy {
     })
   }
 
+  generateReference() {
+    const number: number = Math.floor(Math.random() * 9) + 1; // First digit can't be 0
+    const restOfDigits: string = Math.random().toString().slice(2, 12); // Generates 10 random digits
+    const result: string = number.toString() + restOfDigits;
+    this.terminalForm.controls['terminalSerial'].patchValue(result)
+  }
+
   // Deactivate & Activate
 
   confirmStatus(data: any, statusName: string) {
@@ -147,7 +155,6 @@ export class TerminalComponent implements OnInit, OnDestroy {
         } else {
           this.deactivate(data.terminalId)
         }
-
       }
     })
   }

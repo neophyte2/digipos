@@ -54,7 +54,7 @@ export class ChargebackComponent implements OnInit, OnDestroy {
 
   toggleModal() {
     this.showModal = !this.showModal;
-    this.generateReference()
+    if(this.showModal)  this.generateReference()
   }
 
   viewChargeback(id: any) {
