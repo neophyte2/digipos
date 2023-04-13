@@ -55,7 +55,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.genSrv.sweetAlertDecision(statusName, name).then((result) => {
       if (result.isConfirmed) {
         if (statusName === 'Activate') {
-          this.deactivate(data.customerId)
+          this.activate(data.customerId)
         } else {
           this.deactivate(data.customerId)
         }

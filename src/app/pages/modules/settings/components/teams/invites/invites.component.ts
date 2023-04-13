@@ -74,6 +74,7 @@ export class InvitesComponent implements OnInit, OnDestroy {
           Validators.pattern(VALIDEMAILREGEX),
         ]),
       ],
+      invite:[{value: data?.inviteId}],
       roleId: [Number(data?.inviteCustomerRole), Validators.required],
     });
   }
@@ -83,7 +84,6 @@ export class InvitesComponent implements OnInit, OnDestroy {
   }
 
   changeRoleModal(item?: any) {
-    console.log(item);
     if (item) {
       this.ngOnForms(item)
     }
@@ -137,7 +137,7 @@ export class InvitesComponent implements OnInit, OnDestroy {
 
   updateInvite() {
     let payload = {
-      inviteId: this.ulf['inviteId'].value,
+      inviteId: this.ulf['invite'].value.value,
       roleId: this.ulf['roleId'].value,
     }
     this.loader.btn.update = true;
@@ -158,11 +158,6 @@ export class InvitesComponent implements OnInit, OnDestroy {
       this.genSrv.sweetAlertError(msg);
       this.loader.btn.update = false;
     })
-  }
-
-  getRoleById(id: any) {
-    let role = this.roleList ? this.roleList.filter((r: any) => r.roleId == id) : '';
-    return role ? role[0].roleName : ''
   }
 
   confirmStatus(data: any, statusName: string) {

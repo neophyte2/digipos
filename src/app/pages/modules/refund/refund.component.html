@@ -107,24 +107,24 @@
           <div class="flex p-2 rounded hover:bg-gray-100">
             <div class="flex items-center h-5">
               <!-- success -->
-              <svg *ngIf="item?.trnResponseCode === '00'" width="11" height="11" viewBox="0 0 11 11" fill="none"
+              <svg *ngIf="(item?.refundStatus | uppercase ) === 'ACTIVE'  " width="11" height="11" viewBox="0 0 11 11" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <circle cx="5.5" cy="5.5" r="5.5" fill="#35B172" />
               </svg>
               <!-- pending -->
-              <svg *ngIf="item?.trnResponseCode === '09'" width="11" height="11" viewBox="0 0 11 11" fill="none"
+              <svg *ngIf="item?.refundStatus === '09'" width="11" height="11" viewBox="0 0 11 11" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <circle cx="5.5" cy="5.5" r="5.5" fill="#FF8A00" />
               </svg>
               <!-- failed -->
-              <svg *ngIf="item?.trnResponseCode === '25'" width="11" height="11" viewBox="0 0 11 11" fill="none"
+              <svg *ngIf="item?.refundStatus === '25'" width="11" height="11" viewBox="0 0 11 11" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <circle cx="5.5" cy="5.5" r="5.5" fill="#FF0000" />
               </svg>
 
             </div>
             <div class="ml-2 text-sm">
-              {{formatAmt(item?.trnAmount)}}
+              {{formatAmt(item?.refundAmount)}}
             </div>
           </div>
         </td>

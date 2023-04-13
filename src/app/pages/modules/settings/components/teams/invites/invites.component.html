@@ -118,7 +118,7 @@
         <td class="px-6 py-4">
           <span (click)="viewRole(item?.inviteCustomerRole)"
             class="inline-block bg-gray-200 px-3 py-1 text-sm font-semibold cursor-pointer text-gray-700 mr-2 mb-2">
-            {{getRoleById(item?.inviteCustomerRole)}}
+            {{item?.inviteCustomerRoleName}}
           </span>
         </td>
         <td class="px-6 py-4">
@@ -261,8 +261,7 @@
                 class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
                 Email Address
               </label>
-              <div class="mt-2"
-                *ngIf="(ulf['inviteId'].dirty || ulf['inviteId'].touched) && ulf['inviteId'].invalid">
+              <div class="mt-2" *ngIf="(ulf['inviteId'].dirty || ulf['inviteId'].touched) && ulf['inviteId'].invalid">
                 <span class="text-rose-700" style="font-size: 13px;" *ngIf="ulf['inviteId'].errors?.['required']">
                   Email Address is required.
                 </span>
@@ -281,8 +280,7 @@
               class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
               Role
             </label>
-            <div class="mt-2"
-              *ngIf="ulf['roleId'].invalid && (ulf['roleId'].dirty || ulf['roleId'].touched) ">
+            <div class="mt-2" *ngIf="ulf['roleId'].invalid && (ulf['roleId'].dirty || ulf['roleId'].touched) ">
               <span class="text-rose-700" style="font-size: 13px;" *ngIf="ulf['roleId'].errors?.['required']">
                 Role is required.
               </span>

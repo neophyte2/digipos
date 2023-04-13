@@ -124,6 +124,10 @@ export class SignInomponent implements OnInit, OnDestroy {
             this.router.navigate(["/auth/dashboard"]);
             this.loader.btn.login = false;
           }, 1000);
+        }else{
+          let msg = data.responseMessage
+        this.genSrv.sweetAlertError(msg);
+        this.loader.btn.login = false;
         }
       }, (err) => {
         let msg = err.responseMessage
