@@ -19,11 +19,14 @@ export class KycComponent implements OnInit {
   verifyList: any
   accountType: any
   businessName: any
-  bvnForm!: FormGroup;
-  idCardForm!: FormGroup;
   visible: boolean = false;
   ClickLinkAccount: boolean = true;
   base64Contents: string | undefined;
+
+  //Form
+  bvnForm!: FormGroup;
+  idCardForm!: FormGroup;
+  addressForm!: FormGroup;
 
   //Verification
   verifyCac: boolean = false;
@@ -60,8 +63,7 @@ export class KycComponent implements OnInit {
   constructor(
     private kycSrv: KycService,
     private genSrv: GeneralService
-  ) {
-  }
+  ) { }
 
   ngOnInit(): void {
     this.onInitForm();
@@ -73,12 +75,15 @@ export class KycComponent implements OnInit {
   }
 
   onInitForm() {
+    this.addressForm = new FormGroup({
+      address: new FormControl('', Validators.maxLength(11))
+    })
     this.bvnForm = new FormGroup({
       bvn: new FormControl('', Validators.maxLength(11))
     });
     this.idCardForm = new FormGroup({
       idCardType: new FormControl('', Validators.required),
-      idCardNumber: new FormControl('', Validators.required),
+      idCardNumber: new FormControl(''),
       idCardImageUrl: new FormControl('', Validators.required),
     });
   }
@@ -86,8 +91,18 @@ export class KycComponent implements OnInit {
   getVerification() {
     this.kycSrv.verificatin().pipe(takeUntil(this.unsubcribe)).subscribe(data => {
       this.verifyList = data;
-      this.bvnForm.controls['bvn'].patchValue(this.verifyList.bvn);
+      console.log(data);
+      this.setValues(data)
     })
+  }
+
+  setValues(data: any) {
+    this.bvnForm.controls['bvn'].patchValue(data.bvn);
+    this.addressForm.controls['address'].patchValue(data.address);
+    this.idCardForm.controls['idCardType'].patchValue(data.idCardType);
+    this.idCardForm.controls['idCardNumber'].patchValue(data.idCardNumber);
+    this.idCardForm.controls['idCardImageUrl'].patchValue(data.idCard);
+    this.govtPhoto = { name: data ? data.idCard : ' Choose File' }
   }
 
   getCards() {
@@ -153,9 +168,36 @@ export class KycComponent implements OnInit {
   }
 
   //form verification 
+  validateIdcarNumbers(data: any) {
+    switch (data) {
+      case 'NIN':
+        console.log('ttt');
+        this.idCardForm.controls['idCardNumber'].setValidators([Validators.required,Validators.minLength(11), Validators.maxLength(11)]);
+        break;
+      case 'INTERNATION_PASSPORT':
+
+        break;
+      case 'DRIVERS_LICENSE':
+
+        break;
+      case 'PVC':
+
+        break;
+
+      default:
+        break;
+    }
+  }
+
   //id card verify
   onComplete() {
-    if (this.idCardForm.valid && this.base64Contents) {
+    const idCardType = this.idCardForm.controls['idCardType'].value
+    console.log(idCardType);
+    this.validateIdcarNumbers(idCardType)
+    // return
+    console.log(this.idCardForm.getRawValue());
+    
+    if (this.idCardForm.valid) {
       this.completeIdCard()
     }
   }
@@ -181,25 +223,26 @@ export class KycComponent implements OnInit {
   }
 
   completeIdCard() {
+    this.loader.btn.gvtIDloader = true
     let data = {
       idCardType: this.idCardForm.controls['idCardType'].value,
       idCardNumber: this.idCardForm.controls['idCardNumber'].value,
-      idCardImageUrl: this.base64Contents,
+      idCardImageUrl: this.base64Contents || this.idCardForm.controls['idCardImageUrl'].value,
     }
     this.kycSrv.verifyIdCard(data).subscribe((data: any) => {
       if (data.responseCode === '00') {
         this.genSrv.sweetAlertSuccess(data.responseMessage);
-        this.loader.btn.bvnloader = false;
+        this.loader.btn.gvtIDloader = false;
         this.getVerification()
       } else {
         let msg = data.responseMessage
         this.genSrv.sweetAlertError(msg);
-        this.loader.btn.bvnloader = false;
+        this.loader.btn.gvtIDloader = false;
       }
     }, (err) => {
       let msg = err
       this.genSrv.sweetAlertError(msg);
-      this.loader.btn.bvnloader = false;
+      this.loader.btn.gvtIDloader = false;
     })
   }
 
