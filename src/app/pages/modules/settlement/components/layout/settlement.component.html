@@ -53,8 +53,7 @@
   </div>
   <div class="col-end-6 col-span-2 mt-10">
     <div>
-      <button 
-        class=" w-[150px] py-[15px] rounded flex p-2 text-white bg-download-report text-sm mx-4 text-center ">
+      <button class=" w-[150px] py-[15px] rounded flex p-2 text-white bg-download-report text-sm mx-4 text-center ">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_537_5281)">
             <path
@@ -86,74 +85,52 @@
           Transaction Reference
         </th>
         <th scope="col" class="px-6 py-3">
-          Payment Method
+          Amount To Settle
         </th>
         <th scope="col" class="px-6 py-3">
-          Description
+          Fee
         </th>
         <th scope="col" class="px-6 py-3">
           Date\Time
         </th>
-        <th scope="col" class="px-6 py-3">
+        <!-- <th scope="col" class="px-6 py-3">
           Status
-        </th>
+        </th> -->
       </tr>
     </thead>
     <tbody>
       <tr class="bg-white border-b  hover:bg-gray-100 " *ngFor="let item of settlementList">
         <td class="px-6 py-4">
           <div class="flex p-2 rounded hover:bg-gray-100">
-            <div class="flex items-center h-5">
-              <!-- success -->
-              <svg *ngIf="item?.trnResponseCode === '00'" width="11" height="11" viewBox="0 0 11 11" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <circle cx="5.5" cy="5.5" r="5.5" fill="#35B172" />
-              </svg>
-              <!-- pending -->
-              <svg *ngIf="item?.trnResponseCode === '09'" width="11" height="11" viewBox="0 0 11 11" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <circle cx="5.5" cy="5.5" r="5.5" fill="#FF8A00" />
-              </svg>
-              <!-- failed -->
-              <svg *ngIf="item?.trnResponseCode === '25'" width="11" height="11" viewBox="0 0 11 11" fill="none"
-                xmlns="http://www.w3.org/2000/svg">
-                <circle cx="5.5" cy="5.5" r="5.5" fill="#FF0000" />
-              </svg>
-
-            </div>
-            <div class="ml-2 text-sm">
-              {{formatAmt(item?.trnAmount)}}
-            </div>
+            {{formatAmt(item?.trnAmount)}}
           </div>
         </td>
         <td class="px-6 py-4">
           {{item?.trnReference}}
         </td>
         <td class="px-6 py-4">
-          <span class="inline-block bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-            {{item?.trnService}}
-          </span>
+          {{item?.trnPayable}}
         </td>
         <td class="px-6 py-4">
-          {{item?.trnNarration}}
+          {{item?.trnFee}}
         </td>
         <td class="px-6 py-4">
           {{item?.trnCreatedAt}}
         </td>
-        <td class="px-6 py-4">
-          <span *ngIf="item?.trnResponseCode === '00'"
+        <!-- <td class="px-6 py-4">
+          <span *ngIf="(item?.trnSettlementStatus  | uppercase) === 'SUCCESS'"
             class="inline-block bg-[#DBFFED] px-3 py-1 text-sm font-semibold text-[#35B172] mr-2 mb-2">
             Successful
           </span>
-          <span *ngIf="item?.trnResponseCode === '25'"
+          <span *ngIf="(item?.trnSettlementStatus | uppercase) === 'FAILED'"
             class="inline-block bg-[#FFDBDA] px-3 py-1 text-sm font-semibold text-[#FF0000] mr-2 mb-2">
             Failed
           </span>
-          <span *ngIf="item?.trnResponseCode === '09'"
+          <span *ngIf="(item?.trnSettlementStatus | uppercase) === 'PENDING'"
             class="inline-block bg-[#FFEDD7] px-3 py-1 text-sm font-semibold text-[#FF8A00] mr-2 mb-2">
             Pending
           </span>
-        </td>
+        </td> -->
       </tr>
     </tbody>
   </table>
