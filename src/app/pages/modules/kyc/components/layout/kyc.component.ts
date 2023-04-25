@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder, AbstractControl } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { GeneralService } from 'src/app/shared/services/general.service';
 import { KycService } from '../../services/kyc.service';
@@ -14,17 +14,21 @@ import { NgOtpInputConfig } from 'ng-otp-input';
 export class KycComponent implements OnInit {
 
   otp = ''
-  govtPhoto: any
+  cacPhoto: any
   cardList: any
+  govtPhoto: any
+  logoPhoto: any
   verifyList: any
   accountType: any
   businessName: any
+  maxLength: number = 0;
   visible: boolean = false;
   ClickLinkAccount: boolean = true;
   base64Contents: string | undefined;
 
   //Form
   bvnForm!: FormGroup;
+  cacForm!: FormGroup;
   idCardForm!: FormGroup;
   addressForm!: FormGroup;
 
@@ -61,6 +65,7 @@ export class KycComponent implements OnInit {
 
 
   constructor(
+    private fb: FormBuilder,
     private kycSrv: KycService,
     private genSrv: GeneralService
   ) { }
@@ -81,17 +86,20 @@ export class KycComponent implements OnInit {
     this.bvnForm = new FormGroup({
       bvn: new FormControl('', Validators.maxLength(11))
     });
-    this.idCardForm = new FormGroup({
-      idCardType: new FormControl('', Validators.required),
-      idCardNumber: new FormControl(''),
-      idCardImageUrl: new FormControl('', Validators.required),
+    this.idCardForm = this.fb.group({
+      idCardType: [null, Validators.required],
+      idCardNumber: ['', [Validators.required]],
+      idCardImageUrl: ['', Validators.required],
+    });
+    this.cacForm = this.fb.group({
+      cacNumber: ['', [Validators.required]],
+      cacPdfUrl: ['', Validators.required],
     });
   }
 
   getVerification() {
     this.kycSrv.verificatin().pipe(takeUntil(this.unsubcribe)).subscribe(data => {
       this.verifyList = data;
-      console.log(data);
       this.setValues(data)
     })
   }
@@ -103,6 +111,11 @@ export class KycComponent implements OnInit {
     this.idCardForm.controls['idCardNumber'].patchValue(data.idCardNumber);
     this.idCardForm.controls['idCardImageUrl'].patchValue(data.idCard);
     this.govtPhoto = { name: data ? data.idCard : ' Choose File' }
+    this.validateIdcarNumbers({ name: data.idCardType })
+    this.inputval()
+    this.cacForm.controls['cacNumber'].patchValue(data.cacNumber);
+    this.cacPhoto = { name: data ? data.cac : ' Choose File' }
+
   }
 
   getCards() {
@@ -168,41 +181,58 @@ export class KycComponent implements OnInit {
   }
 
   //form verification 
-  validateIdcarNumbers(data: any) {
-    switch (data) {
-      case 'NIN':
-        console.log('ttt');
-        this.idCardForm.controls['idCardNumber'].setValidators([Validators.required,Validators.minLength(11), Validators.maxLength(11)]);
-        break;
-      case 'INTERNATION_PASSPORT':
-
-        break;
-      case 'DRIVERS_LICENSE':
-
-        break;
-      case 'PVC':
-
-        break;
-
-      default:
-        break;
+  validateIdcarNumbers(event: any) {
+    const data = event ? event.name : ''
+    if (data === 'NIN') {
+      this.idCardForm.controls['idCardNumber'].setValidators([Validators.required, Validators.pattern(/^\d+(\.\d+)?$/), Validators.minLength(11), Validators.maxLength(11)]);
+      return
+    }
+    if (data === 'INTERNATION_PASSPORT') {
+      this.maxLength = 9
+      this.idCardForm.controls['idCardNumber'].setValidators([Validators.required, this.validateInput.bind(this), Validators.minLength(this.maxLength),
+      Validators.maxLength(this.maxLength)]);
+      return
+    }
+    if (data === 'DRIVERS_LICENSE') {
+      this.maxLength = 12
+      this.idCardForm.controls['idCardNumber'].setValidators([Validators.required, this.validateInput.bind(this), Validators.minLength(this.maxLength), Validators.maxLength(this.maxLength)]);
+      return
+    }
+    if (data === 'PVC') {
+      this.maxLength = 19
+      this.idCardForm.controls['idCardNumber'].setValidators([Validators.required, this.validateInput.bind(this), Validators.minLength(this.maxLength), Validators.maxLength(this.maxLength)]);
+      return
     }
   }
 
-  //id card verify
-  onComplete() {
-    const idCardType = this.idCardForm.controls['idCardType'].value
-    console.log(idCardType);
-    this.validateIdcarNumbers(idCardType)
-    // return
-    console.log(this.idCardForm.getRawValue());
-    
-    if (this.idCardForm.valid) {
-      this.completeIdCard()
+  inputval() {
+    this.maxLength = 10
+    this.cacForm.controls['cacNumber'].setValidators([Validators.required, this.validateInput.bind(this), Validators.minLength(this.maxLength),
+    Validators.maxLength(this.maxLength)]);
+  }
+
+  //Validate passport-drivers license-pvc charaters
+  validateInput(control: AbstractControl) {
+    const inputValue = control.value;
+    const regex = new RegExp(`^[a-zA-Z0-9]{${this.maxLength}}$`);
+    if (regex.test(inputValue) && !this.isAllCharactersEqual(inputValue)) {
+      return null;
+    } else {
+      return { invalidInput: true };
     }
   }
 
-  // complete verification
+  isAllCharactersEqual(inputValue: string): boolean {
+    let firstCharacter: string = inputValue.charAt(0);
+    for (let i = 1; i < inputValue.length; i++) {
+      if (firstCharacter !== inputValue.charAt(i)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  // complete  verification
   completeBvnOtp() {
     let otp = { otp: this.otp }
     this.kycSrv.completeBvn(otp).subscribe((data: any) => {
@@ -246,23 +276,76 @@ export class KycComponent implements OnInit {
     })
   }
 
+  completeCac() {
+    this.loader.btn.cacloader = true
+    let data = {
+      cacNumber: this.cacForm.controls['cacNumber'].value,
+      cacPdfUrl: this.cacForm.controls['cacPdfUrl'].value
+    }
+    this.kycSrv.verifyCac(data).subscribe((data: any) => {
+      if (data.responseCode === '00') {
+        this.genSrv.sweetAlertSuccess(data.responseMessage);
+        this.loader.btn.cacloader = false;
+        this.getVerification()
+      } else {
+        let msg = data.responseMessage
+        this.genSrv.sweetAlertError(msg);
+        this.loader.btn.cacloader = false;
+      }
+    }, (err) => {
+      let msg = err
+      this.genSrv.sweetAlertError(msg);
+      this.loader.btn.cacloader = false;
+    })
+  }
+
+  completeBislogo() {
+    this.loader.btn.cacloader = true
+    let data = {
+      cacNumber: this.cacForm.controls['cacNumber'].value,
+      cacPdfUrl: this.cacForm.controls['cacPdfUrl'].value
+    }
+    this.kycSrv.verifyCac(data).subscribe((data: any) => {
+      if (data.responseCode === '00') {
+        this.genSrv.sweetAlertSuccess(data.responseMessage);
+        this.loader.btn.gvtIDloader = false;
+        this.getVerification()
+      } else {
+        let msg = data.responseMessage
+        this.genSrv.sweetAlertError(msg);
+        this.loader.btn.gvtIDloader = false;
+      }
+    }, (err) => {
+      let msg = err
+      this.genSrv.sweetAlertError(msg);
+      this.loader.btn.gvtIDloader = false;
+    })
+  }
+
   //Upload
-  browseGovtFile(event: any) {
+  browseFile(event: any, type?: any) {
+    console.log(type);
+    const fileName = event.target.files[0]
     const size = 5 * 1024 * 1024;
-    if (event.target.files[0].size > size) {
+    if (fileName.size > size) {
       this.genSrv.sweetAlertSuccess('File is Larger Than 5MB')
     } else {
-      this.govtPhoto = event.target.files[0];
+      if (type === 'idcard') this.govtPhoto = fileName;
+      if (type === 'cac') this.cacPhoto = fileName;
+      if (type === 'logo') this.logoPhoto = fileName;
       const reader: FileReader = new FileReader();
       reader.onload = (e: any) => {
         const contents: string = e.target.result;
         this.base64Contents = contents.replace(/^data:image\/(png|jpg);base64,/, "");
         if (this.base64Contents) {
-          this.idCardForm.controls['idCardImageUrl'].patchValue(this.base64Contents);
-          this.onComplete()
+          if (type === 'idcard') this.idCardForm.controls['idCardImageUrl'].patchValue(this.base64Contents);
+          if (type === 'cac') this.cacForm.controls['cacPdfUrl'].patchValue(this.base64Contents);
+          if(type ==='logo') {
+
+          }
         }
       };
-      reader.readAsDataURL(this.govtPhoto);
+      reader.readAsDataURL(fileName);
     }
   }
 

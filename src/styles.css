@@ -407,7 +407,7 @@
   position: absolute;
   top: -24px;
   left: 0px;
-  z-index: 222;
+  z-index: auto;
 }
 
 .input-wrap input:focus~label {

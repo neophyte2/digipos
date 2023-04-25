@@ -24,6 +24,10 @@ export class KycService {
         return this.http.post(`${this.api}/kyc/create-id-card`, param);
     }
 
+    verifyCac(param: any){
+        return this.http.post(`${this.api}/kyc/create-cac`, param);
+    }
+
     initiateBvn(param: any) {
         return this.http.post(`${this.api}/kyc/initial-bvn-verification`, param);
     }
