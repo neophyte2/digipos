@@ -393,7 +393,7 @@
 
       <!-- Upload Business Logo -->
       <div class="mt-5" *ngIf="accountType === 'BUSINESS'">
-        <form>
+        <form [formGroup]="bislogoForm">
           <div class="border border-600 p-5 rounded">
             <div class="flex mb-3">
               <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -406,10 +406,23 @@
               </svg>
               <p class="pl-8 font-bold">Upload Business Logo</p>
             </div>
+            <div class="order-last float-right">
+              <svg *ngIf="verifyList?.cacVerified === 'YES' && !loader.btn.cacloader" width="25" height="25"
+                viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12.5" cy="12.5" r="12.5" fill="#64154A" />
+                <path
+                  d="M10.16 14.8734L7.05673 11.7702L6 12.8195L10.16 16.9794L19.0901 8.04929L18.0408 7L10.16 14.8734Z"
+                  fill="white" />
+              </svg>
+            </div>
+
+          <div class="mt-11">
             <div class="border-dotted border-2 p-3 border-indigo-500 rounded">
               <label for="file3">
-                <span class="font-bold text-[#64154A] flex justify-center">Choose file</span>
-                <input (change)="browseFile($event,'logo')"
+                <span class="font-bold text-[#64154A] flex justify-center">
+                  {{ bislogoPhoto ? bislogoPhoto.name : 'Choose file'}}
+                </span>
+                <input (change)="browseFile($event,'logo')" 
                   class="upload block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
                   id="file3" type="file" accept="image/*" />
               </label>
@@ -417,6 +430,7 @@
             <div class="mt-1 text-sm text-[#677189]">
               JPG, PDF, JPEG, PNG are accepted. Max file size 5MB
             </div>
+          </div>
           </div>
         </form>
       </div>

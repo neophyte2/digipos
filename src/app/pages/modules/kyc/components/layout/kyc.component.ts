@@ -14,16 +14,19 @@ import { NgOtpInputConfig } from 'ng-otp-input';
 export class KycComponent implements OnInit {
 
   otp = ''
-  cacPhoto: any
   cardList: any
-  govtPhoto: any
-  logoPhoto: any
   verifyList: any
   accountType: any
   businessName: any
   maxLength: number = 0;
   visible: boolean = false;
   ClickLinkAccount: boolean = true;
+
+  //files
+  cacPhoto: any
+  govtPhoto: any
+  logoPhoto: any
+  bislogoPhoto: any
   base64Contents: string | undefined;
 
   //Form
@@ -31,14 +34,7 @@ export class KycComponent implements OnInit {
   cacForm!: FormGroup;
   idCardForm!: FormGroup;
   addressForm!: FormGroup;
-
-  //Verification
-  verifyCac: boolean = false;
-  verifyBvn: boolean = false;
-  verifGvtID: boolean = false;
-  verifyAddress: boolean = false;
-  verifyPicture: boolean = false;
-  verifyBusinessLogo: boolean = false;
+  bislogoForm!: FormGroup;
 
   //Loader
   loader: any = {
@@ -95,6 +91,9 @@ export class KycComponent implements OnInit {
       cacNumber: ['', [Validators.required]],
       cacPdfUrl: ['', Validators.required],
     });
+    this.bislogoForm = this.fb.group({
+      logo: ['', Validators.required],
+    })
   }
 
   getVerification() {
@@ -114,8 +113,10 @@ export class KycComponent implements OnInit {
     this.validateIdcarNumbers({ name: data.idCardType })
     this.inputval()
     this.cacForm.controls['cacNumber'].patchValue(data.cacNumber);
+    this.cacForm.controls['cacPdfUrl'].patchValue(data.cac);
     this.cacPhoto = { name: data ? data.cac : ' Choose File' }
-
+    this.bislogoForm.controls['logo'].patchValue(data.logo);
+    this.bislogoPhoto = { name: data ? data.logo : ' Choose File' }
   }
 
   getCards() {
@@ -133,18 +134,15 @@ export class KycComponent implements OnInit {
         if (data.responseCode === '00') {
           this.genSrv.sweetAlertSuccess(data.responseMessage);
           this.loader.btn.addressloader = false;
-          this.verifyAddress = true
           this.getVerification()
         } else {
           let msg = data.responseMessage
           this.genSrv.sweetAlertError(msg);
           this.loader.btn.addressloader = false;
-          this.verifyAddress = false
         }
       }, (err) => {
         let msg = err
         this.genSrv.sweetAlertError(msg);
-        this.verifyAddress = false
         this.loader.btn.addressloader = false;
       })
     }
@@ -300,25 +298,24 @@ export class KycComponent implements OnInit {
   }
 
   completeBislogo() {
-    this.loader.btn.cacloader = true
+    this.loader.btn.bislogoloader = true
     let data = {
-      cacNumber: this.cacForm.controls['cacNumber'].value,
-      cacPdfUrl: this.cacForm.controls['cacPdfUrl'].value
+      logo: this.bislogoForm.controls['logo'].value,
     }
     this.kycSrv.verifyCac(data).subscribe((data: any) => {
       if (data.responseCode === '00') {
         this.genSrv.sweetAlertSuccess(data.responseMessage);
-        this.loader.btn.gvtIDloader = false;
+        this.loader.btn.bislogoloader = false;
         this.getVerification()
       } else {
         let msg = data.responseMessage
         this.genSrv.sweetAlertError(msg);
-        this.loader.btn.gvtIDloader = false;
+        this.loader.btn.bislogoloader = false;
       }
     }, (err) => {
       let msg = err
       this.genSrv.sweetAlertError(msg);
-      this.loader.btn.gvtIDloader = false;
+      this.loader.btn.bislogoloader = false;
     })
   }
 
@@ -340,8 +337,9 @@ export class KycComponent implements OnInit {
         if (this.base64Contents) {
           if (type === 'idcard') this.idCardForm.controls['idCardImageUrl'].patchValue(this.base64Contents);
           if (type === 'cac') this.cacForm.controls['cacPdfUrl'].patchValue(this.base64Contents);
-          if(type ==='logo') {
-
+          if (type === 'logo') {
+            this.bislogoForm.controls['logo'].patchValue(this.base64Contents);
+            this.completeBislogo()
           }
         }
       };
