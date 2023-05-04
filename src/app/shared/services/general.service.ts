@@ -11,18 +11,27 @@ import { Location } from '@angular/common';
 export class GeneralService {
 
   public currentUser: Observable<any>;
+  public currentVerify: Observable<any>;
   private storageKey = "AdminCurrentUser";
+  private verifyKey = "Verify";
   private currentUserSubject: BehaviorSubject<any>;
+  private verifySubject: BehaviorSubject<any>;
 
   constructor(private route: Router,
     private location: Location,
   ) {
     this.currentUserSubject = new BehaviorSubject<any>(this.userDetails);
+    this.verifySubject = new BehaviorSubject<any>(this.verifyDetails);
     this.currentUser = this.currentUserSubject.asObservable();
+    this.currentVerify = this.verifySubject.asObservable();
   }
 
   public get currentUserValue(): Observable<any> {
     return this.currentUserSubject.value;
+  }
+
+  public get currentVerifyValue(): Observable<any> {
+    return this.verifySubject.value;
   }
 
   /**
@@ -30,6 +39,14 @@ export class GeneralService {
    */
   get userDetails(): Observable<any> {
     let storage: any = localStorage.getItem(this.storageKey)
+    return JSON.parse(storage);
+  }
+
+  /**
+   * getting verify details
+   */
+  get verifyDetails(): Observable<any> {
+    let storage: any = localStorage.getItem(this.verifyKey)
     return JSON.parse(storage);
   }
 
@@ -44,6 +61,11 @@ export class GeneralService {
     return this.currentUserSubject.next(data);
   }
 
+  storeVerification(data: any) {
+    localStorage.setItem(this.verifyKey, JSON.stringify(data));
+    return this.verifySubject.next(data);
+  }
+
   /**
    * this is use for clearing the data 
    * stored in the loacl storage
@@ -51,6 +73,7 @@ export class GeneralService {
   logout(value: any) {
     // remove user from local storage to log user out
     localStorage.removeItem(this.storageKey);
+    localStorage.removeItem(this.verifyKey);
     this.currentUserSubject.next(null);
     this.route.navigate([value])
   }

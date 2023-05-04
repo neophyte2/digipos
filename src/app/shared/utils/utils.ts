@@ -85,7 +85,7 @@ export const getInitials = (name: any) => {
 export const tableCurrency = (amt: any) => {
     return new Intl.NumberFormat('en-NG',
         { style: 'currency', currency: 'NGN' }
-    ).format(amt);
+    ).format(amt).replace(/\.00$/, '');;
 }
 
 export const getPageCountUtil = (data: { pageNumber: number; pageSize: number; dataLength: number }) => {
@@ -93,22 +93,3 @@ export const getPageCountUtil = (data: { pageNumber: number; pageSize: number; d
     const count = (pageNumber - 1) * pageSize + dataLength;
     return count || 0;
 };
-
-
-export const getBase64ImageUrl = (imgUrl: any): Promise<string> => {
-    return new Promise<string>(resolve => {
-        var img = new Image();
-        img.src = imgUrl;
-        img.setAttribute('crossOrigin', 'anonymous');
-        img.onload = (() => {
-            var canvas = document.createElement("canvas");
-            canvas.width = img.width;
-            canvas.height = img.height;
-            var ctx: any = canvas.getContext("2d");
-            ctx.drawImage(img, 0, 0);
-            var dataURL = canvas.toDataURL("image/png");
-            resolve(dataURL);
-            // resolve(dataURL.replace(/^data:image\/(png|jpg);base64,/, ""));
-        });
-    });
-}

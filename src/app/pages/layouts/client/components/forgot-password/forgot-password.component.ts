@@ -60,19 +60,19 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
     this.gustSrv.initiateReset(payload).pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
       if (data.responseCode === '00') {
         setTimeout(() => {
-          this.router.navigate(["/verify-reset"]);
+          this.router.navigate(["/verify-reset"], { queryParams: { email: this.lf['customerEmail'].value, } });
           this.genSrv.sweetAlertSuccess(data.responseMessage);
           this.loader.btn.reset = false;
         }, 1000);
-      }else{
+      } else {
         let msg = data.responseMessage
         this.genSrv.sweetAlertError(msg);
-        this.loader.btn.signup = false;
+        this.loader.btn.reset = false;
       }
     }, (err) => {
       let msg = err.responseMessage
       this.genSrv.sweetAlertError(msg);
-      this.loader.btn.login = false;
+      this.loader.btn.reset = false;
     })
   }
 

@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { KycComponent } from './components/layout/kyc.component';
 import { NgOtpInputModule } from 'ng-otp-input';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { HideDataPipe } from 'src/app/shared/utils/hide-data.pipe';
 
 const routes: Routes = [
   {
@@ -14,7 +15,8 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    KycComponent
+    KycComponent,
+    HideDataPipe
   ],
   imports: [
     CommonModule,

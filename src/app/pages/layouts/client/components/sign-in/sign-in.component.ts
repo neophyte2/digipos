@@ -52,7 +52,7 @@ export class SignInomponent implements OnInit, OnDestroy {
     this.getGeoLocation()
     this.preferredCountries = [CountryISO.Nigeria];
     this.deviceInfo = this.deviceService.getDeviceInfo();
-        this.ngOnForms();
+    this.ngOnForms();
   }
 
   // Get login Form Value
@@ -93,19 +93,19 @@ export class SignInomponent implements OnInit, OnDestroy {
 
   result(): any {
     let payload
-      payload = {
-        password: this.lf['password'].value,
-        username: this.lf['username'].value,
-        appVersion: '',
-        customerPushId: '',
-        countryCode: this.location?.calling_code,
-        latitude: this.location?.latitude,
-        ipAddress: this.location.ip,
-        source: 'Web',
-        devicePlatform: this.deviceInfo.deviceType,
-        deviceId: '',
-        deviceName: this.deviceInfo.device,
-        longitude: this.location.longitude,
+    payload = {
+      password: this.lf['password'].value,
+      username: this.lf['username'].value,
+      appVersion: '',
+      customerPushId: '',
+      countryCode: this.location?.calling_code,
+      latitude: this.location?.latitude,
+      ipAddress: this.location.ip,
+      source: 'Web',
+      devicePlatform: this.deviceInfo.deviceType,
+      deviceId: '',
+      deviceName: this.deviceInfo.device,
+      longitude: this.location.longitude,
     }
     return payload
   }
@@ -120,14 +120,15 @@ export class SignInomponent implements OnInit, OnDestroy {
       this.gustSrv.login(payload).pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
         if (data.responseCode === '00') {
           this.genSrv.storeUser(data)
+          this.genSrv.storeVerification(data.verifications)
           setTimeout(() => {
             this.router.navigate(["/auth/dashboard"]);
             this.loader.btn.login = false;
           }, 1000);
-        }else{
+        } else {
           let msg = data.responseMessage
-        this.genSrv.sweetAlertError(msg);
-        this.loader.btn.login = false;
+          this.genSrv.sweetAlertError(msg);
+          this.loader.btn.login = false;
         }
       }, (err) => {
         let msg = err.responseMessage

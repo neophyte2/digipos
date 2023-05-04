@@ -17,9 +17,9 @@
         <div class='nav-links hidden lg:block '>
             <div class='flex items-center'>
                 <div class='relative'>
-                    <div class=' ml-[37px] flex items-center'>
-                        <div class='rounded-full relative h-[42px] w-[42px] bg-[#EEEEEE]' id="dropdownBottomButton2"
-                            data-dropdown-toggle="dropdownBottom2" data-dropdown-placement="bottom">
+                    <div id="dropdownBottom2Button" data-dropdown-toggle="dropdownBottom2"
+                        data-dropdown-placement="bottom" class='ml-[37px] flex items-center'>
+                        <div class='rounded-full relative h-[42px] w-[42px] bg-[#EEEEEE]'>
                             <svg class='w-[16px] absolute top-0 left-0 right-0 bottom-0  h-fit m-auto ' width="15"
                                 height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -36,19 +36,22 @@
                     </div>
                     <div id="dropdownBottom2"
                         class="z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-[250px]  dark:bg-gray-700"
-                        data-popper-reference-hidden data-popper-escaped data-popper-placement="top">
+                        data-popper-reference-hidden data-popper-escaped data-popper-placement="bottom">
 
                         <div class='top-[70px] right-6 bg-white shadow-md min-w-[200px] rounded px-5 py-[30px]  flex-col'
                             aria-labelledby="dropdownBottomButton2">
                             <div class=''>
-                                <a class='text-[#000000CC] items-center mb-[4px] text-[15px] hover:text-[#043D69] flex' routerLink="settings">
+                                <a class='text-[#000000CC] items-center mb-[4px] text-[15px] hover:text-[#043D69] flex'
+                                    routerLink="settings">
                                     <span class='ml-5'>Profile</span>
                                 </a>
-                                <a class='text-[#000000CC] my-5 text-[15px] hover:text-[#043D69] flex' routerLink="settings">
+                                <a class='text-[#000000CC] my-5 text-[15px] hover:text-[#043D69] flex'
+                                    routerLink="settings">
 
                                     <span class='ml-5'>Settings</span>
                                 </a>
-                                <a class='text-[#000000CC]  mb-[4px] text-[15px] hover:text-[#043D69] flex ' (click)="genSrv.logout('/')">
+                                <a class='text-[#000000CC]  mb-[4px] text-[15px] hover:text-[#043D69] flex cursor-pointer'
+                                    (click)="genSrv.logout('/')">
 
                                     <span class='ml-5'>Logout</span>
                                 </a>

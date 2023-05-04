@@ -109,14 +109,14 @@ export class KycComponent implements OnInit {
     this.idCardForm.controls['idCardType'].patchValue(data.idCardType);
     this.idCardForm.controls['idCardNumber'].patchValue(data.idCardNumber);
     this.idCardForm.controls['idCardImageUrl'].patchValue(data.idCard);
-    this.govtPhoto = { name: data ? data.idCard : ' Choose File' }
+    this.govtPhoto = { name: data && typeof data.idCard === 'string' && data.idCard.length > 0 ? data.idCard : 'Choose File' }
     this.validateIdcarNumbers({ name: data.idCardType })
     this.inputval()
     this.cacForm.controls['cacNumber'].patchValue(data.cacNumber);
     this.cacForm.controls['cacPdfUrl'].patchValue(data.cac);
-    this.cacPhoto = { name: data ? data.cac : ' Choose File' }
+    this.cacPhoto = { name: data && typeof data.cac === 'string' && data.cac.length > 0 ? data.cac : 'Choose File' }
     this.bislogoForm.controls['logo'].patchValue(data.logo);
-    this.bislogoPhoto = { name: data ? data.logo : ' Choose File' }
+    this.bislogoPhoto = { name: data && typeof data.logo === 'string' && data.logo.length > 0 ? data.logo : 'Choose File' }
   }
 
   getCards() {
@@ -321,7 +321,6 @@ export class KycComponent implements OnInit {
 
   //Upload
   browseFile(event: any, type?: any) {
-    console.log(type);
     const fileName = event.target.files[0]
     const size = 5 * 1024 * 1024;
     if (fileName.size > size) {

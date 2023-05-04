@@ -17,6 +17,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
 
   otp = '';
   name = ''
+  email: any
   loader: any = {
     btn: {
       vef: false, //verify enroll form
@@ -44,12 +45,16 @@ export class VerifyComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private gustSrv: ClientService,
     private genSrv: GeneralService,
+    private activatedRoute: ActivatedRoute,
   ) {
     this.name = window.location.pathname;
   }
 
   ngOnInit(): void {
+    this.email = this.activatedRoute.snapshot.queryParams['email'];
     this.ngOnForms();
+    console.log(this.email);
+
   }
 
   // Get login Form Value
@@ -65,7 +70,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
   ngOnForms() {
     this.verifyEnrollForm = this.fb.group({
       customerEmail: [
-        "",
+        { value: this.email, disabled: true },
         Validators.compose([
           Validators.required,
           Validators.pattern(VALIDEMAILREGEX),

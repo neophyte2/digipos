@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { ChartDataSets, ChartOptions } from 'chart.js';
 import * as moment from 'moment';
 import { Label, Color } from 'ng2-charts';
@@ -64,6 +64,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   //dates
   query: any
+  isVerified: any
   cardDataList: any
   translength: any
   transactionList: any
@@ -72,6 +73,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   constructor(
     private adminSrv: AdminService,
+    private genSrv: GeneralService,
     private transShrdService: TransactionSharedService
   ) {
     this.dateRangeForm = new FormGroup({
@@ -82,11 +84,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.dateRangeForm.valueChanges.subscribe((data) => {
       if (data?.start && data?.end) {
         this.query = { startDate: moment(data?.start).format("YYYY-MM-DD"), endDate: moment(data?.end).format("YYYY-MM-DD") }
-        this.cardsData()
+        this.cardsData();
+        this.getChart();
         this.allTransactionList();
       }
-    }
-    );
+    });
   }
 
   ngOnInit(): void {
@@ -94,6 +96,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.cardsData();
     this.getChart();
     this.allTransactionList();
+    this.isVerified = this.genSrv.currentVerifyValue
   }
 
   cardsData() {

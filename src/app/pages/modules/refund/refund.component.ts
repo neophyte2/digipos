@@ -58,7 +58,6 @@ export class RefundComponent implements OnInit, OnDestroy {
     }
     this.refundSrv.getAllRefunds(payload).pipe(takeUntil(this.unsubcribe)).subscribe((refund: any) => {
       if (refund.responseCode === '00') {
-        console.log(refund);
         this.refundList = refund.data
         // this.refundlength = this.refundList?.length
       }

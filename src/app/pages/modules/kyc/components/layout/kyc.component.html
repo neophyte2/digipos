@@ -13,7 +13,8 @@
     <div>
       <!-- Address VERIFICATION -->
       <form [formGroup]="addressForm">
-        <div class="mt-10">
+        <div class="mt-10" *ngIf="(verifyList?.addressVerified | uppercase) === 'NO'">
+          <!-- Create -->
           <div class="relative">
             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
               <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -39,12 +40,44 @@
             </div>
           </div>
         </div>
+        <!-- View -->
+        <div class="mt-5" *ngIf="(verifyList?.addressVerified | uppercase) === 'YES'">
+          <div class="border border-600 p-5 rounded">
+            <div class="float-right">
+              <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12.5" cy="12.5" r="12.5" fill="#64154A" />
+                <path
+                  d="M10.16 14.8734L7.05673 11.7702L6 12.8195L10.16 16.9794L19.0901 8.04929L18.0408 7L10.16 14.8734Z"
+                  fill="white" />
+              </svg>
+            </div>
+            <div class="grid grid-cols-6 gap-4">
+              <div class="col-start-1 col-end-3">
+                <div class="flex">
+                  <div>
+                    <svg width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M15 0.5H5C2 0.5 0 2 0 5.5V12.5C0 16 2 17.5 5 17.5H15C18 17.5 20 16 20 12.5V5.5C20 2 18 0.5 15 0.5ZM15.47 6.59L12.34 9.09C11.68 9.62 10.84 9.88 10 9.88C9.16 9.88 8.31 9.62 7.66 9.09L4.53 6.59C4.21 6.33 4.16 5.85 4.41 5.53C4.67 5.21 5.14 5.15 5.46 5.41L8.59 7.91C9.35 8.52 10.64 8.52 11.4 7.91L14.53 5.41C14.85 5.15 15.33 5.2 15.58 5.53C15.84 5.85 15.79 6.33 15.47 6.59Z"
+                        fill="#8D005F" />
+                    </svg>
+                  </div>
+                  <div class="ml-3">
+                    Address
+                  </div>
+                </div>
+              </div>
+              <div class="col-end-7 col-span-2">
+                {{ addressForm.controls['address'].value}}
+              </div>
+            </div>
+          </div>
+        </div>
       </form>
       <!-- Address VERIFICATION -->
 
       <!-- BVN VERIFICATION -->
       <form [formGroup]="bvnForm">
-        <div class="mt-5">
+        <div class="mt-5" *ngIf="(verifyList?.bvnVerified | uppercase) === 'NO'">
           <div class="relative">
             <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
               <svg width="22" height="25" viewBox="0 0 22 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -59,7 +92,7 @@
                   fill="#8D005F" />
               </svg>
             </div>
-            <input style="padding-left: 55px;" type="text" id="email-address-icon" (focusout)="onFocusLostBvn($event)"
+            <input style="padding-left: 55px;" type="text" id="bvn" (focusout)="onFocusLostBvn($event)"
               oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
               onkeydown="if(event.key==='.'){event.preventDefault();}" formControlName="bvn"
               class="p-5 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 placeholder-black"
@@ -77,12 +110,50 @@
             </div>
           </div>
         </div>
+        <!-- View -->
+        <div class="mt-5" *ngIf="(verifyList?.bvnVerified | uppercase) === 'YES'">
+          <div class="border border-600 p-5 rounded">
+            <div class="float-right">
+              <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12.5" cy="12.5" r="12.5" fill="#64154A" />
+                <path
+                  d="M10.16 14.8734L7.05673 11.7702L6 12.8195L10.16 16.9794L19.0901 8.04929L18.0408 7L10.16 14.8734Z"
+                  fill="white" />
+              </svg>
+            </div>
+            <div class="grid grid-cols-6 gap-4">
+              <div class="col-start-1 col-end-3">
+                <div class="flex">
+                  <div>
+                    <svg width="22" height="25" viewBox="0 0 22 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M8.02911 7.78646C8.10467 7.72506 8.13774 7.63533 8.13774 7.51725C8.13774 7.39917 8.09995 7.30471 8.02911 7.23387C7.95826 7.16302 7.85435 7.12524 7.72211 7.12051H7.17896V7.88093H7.71266C7.85435 7.88093 7.95826 7.84786 8.02911 7.78646Z"
+                        fill="#8D005F" />
+                      <path
+                        d="M0.873763 9.7135H21.1262C21.2915 9.7135 21.4238 9.58126 21.4238 9.41595V8.31548C21.4238 8.22102 21.3813 8.13128 21.3057 8.0746L11.1748 0.560219C11.0708 0.479927 10.9244 0.479927 10.8205 0.560219L0.69901 8.07933C0.623441 8.136 0.580933 8.22574 0.580933 8.3202V9.42067C0.57621 9.58126 0.708456 9.7135 0.873763 9.7135ZM13.3521 5.83115H13.7441V6.83244H13.9L14.6651 5.83115H15.128L15.1327 5.8406L14.2447 6.95052L15.2035 8.19268H14.7076L13.9377 7.1725H13.7441V8.19268H13.3521V5.83115V5.83115ZM11.0142 5.83115H11.4062L12.45 7.53145L12.4594 7.52673V5.82643H12.8514V8.18796H12.4641L11.4204 6.48766L11.4109 6.49238V8.19268H11.0189V5.83115H11.0142ZM9.53113 5.83115H9.90425L10.7166 8.19268H10.3104L10.131 7.64008H9.2997L9.12022 8.19268H8.71404L9.53113 5.83115V5.83115ZM6.79175 5.83115H7.56634C7.8261 5.83115 8.02919 5.8831 8.17561 5.99173C8.32202 6.10036 8.39759 6.26095 8.39759 6.47349C8.39759 6.57739 8.36926 6.67185 8.30786 6.75215C8.25118 6.83716 8.16616 6.89856 8.06226 6.94107C8.21339 6.96468 8.33147 7.03081 8.41176 7.13944C8.49205 7.24334 8.53456 7.37087 8.53456 7.51256C8.53456 7.73454 8.46372 7.90457 8.3173 8.01793C8.17089 8.13128 7.97252 8.19268 7.71747 8.19268H6.79175V5.83115V5.83115Z"
+                        fill="#8D005F" fill-opacity="0.4" />
+                      <path
+                        d="M7.89695 6.73795C7.9678 6.68127 8.00086 6.59626 8.00086 6.49235C8.00086 6.37427 7.96307 6.28926 7.88751 6.23258C7.81194 6.17591 7.70331 6.14757 7.56161 6.14757H7.18377V6.82769H7.60412C7.72692 6.82769 7.82611 6.79935 7.89695 6.73795V6.73795ZM9.72477 6.38372H9.71533L9.40833 7.31416H10.027L9.72477 6.38372ZM21.7024 22.768H0.297553C0.132246 22.768 0 22.9003 0 23.0656V23.8212C0 23.9866 0.132246 24.1188 0.297553 24.1188H21.7024C21.8678 24.1188 22 23.9866 22 23.8212V23.0656C22 22.9003 21.8678 22.768 21.7024 22.768V22.768ZM1.05796 21.148V21.9037C1.05796 22.069 1.19021 22.2012 1.35552 22.2012H20.6445C20.8098 22.2012 20.942 22.069 20.942 21.9037V21.148C20.942 20.9827 20.8098 20.8504 20.6445 20.8504H1.35552C1.19021 20.8504 1.05796 20.9827 1.05796 21.148ZM16.9227 19.3202C16.8377 19.3202 16.7669 19.391 16.7669 19.476V19.9247C16.7669 20.0097 16.8377 20.0806 16.9227 20.0806H19.6054C19.6904 20.0806 19.7613 20.0097 19.7613 19.9247V19.476C19.7613 19.391 19.6904 19.3202 19.6054 19.3202H19.3409V11.3477H19.6054C19.6904 11.3477 19.7613 11.2768 19.7613 11.1918V10.7431C19.7613 10.6581 19.6904 10.5872 19.6054 10.5872H16.9227C16.8377 10.5872 16.7669 10.6581 16.7669 10.7431V11.1918C16.7669 11.2768 16.8377 11.3477 16.9227 11.3477H17.1872V19.3249H16.9227V19.3202ZM12.0816 19.3202C11.9966 19.3202 11.9257 19.391 11.9257 19.476V19.9247C11.9257 20.0097 11.9966 20.0806 12.0816 20.0806H14.7643C14.8493 20.0806 14.9201 20.0097 14.9201 19.9247V19.476C14.9201 19.391 14.8493 19.3202 14.7643 19.3202H14.4998V11.3477H14.7643C14.8493 11.3477 14.9201 11.2768 14.9201 11.1918V10.7431C14.9201 10.6581 14.8493 10.5872 14.7643 10.5872H12.0816C11.9966 10.5872 11.9257 10.6581 11.9257 10.7431V11.1918C11.9257 11.2768 11.9966 11.3477 12.0816 11.3477H12.3461V19.3249H12.0816V19.3202ZM7.23572 19.3202C7.15071 19.3202 7.07986 19.391 7.07986 19.476V19.9247C7.07986 20.0097 7.15071 20.0806 7.23572 20.0806H9.91842C10.0034 20.0806 10.0743 20.0097 10.0743 19.9247V19.476C10.0743 19.391 10.0034 19.3202 9.91842 19.3202H9.65393V11.3477H9.91842C10.0034 11.3477 10.0743 11.2768 10.0743 11.1918V10.7431C10.0743 10.6581 10.0034 10.5872 9.91842 10.5872H7.23572C7.15071 10.5872 7.07986 10.6581 7.07986 10.7431V11.1918C7.07986 11.2768 7.15071 11.3477 7.23572 11.3477H7.50021V19.3249H7.23572V19.3202ZM2.38987 19.3202C2.30485 19.3202 2.23401 19.391 2.23401 19.476V19.9247C2.23401 20.0097 2.30485 20.0806 2.38987 20.0806H5.07256C5.15758 20.0806 5.22842 20.0097 5.22842 19.9247V19.476C5.22842 19.391 5.15758 19.3202 5.07256 19.3202H4.80807V11.3477H5.07256C5.15758 11.3477 5.22842 11.2768 5.22842 11.1918V10.7431C5.22842 10.6581 5.15758 10.5872 5.07256 10.5872H2.38987C2.30485 10.5872 2.23401 10.6581 2.23401 10.7431V11.1918C2.23401 11.2768 2.30485 11.3477 2.38987 11.3477H2.65436V19.3249H2.38987V19.3202Z"
+                        fill="#8D005F" />
+                    </svg>
+                  </div>
+                  <div class="ml-3">
+                    Bank Verification Number
+                  </div>
+                </div>
+              </div>
+              <div class="col-end-7 col-span-2">
+                {{ bvnForm.controls['bvn'].value | hideData }}
+              </div>
+            </div>
+          </div>
+        </div>
       </form>
       <!-- BVN VERIFICATION -->
 
       <!-- Id card VERIFICATION -->
       <form [formGroup]="idCardForm">
-        <div class="mt-5">
+        <div class="mt-5" *ngIf="(verifyList?.idCardVerified | uppercase) === 'NO'">
           <div class="border border-600 p-5 rounded">
             <div class="flex mb-3">
               <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -164,6 +235,60 @@
                 Save <span *ngIf="loader.btn.gvtIDloader"><i style="color:black"
                     class="fa fa-spinner fa-spin"></i></span>
               </button>
+            </div>
+          </div>
+        </div>
+        <!-- View -->
+        <div class="mt-5" *ngIf="(verifyList?.idCardVerified | uppercase) === 'YES'">
+          <div class="border border-600 p-5 rounded">
+            <div class="float-right">
+              <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12.5" cy="12.5" r="12.5" fill="#64154A" />
+                <path
+                  d="M10.16 14.8734L7.05673 11.7702L6 12.8195L10.16 16.9794L19.0901 8.04929L18.0408 7L10.16 14.8734Z"
+                  fill="white" />
+              </svg>
+            </div>
+            <div class="grid grid-cols-6 gap-4">
+              <div class="col-start-1 col-end-3">
+                <div class="flex">
+                  <div>
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M21 2.5H20V1.5C20 0.9 19.6 0.5 19 0.5C18.4 0.5 18 0.9 18 1.5V2.5H17C16.4 2.5 16 2.9 16 3.5C16 4.1 16.4 4.5 17 4.5H18V5.5C18 6.1 18.4 6.5 19 6.5C19.6 6.5 20 6.1 20 5.5V4.5H21C21.6 4.5 22 4.1 22 3.5C22 2.9 21.6 2.5 21 2.5ZM10 11.5C8.9 11.5 8 12.4 8 13.5C8 14.6 8.9 15.5 10 15.5C11.1 15.5 12 14.6 12 13.5C12 12.4 11.1 11.5 10 11.5ZM17 7.5H15.7L15.4 6.6C15.3 6.3 15.2 6.1 15 5.8C15 5.8 15 5.8 15 5.7L14.9 5.6C14.3 4.9 13.5 4.5 12.6 4.5H7.4C6.9 4.5 6.3 4.7 5.9 5C5.8 5 5.8 5.1 5.7 5.1C5.2 5.5 4.8 6 4.6 6.6L4.3 7.5H3C1.3 7.5 0 8.8 0 10.5V18.5C0 20.2 1.3 21.5 3 21.5H17C18.7 21.5 20 20.2 20 18.5V10.5C20 8.8 18.7 7.5 17 7.5ZM10 17.5C7.8 17.5 6 15.7 6 13.5C6 11.3 7.8 9.5 10 9.5C12.2 9.5 14 11.3 14 13.5C14 15.7 12.2 17.5 10 17.5Z"
+                        fill="#8D005F" />
+                    </svg>
+                  </div>
+                  <div class="ml-3">
+                    Goverment Identity
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex">
+              <div class="p-2">
+                Identity Type :
+              </div>
+              <div class="p-2">
+                <b> {{ idCardForm.controls['idCardType'].value }} </b>
+              </div>
+            </div>
+            <div class="flex">
+              <div class="p-2">
+                Identity Card Number :
+              </div>
+              <div class="p-2">
+                <b> {{ idCardForm.controls['idCardNumber'].value }} </b>
+              </div>
+            </div>
+            <div class="flex">
+              <div class="p-2">
+                Identity Image Url :
+              </div>
+              <div class="p-2">
+                <b> <a target="_blank" [href]="idCardForm.controls['idCardImageUrl'].value">{{
+                    idCardForm.controls['idCardImageUrl'].value }}</a> </b>
+              </div>
             </div>
           </div>
         </div>
@@ -327,7 +452,7 @@
       <!-- Upload CAC -->
       <form [formGroup]="cacForm">
         <div class="mt-5" *ngIf="accountType === 'BUSINESS'">
-          <div class="border border-600 p-5 rounded">
+          <div class="border border-600 p-5 rounded" *ngIf="(verifyList?.cacVerified | uppercase) === 'NO'">
             <div class="flex mb-3">
               <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path opacity="0.8"
@@ -387,14 +512,60 @@
               </button>
             </div>
           </div>
+          <!-- View -->
+          <div class="mt-5" *ngIf="(verifyList?.cacVerified | uppercase) === 'YES'">
+            <div class="border border-600 p-5 rounded">
+              <div class="float-right">
+                <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12.5" cy="12.5" r="12.5" fill="#64154A" />
+                  <path
+                    d="M10.16 14.8734L7.05673 11.7702L6 12.8195L10.16 16.9794L19.0901 8.04929L18.0408 7L10.16 14.8734Z"
+                    fill="white" />
+                </svg>
+              </div>
+              <div class="grid grid-cols-6 gap-4">
+                <div class="col-start-1 col-end-3">
+                  <div class="flex">
+                    <div>
+                      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M21 2.5H20V1.5C20 0.9 19.6 0.5 19 0.5C18.4 0.5 18 0.9 18 1.5V2.5H17C16.4 2.5 16 2.9 16 3.5C16 4.1 16.4 4.5 17 4.5H18V5.5C18 6.1 18.4 6.5 19 6.5C19.6 6.5 20 6.1 20 5.5V4.5H21C21.6 4.5 22 4.1 22 3.5C22 2.9 21.6 2.5 21 2.5ZM10 11.5C8.9 11.5 8 12.4 8 13.5C8 14.6 8.9 15.5 10 15.5C11.1 15.5 12 14.6 12 13.5C12 12.4 11.1 11.5 10 11.5ZM17 7.5H15.7L15.4 6.6C15.3 6.3 15.2 6.1 15 5.8C15 5.8 15 5.8 15 5.7L14.9 5.6C14.3 4.9 13.5 4.5 12.6 4.5H7.4C6.9 4.5 6.3 4.7 5.9 5C5.8 5 5.8 5.1 5.7 5.1C5.2 5.5 4.8 6 4.6 6.6L4.3 7.5H3C1.3 7.5 0 8.8 0 10.5V18.5C0 20.2 1.3 21.5 3 21.5H17C18.7 21.5 20 20.2 20 18.5V10.5C20 8.8 18.7 7.5 17 7.5ZM10 17.5C7.8 17.5 6 15.7 6 13.5C6 11.3 7.8 9.5 10 9.5C12.2 9.5 14 11.3 14 13.5C14 15.7 12.2 17.5 10 17.5Z"
+                          fill="#8D005F" />
+                      </svg>
+                    </div>
+                    <div class="ml-3">
+                      CAC Document
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex">
+                <div class="p-2">
+                  CAC Number :
+                </div>
+                <div class="p-2">
+                  <b> {{ cacForm.controls['cacNumber'].value }} </b>
+                </div>
+              </div>
+              <div class="flex">
+                <div class="p-2">
+                  CAC Image Url :
+                </div>
+                <div class="p-2">
+                  <b> <a target="_blank" [href]="cacForm.controls['cacPdfUrl'].value">{{
+                      cacForm.controls['cacPdfUrl'].value }} </a></b>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </form>
       <!-- Upload CAC -->
 
       <!-- Upload Business Logo -->
-      <div class="mt-5" *ngIf="accountType === 'BUSINESS'">
-        <form [formGroup]="bislogoForm">
-          <div class="border border-600 p-5 rounded">
+      <form [formGroup]="bislogoForm">
+        <div class="mt-5" *ngIf="accountType === 'BUSINESS'">
+          <div class="border border-600 p-5 rounded" *ngIf="(verifyList?.logoVerified | uppercase) === 'NO'">
             <div class="flex mb-3">
               <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path opacity="0.8"
@@ -432,8 +603,46 @@
               </div>
             </div>
           </div>
-        </form>
-      </div>
+          <!-- View -->
+          <div class="mt-5" *ngIf="(verifyList?.logoVerified | uppercase) === 'YES'">
+            <div class="border border-600 p-5 rounded">
+              <div class="float-right">
+                <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12.5" cy="12.5" r="12.5" fill="#64154A" />
+                  <path
+                    d="M10.16 14.8734L7.05673 11.7702L6 12.8195L10.16 16.9794L19.0901 8.04929L18.0408 7L10.16 14.8734Z"
+                    fill="white" />
+                </svg>
+              </div>
+              <div class="grid grid-cols-6 gap-4">
+                <div class="col-start-1 col-end-3">
+                  <div class="flex">
+                    <div>
+                      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M21 2.5H20V1.5C20 0.9 19.6 0.5 19 0.5C18.4 0.5 18 0.9 18 1.5V2.5H17C16.4 2.5 16 2.9 16 3.5C16 4.1 16.4 4.5 17 4.5H18V5.5C18 6.1 18.4 6.5 19 6.5C19.6 6.5 20 6.1 20 5.5V4.5H21C21.6 4.5 22 4.1 22 3.5C22 2.9 21.6 2.5 21 2.5ZM10 11.5C8.9 11.5 8 12.4 8 13.5C8 14.6 8.9 15.5 10 15.5C11.1 15.5 12 14.6 12 13.5C12 12.4 11.1 11.5 10 11.5ZM17 7.5H15.7L15.4 6.6C15.3 6.3 15.2 6.1 15 5.8C15 5.8 15 5.8 15 5.7L14.9 5.6C14.3 4.9 13.5 4.5 12.6 4.5H7.4C6.9 4.5 6.3 4.7 5.9 5C5.8 5 5.8 5.1 5.7 5.1C5.2 5.5 4.8 6 4.6 6.6L4.3 7.5H3C1.3 7.5 0 8.8 0 10.5V18.5C0 20.2 1.3 21.5 3 21.5H17C18.7 21.5 20 20.2 20 18.5V10.5C20 8.8 18.7 7.5 17 7.5ZM10 17.5C7.8 17.5 6 15.7 6 13.5C6 11.3 7.8 9.5 10 9.5C12.2 9.5 14 11.3 14 13.5C14 15.7 12.2 17.5 10 17.5Z"
+                          fill="#8D005F" />
+                      </svg>
+                    </div>
+                    <div class="ml-3">
+                      Business Logo
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex">
+                <div class="p-2">
+                  Logo Url :
+                </div>
+                <div class="p-2">
+                  <b> <a target="_blank" [href]="bislogoForm.controls['logo'].value">{{
+                      bislogoForm.controls['logo'].value }} </a></b>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
       <!-- Upload Business Logo -->
 
       <!-- verify bank account details -->
@@ -558,11 +767,11 @@
 
     <!-- Verify GVT ID -->
     <div class="flex items-center mb-4">
-      <svg *ngIf="(verifyList?.cacVerified | uppercase) === 'NO'" width="25" height="25" viewBox="0 0 25 25" fill="none"
-        xmlns="http://www.w3.org/2000/svg">
+      <svg *ngIf="(verifyList?.idCardVerified | uppercase) === 'NO'" width="25" height="25" viewBox="0 0 25 25"
+        fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="12.5" cy="12.5" r="12" stroke="#737B8B"></circle>
       </svg>
-      <svg *ngIf="(verifyList?.cacVerified | uppercase) === 'YES'" width="25" height="25" viewBox="0 0 25 25"
+      <svg *ngIf="(verifyList?.idCardVerified | uppercase) === 'YES'" width="25" height="25" viewBox="0 0 25 25"
         fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="12.5" cy="12.5" r="12.5" fill="#27AE60"></circle>
       </svg>
