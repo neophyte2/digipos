@@ -53,8 +53,6 @@ export class VerifyComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.email = this.activatedRoute.snapshot.queryParams['email'];
     this.ngOnForms();
-    console.log(this.email);
-
   }
 
   // Get login Form Value

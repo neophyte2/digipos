@@ -14,7 +14,7 @@ export class AdminService {
     }
 
     readChart(payload: any) {
-        return this.http.post(`${this.api}/dashboard/read-chart`, payload);
+        return this.http.post(`${this.api}/dashboard/read-chart-by-organisation-id`, payload);
     }
     
     recentTransaction(payload: any) {

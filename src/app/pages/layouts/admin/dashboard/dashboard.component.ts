@@ -35,8 +35,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
           labelString: 'Counts'
         },
         ticks: {
-          callback: (value, index) => {
-            return Number(value).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+          min: 0,
+          callback: (value) => {
+            return Number(value);
           }
         }
       }]
@@ -70,6 +71,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   transactionList: any
   dateRangeForm!: FormGroup;
   year = new Date().getFullYear()
+  month = (new Date().getMonth() + 1).toString().padStart(2, '0');
+  day = new Date().getDate();
 
   constructor(
     private adminSrv: AdminService,
@@ -77,10 +80,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     private transShrdService: TransactionSharedService
   ) {
     this.dateRangeForm = new FormGroup({
-      start: new FormControl(`${this.year}-01-01`),
-      end: new FormControl(`${this.year}-12-31`),
+      start: new FormControl(`${this.year}-${this.month}-${this.day}`),
+      end: new FormControl(`${this.year}-${this.month}-${this.day}`),
     });
-
     this.dateRangeForm.valueChanges.subscribe((data) => {
       if (data?.start && data?.end) {
         this.query = { startDate: moment(data?.start).format("YYYY-MM-DD"), endDate: moment(data?.end).format("YYYY-MM-DD") }
@@ -113,7 +115,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   allTransactionList() {
     let payload = {
-      organisationId: '',
       startDate: this.dateRangeForm.value.start,
       endDate: this.dateRangeForm.value.end,
     }
@@ -131,46 +132,57 @@ export class DashboardComponent implements OnInit, OnDestroy {
       endDate: this.dateRangeForm.value.end,
     }
     this.adminSrv.readChart(payload).pipe(takeUntil(this.unsubcribe)).subscribe((trans: any) => {
-      if (trans.responseCode === '00') {
-        const list = trans.data
-        const rawLabel = list.map((x: any) => x.trnChannel)
-        const label: any = [...new Set(rawLabel)].sort();
-        //cards
-        const c_sucess = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'CARD' && x.trnResponseCode === '00').map((x: any) => x.trnCount) : 0
-        const c_pen = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'CARD' && x.trnResponseCode === '09').map((x: any) => x.trnCount) : 0
-        const c_fail = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'CARD' && x.trnResponseCode === '22').map((x: any) => x.trnCount) : 0
-        //nqr
-        const n_sucess = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'NQR' && x.trnResponseCode === '00').map((x: any) => x.trnCount) : 0
-        const n_pen = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'NQR' && x.trnResponseCode === '09').map((x: any) => x.trnCount) : 0
-        const n_fail = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'NQR' && x.trnResponseCode === '22').map((x: any) => x.trnCount) : 0
-        //pwbt
-        const p_sucess = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'PWBT' && x.trnResponseCode === '00').map((x: any) => x.trnCount) : 0
-        const p_pen = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'PWBT' && x.trnResponseCode === '09').map((x: any) => x.trnCount) : 0
-        const p_fail = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'PWBT' && x.trnResponseCode === '22').map((x: any) => x.trnCount) : 0
-        //wallet
-        const W_sucess = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'USSD' && x.trnResponseCode === '00').map((x: any) => x.trnCount) : 0
-        const W_pen = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'USSD' && x.trnResponseCode === '09').map((x: any) => x.trnCount) : 0
-        const W_fail = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'USSD' && x.trnResponseCode === '22').map((x: any) => x.trnCount) : 0
-        //ussd
-        const U_sucess = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'WALLET' && x.trnResponseCode === '00').map((x: any) => x.trnCount) : 0
-        const U_pen = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'WALLET' && x.trnResponseCode === '00').map((x: any) => x.trnCount) : 0
-        const U_fail = trans.data ? trans.data.filter((x: any) => x.trnChannel === 'WALLET' && x.trnResponseCode === '00').map((x: any) => x.trnCount) : 0
-        this.barChartLabels = label
-        this.barChartData = [
-          {
-            data: [c_sucess[0], n_sucess[0], p_sucess[0], U_sucess[0], W_sucess[0]],
-            label: 'Successfull',
-          },
-          {
-            data: [c_pen[0], n_pen[0], p_pen[0], U_pen[0], W_pen[0]],
-            label: 'Pending',
-          },
-          {
-            data: [c_fail[0], n_fail[0], p_fail[0], U_fail[0], W_fail[0]],
-            label: 'Failed',
-          },
-        ]
-      }
+      const statusMap: Map<string, string> = new Map();
+      statusMap.set("Successfull", "00")
+      statusMap.set("Pending", "09")
+      statusMap.set("Failed", "22")
+      const channels = ["CARD", "NQR", "PWBT", "USSD", "WALLET"]
+      type ResponseCodeCount = {
+        responseCode: string;
+        count: number;
+      };
+
+      type TransactionCount = {
+        channel: string;
+        respones: ResponseCodeCount[];
+      };
+
+      const channelTranstionCount: TransactionCount[] = [];
+      const responseData = trans?.data || [];
+
+      responseData.forEach((x: any) => {
+        const { trnChannel, trnResponseCode, trnCount } = x;
+        let channelInfo = channelTranstionCount.find(x => x.channel == trnChannel)
+        if (channelInfo) {
+          let responseCount = channelInfo.respones.find(x => x.responseCode == trnResponseCode)
+          if (responseCount) {
+            responseCount.count += trnCount || 0;
+          } else {
+            channelInfo.respones.push({
+              responseCode: trnResponseCode,
+              count: trnCount || 0
+            })
+          }
+        } else {
+          channelTranstionCount.push({
+            channel: trnChannel,
+            respones: [{
+              responseCode: trnResponseCode,
+              count: trnCount || 0
+            }]
+          })
+        }
+      });
+
+      const barChartData = Array.from(statusMap.entries()).map(([status, code]) => {
+        const data = channels.map((channel) => {
+          const channelData = channelTranstionCount.find(x => x.channel == channel);
+          return channelData?.respones.find(x => x.responseCode == code)?.count || 0;
+        });
+        return { data, label: status };
+      });
+      this.barChartLabels = channels;
+      this.barChartData = barChartData;
     })
   }
 

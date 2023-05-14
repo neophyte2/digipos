@@ -14,3 +14,7 @@ label{
   padding-top: 1.25rem;
   padding-right: 1.25rem;
 }
+
+.blur-text {
+  filter: blur(3px);
+}

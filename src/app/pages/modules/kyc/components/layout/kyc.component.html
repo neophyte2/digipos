@@ -66,7 +66,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-end-7 col-span-2">
+              <div class="col-end-7 col-span-2 blur-text">
                 {{ addressForm.controls['address'].value}}
               </div>
             </div>
@@ -278,7 +278,7 @@
                 Identity Card Number :
               </div>
               <div class="p-2">
-                <b> {{ idCardForm.controls['idCardNumber'].value }} </b>
+                <b> {{ idCardForm.controls['idCardNumber'].value | hideData  }} </b>
               </div>
             </div>
             <div class="flex">
@@ -286,7 +286,7 @@
                 Identity Image Url :
               </div>
               <div class="p-2">
-                <b> <a target="_blank" [href]="idCardForm.controls['idCardImageUrl'].value">{{
+                <b> <a class="blur-text" target="_blank" [href]="idCardForm.controls['idCardImageUrl'].value">{{
                     idCardForm.controls['idCardImageUrl'].value }}</a> </b>
               </div>
             </div>
@@ -544,7 +544,7 @@
                   CAC Number :
                 </div>
                 <div class="p-2">
-                  <b> {{ cacForm.controls['cacNumber'].value }} </b>
+                  <b> {{ cacForm.controls['cacNumber'].value |hideData }} </b>
                 </div>
               </div>
               <div class="flex">
@@ -552,7 +552,7 @@
                   CAC Image Url :
                 </div>
                 <div class="p-2">
-                  <b> <a target="_blank" [href]="cacForm.controls['cacPdfUrl'].value">{{
+                  <b> <a class="blur-text" target="_blank" [href]="cacForm.controls['cacPdfUrl'].value">{{
                       cacForm.controls['cacPdfUrl'].value }} </a></b>
                 </div>
               </div>
@@ -635,7 +635,7 @@
                   Logo Url :
                 </div>
                 <div class="p-2">
-                  <b> <a target="_blank" [href]="bislogoForm.controls['logo'].value">{{
+                  <b> <a class="blur-text" target="_blank" [href]="bislogoForm.controls['logo'].value">{{
                       bislogoForm.controls['logo'].value }} </a></b>
                 </div>
               </div>

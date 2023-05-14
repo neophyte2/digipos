@@ -34,14 +34,16 @@ export class SettlementComponent implements OnInit, OnDestroy {
   ]
   responseList = responsesType
   year = new Date().getFullYear()
+  month = (new Date().getMonth() + 1).toString().padStart(2, '0');
+  day = new Date().getDate();
   private unsubcribe = new Subject<void>();
 
   constructor(
     private transSrvService: SettlementService,
   ) {
     this.dateRangeForm = new FormGroup({
-      start: new FormControl(`${this.year}-01-01`),
-      end: new FormControl(`${this.year}-12-31`),
+      start: new FormControl(`${this.year}-${this.month}-${this.day}`),
+      end: new FormControl(`${this.year}-${this.month}-${this.day}`),
     });
 
     this.dateRangeForm.valueChanges.subscribe((data) => {

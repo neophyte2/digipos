@@ -37,6 +37,8 @@ export class TransactionComponent implements OnInit, OnDestroy {
   ]
   responseList = responsesType
   year = new Date().getFullYear()
+  month = (new Date().getMonth() + 1).toString().padStart(2, '0');
+  day = new Date().getDate();
   private unsubcribe = new Subject<void>();
 
   constructor(
@@ -46,8 +48,8 @@ export class TransactionComponent implements OnInit, OnDestroy {
     private transShrdService: TransactionSharedService
   ) {
     this.dateRangeForm = new FormGroup({
-      start: new FormControl(`${this.year}-01-01`),
-      end: new FormControl(`${this.year}-12-31`),
+      start: new FormControl(`${this.year}-${this.month}-${this.day}`),
+      end: new FormControl(`${this.year}-${this.month}-${this.day}`),
       trnResponseCode: new FormControl(null),
       trnService: new FormControl(null),
       trnAmount: new FormControl(''),

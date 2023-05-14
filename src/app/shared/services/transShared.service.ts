@@ -13,7 +13,7 @@ export class TransactionSharedService {
     constructor(private http: HttpClient) { }
 
     stats(payload: any) {
-        return this.http.post(`${this.api}/dashboard/read-stats`, payload);
+        return this.http.post(`${this.api}/dashboard/read-stats-by-organisation-id`, payload);
     }
 
     transactionList(params: any){
