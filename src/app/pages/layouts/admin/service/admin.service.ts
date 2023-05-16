@@ -18,7 +18,7 @@ export class AdminService {
     }
     
     recentTransaction(payload: any) {
-        return this.http.post(`${this.api}/dashboard/recent-transaction`, payload);
+        return this.http.post(`${this.api}/dashboard/recent-transaction-by-organisation-id`, payload);
     }
 
 }

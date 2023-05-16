@@ -118,7 +118,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       startDate: this.dateRangeForm.value.start,
       endDate: this.dateRangeForm.value.end,
     }
-    this.adminSrv.recentTransaction(payload).pipe(takeUntil(this.unsubcribe)).subscribe((trans: any) => {
+    this.transShrdService.transactionList(payload).pipe(takeUntil(this.unsubcribe)).subscribe((trans: any) => {
       if (trans.responseCode === '00') {
         this.transactionList = trans.data ? trans.data.slice(0, 10) : []
       }

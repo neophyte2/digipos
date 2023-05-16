@@ -6,6 +6,7 @@ import { GeneralService } from 'src/app/shared/services/general.service';
 import { acctType } from 'src/app/shared/utils/data';
 import { VALIDEMAILREGEX } from 'src/app/shared/utils/utils';
 import { SettingsService } from '../../../services/settings.service';
+import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'dp-invites',
@@ -41,6 +42,7 @@ export class InvitesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
+    initFlowbite()
     this.allRoles()
     this.users()
     this.ngOnForms()

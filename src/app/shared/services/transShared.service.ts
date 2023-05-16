@@ -17,6 +17,6 @@ export class TransactionSharedService {
     }
 
     transactionList(params: any){
-        return this.http.post(`${this.api}/payment/read-transaction`, params);
+        return this.http.post(`${this.api}/payment/read-transaction-by-organisation-id`, params);
     }
 }
