@@ -25,6 +25,7 @@ export class TransactionComponent implements OnInit, OnDestroy {
   };
   query: any
   cardDataList: any
+  isloading = false
   filter: any[] = [];
   transactionList: any
   method = paymentMethods
@@ -47,9 +48,11 @@ export class TransactionComponent implements OnInit, OnDestroy {
     private transSrvService: TransactionService,
     private transShrdService: TransactionSharedService
   ) {
+    var month = new Date().getMonth() + 1;
+    var last_day = new Date(this.year, month, 0).getDate();
     this.dateRangeForm = new FormGroup({
-      start: new FormControl(`${this.year}-${this.month}-${this.day}`),
-      end: new FormControl(`${this.year}-${this.month}-${this.day}`),
+      start: new FormControl(`${this.year}-${this.month}-01`),
+      end: new FormControl(`${this.year}-${this.month}-${last_day}`),
       trnResponseCode: new FormControl(null),
       trnService: new FormControl(null),
       trnAmount: new FormControl(''),
@@ -83,6 +86,7 @@ export class TransactionComponent implements OnInit, OnDestroy {
   }
 
   allTransactionList() {
+    this.isloading = true
     let payload = {
       trnReference: this.dateRangeForm.value.trnReference,
       trnService: this.dateRangeForm.value.trnService,
@@ -94,6 +98,7 @@ export class TransactionComponent implements OnInit, OnDestroy {
     }
     this.transShrdService.transactionList(payload).pipe(takeUntil(this.unsubcribe)).subscribe((trans: any) => {
       this.transactionList = trans.data;
+      this.isloading = false
     })
   }
 
@@ -141,7 +146,7 @@ export class TransactionComponent implements OnInit, OnDestroy {
     return tableCurrency(val);
   }
 
-  async copyWallet(toCopy:any) {
+  async copyWallet(toCopy: any) {
     try {
       await navigator.clipboard.writeText(toCopy);
       this.genSrv.sweetAlertSuccess('Copied to clipboard')

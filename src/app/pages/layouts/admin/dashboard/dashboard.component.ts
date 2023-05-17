@@ -66,22 +66,25 @@ export class DashboardComponent implements OnInit, OnDestroy {
   //dates
   query: any
   isVerified: any
-  cardDataList: any
   translength: any
+  cardDataList: any
+  isloading = false
   transactionList: any
   dateRangeForm!: FormGroup;
   year = new Date().getFullYear()
-  month = (new Date().getMonth() + 1).toString().padStart(2, '0');
   day = new Date().getDate();
+  month = (new Date().getMonth() + 1).toString().padStart(2, '0');
 
   constructor(
     private adminSrv: AdminService,
     private genSrv: GeneralService,
     private transShrdService: TransactionSharedService
   ) {
+    var month = new Date().getMonth() + 1;
+    var last_day = new Date(this.year, month, 0).getDate();
     this.dateRangeForm = new FormGroup({
-      start: new FormControl(`${this.year}-${this.month}-${this.day}`),
-      end: new FormControl(`${this.year}-${this.month}-${this.day}`),
+      start: new FormControl(`${this.year}-${this.month}-01`),
+      end: new FormControl(`${this.year}-${this.month}-${last_day}`),
     });
     this.dateRangeForm.valueChanges.subscribe((data) => {
       if (data?.start && data?.end) {
@@ -114,6 +117,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   allTransactionList() {
+    this.isloading = true
     let payload = {
       startDate: this.dateRangeForm.value.start,
       endDate: this.dateRangeForm.value.end,
@@ -121,6 +125,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.transShrdService.transactionList(payload).pipe(takeUntil(this.unsubcribe)).subscribe((trans: any) => {
       if (trans.responseCode === '00') {
         this.transactionList = trans.data ? trans.data.slice(0, 10) : []
+        this.isloading = false
       }
     })
   }

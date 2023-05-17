@@ -20,7 +20,7 @@ export class UsersComponent implements OnInit, OnDestroy {
       pageLoader: false,
     },
   };
-
+  isloading = false
   selectedItem: any
   dropdown = false
 
@@ -38,8 +38,10 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   users() {
+    this.isloading = true
     this.userShdSrv.getUserByOrg().pipe(takeUntil(this.unsubcribe)).subscribe((user: any) => {
       this.userList = user.data;
+      this.isloading =false
     })
   }
 

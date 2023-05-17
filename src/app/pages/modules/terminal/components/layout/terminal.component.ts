@@ -25,6 +25,7 @@ export class TerminalComponent implements OnInit, OnDestroy {
   selectedItem: any
   userList: any
   query: any
+  isloading = false
   showModal = false;
   dropdown = false
   terminalList: any
@@ -42,11 +43,12 @@ export class TerminalComponent implements OnInit, OnDestroy {
     private terminSrv: TerminalService,
     private userShdSrv: UserSharedService,
   ) {
+    var month = new Date().getMonth() + 1;
+    var last_day = new Date(this.year, month, 0).getDate();
     this.dateRangeForm = new FormGroup({
-      start: new FormControl(`${this.year}-${this.month}-${this.day}`),
-      end: new FormControl(`${this.year}-${this.month}-${this.day}`),
+      start: new FormControl(`${this.year}-${this.month}-01`),
+      end: new FormControl(`${this.year}-${this.month}-${last_day}`),
     });
-
     this.dateRangeForm.valueChanges.subscribe((data) => {
       if (data?.start && data?.end) {
         this.query = { startDate: moment(data?.start).format("YYYY-MM-DD"), endDate: moment(data?.end).format("YYYY-MM-DD") }
@@ -77,13 +79,15 @@ export class TerminalComponent implements OnInit, OnDestroy {
   }
 
   allTerminals() {
+    this.isloading = true
     let payload = {
       startDate: this.dateRangeForm.value.start,
       endDate: this.dateRangeForm.value.end,
     }
     this.terminSrv.getAllTerminals(payload).pipe(takeUntil(this.unsubcribe)).subscribe((trans: any) => {
       this.terminalList = trans.data;
-    })
+    this.isloading = false
+  })
   }
 
   get tf() {
@@ -92,7 +96,7 @@ export class TerminalComponent implements OnInit, OnDestroy {
 
   toggleModal() {
     this.showModal = !this.showModal;
-    if(this.showModal)  this.generateReference()
+    if (this.showModal) this.generateReference()
   }
 
   viewTerminal(id: any) {
@@ -107,7 +111,7 @@ export class TerminalComponent implements OnInit, OnDestroy {
   ngOnForms() {
     this.terminalForm = this.fb.group({
       terminalCustomerId: [null, Validators.required,],
-      terminalSerial: [{ value: '', disabled: true },  Validators.required],
+      terminalSerial: [{ value: '', disabled: true }, Validators.required],
     });
   }
 

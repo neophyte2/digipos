@@ -22,6 +22,7 @@ export class ChargebackComponent implements OnInit, OnDestroy {
   selectedItem: any
   showModal = false;
   dropdown = false
+  isloading = false;
   chargebackList: any
   chargebackForm!: FormGroup;
   private unsubcribe = new Subject<void>();
@@ -41,11 +42,13 @@ export class ChargebackComponent implements OnInit, OnDestroy {
   }
 
   allChargeback() {
+    this.isloading = true
     let payload = {
     }
     this.chargeSrv.getAllChargeback(payload).pipe(takeUntil(this.unsubcribe)).subscribe((charge: any) => {
       this.chargebackList = charge.data;
-    })
+    this.isloading = false
+  })
   }
 
   get cf() {

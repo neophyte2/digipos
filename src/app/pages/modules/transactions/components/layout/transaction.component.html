@@ -172,5 +172,13 @@
       </tr>
     </tbody>
   </table>
+  <div *ngIf="!isloading">
+    <div class="text-center" *ngIf="!transactionList?.length">
+     <div style="display: flex; align-items: center; justify-content: center;">
+      <img src="../../../../../assets/svgs/EmptyInbox.svg" style="width:10%;" class="mt-5">
+     </div>
+      <br> No Data Found
+    </div>
+  </div>
 </div>
 <!-- TABLE -->

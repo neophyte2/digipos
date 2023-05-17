@@ -101,7 +101,7 @@ export class SignInomponent implements OnInit, OnDestroy {
       countryCode: this.location?.calling_code,
       latitude: this.location?.latitude,
       ipAddress: this.location.ip,
-      source: 'Web',
+      source: 'MERCHAT_WEB',
       devicePlatform: this.deviceInfo.deviceType,
       deviceId: '',
       deviceName: this.deviceInfo.device,

@@ -15,8 +15,8 @@ import { tableCurrency } from 'src/app/shared/utils/utils';
 
 export class ViewTerminalComponent implements OnInit, OnDestroy {
 
-
-  terminal :any
+  isloading = false
+  terminal: any
   terminalList: any
   private unsubcribe = new Subject<void>();
 
@@ -44,11 +44,13 @@ export class ViewTerminalComponent implements OnInit, OnDestroy {
   }
 
   getSingleTerminal(id: any) {
+    this.isloading = true;
     let payload = {
       terminalId: id
     }
     this.terminSrv.getSingleTerminal(payload).pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
       this.terminal = data;
+      this.isloading = false;
     })
   }
 

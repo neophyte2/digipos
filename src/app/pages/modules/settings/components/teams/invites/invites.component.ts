@@ -26,6 +26,7 @@ export class InvitesComponent implements OnInit, OnDestroy {
     },
   };
   selectedItem: any
+  isloading = false
   dropdown = false
   showModal = false;
   updateModal = false
@@ -94,8 +95,10 @@ export class InvitesComponent implements OnInit, OnDestroy {
   }
 
   users() {
+    this.isloading = true;
     this.setSrv.allInvite().pipe(takeUntil(this.unsubcribe)).subscribe((invite: any) => {
       this.inviteList = invite.data;
+      this.isloading = false
     })
   }
 
