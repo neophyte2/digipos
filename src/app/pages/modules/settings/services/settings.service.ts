@@ -31,7 +31,7 @@ export class SettingsService {
         let data = {
             "request": "READ_ROLE"
         }
-        return this.http.post(`${this.api}/role/read-by-organization-id`, data);
+        return this.http.post(`${this.api}/role/read-by-customer-type`, data);
     }
 
     getPermissions(data: any) {
