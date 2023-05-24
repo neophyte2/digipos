@@ -13,6 +13,6 @@ export class SettlementService {
     constructor(private http: HttpClient) { }
 
     getAllSettlement(params: any){
-        return this.http.post(`${this.api}/report/settlement`, params);
+        return this.http.post(`${this.api}/settlement/read-by-organisation-id`, params);
     }
 }

@@ -82,40 +82,43 @@
           AMOUNT
         </th>
         <th scope="col" class="px-6 py-3">
-          Transaction Reference
-        </th>
-        <th scope="col" class="px-6 py-3">
           Amount To Settle
         </th>
         <th scope="col" class="px-6 py-3">
           Fee
         </th>
         <th scope="col" class="px-6 py-3">
+          Vat
+        </th>
+        <th scope="col" class="px-6 py-3">
           Date\Time
         </th>
-        <!-- <th scope="col" class="px-6 py-3">
-          Status
-        </th> -->
+        <th scope="col" class="px-6 py-3">
+          Updated At
+        </th>
       </tr>
     </thead>
     <tbody>
       <tr class="bg-white border-b  hover:bg-gray-100 " *ngFor="let item of settlementList">
         <td class="px-6 py-4">
           <div class="flex p-2 rounded hover:bg-gray-100">
-            {{formatAmt(item?.trnAmount)}}
+            {{formatAmt(item?.settlementAmount)}}
           </div>
         </td>
         <td class="px-6 py-4">
-          {{item?.trnReference}}
+          {{formatAmt(item?.settlementPayable)}}
         </td>
         <td class="px-6 py-4">
-          {{item?.trnPayable}}
+          {{formatAmt(item?.settlementMsc)}}
         </td>
         <td class="px-6 py-4">
-          {{item?.trnFee}}
+          {{item?.settlementVat}}
         </td>
         <td class="px-6 py-4">
-          {{item?.trnCreatedAt}}
+          {{item?.settlementCreatedAt}}
+        </td>
+        <td class="px-6 py-4">
+          {{item?.settlementUpdatedAt}}
         </td>
         <!-- <td class="px-6 py-4">
           <span *ngIf="(item?.trnSettlementStatus  | uppercase) === 'SUCCESS'"
@@ -136,9 +139,9 @@
   </table>
   <div *ngIf="!isloading">
     <div class="text-center" *ngIf="!settlementList?.length">
-     <div style="display: flex; align-items: center; justify-content: center;">
-      <img src="../../../../../assets/svgs/EmptyInbox.svg" style="width:10%;" class="mt-5">
-     </div>
+      <div style="display: flex; align-items: center; justify-content: center;">
+        <img src="../../../../../assets/svgs/EmptyInbox.svg" style="width:10%;" class="mt-5">
+      </div>
       <br> No Data Found
     </div>
   </div>
