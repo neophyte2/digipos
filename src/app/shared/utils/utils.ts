@@ -28,17 +28,11 @@ export default class DateUtils {
     }
 }
 
-export const exportTableToCSV = (
-    data: any[],
-    columns: { value: string; title: string }[],
-    filename: any
-) => {
-
+export const exportTableToCSV = (data: any[], columns: { value: string; title: string }[], filename: any) => {
     let newData: any = [];
     data.forEach((dat) => {
         newData.push(columns.map((col) => `"${dat[col.value]}"`).join(","));
     });
-    //@ts-ignore
     newData = [columns.map((col) => col.title).join(","), ...newData];
     downloadCSV(newData.join("\n"), `${filename}.csv`);
 };
