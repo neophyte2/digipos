@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     { data: [], label: 'Pending' },
     { data: [], label: 'Failed' },
   ];
-  public barChartLabels: Label[] = ['NQR', 'USSD', 'PWBT', 'CARD', 'WALLET'];
+  public barChartLabels: Label[] = ['NQR', 'USSD', 'PWBT', 'CARD'];
   public barChartOptions: ChartOptions = {
     responsive: true,
     scales: {
@@ -141,7 +141,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       statusMap.set("Successfull", "00")
       statusMap.set("Pending", "09")
       statusMap.set("Failed", "22")
-      const channels = ["CARD", "NQR", "PWBT", "USSD", "WALLET"]
+      const channels = ["CARD", "NQR", "PWBT", "USSD"]
       type ResponseCodeCount = {
         responseCode: string;
         count: number;

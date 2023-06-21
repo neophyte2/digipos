@@ -59,25 +59,11 @@
   <div class="col-start-1 col-end-3 mt-8">
     <p class="flex">
       <b>STAT</b>
-      <!-- <span>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#D0D1D2"
-          class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round"
-            d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
-        </svg>
-      </span> -->
     </p>
   </div>
   <div class="col-end-7 col-span-2">
     <form [formGroup]="dateRangeForm">
       <div class="md:flex my-3 hidden items-end flex-wrap ">
-        <!-- <div class="mr-3">
-          <label for="" class="block text-sm text-gray-400 regularfont">Filter By</label>
-          <select
-            class="w-[140px] text-xs py-[15px] text-gray-400 text-center border border-gray-300 rounded focus:outline-0 focus:ring-0 brd">
-            <option>Filter by Biller</option>
-          </select>
-        </div> -->
         <div class="mr-3">
           <label for="from" class="block text-sm text-gray-400 regularfont">From</label>
           <input type="date" formControlName="start"
@@ -144,7 +130,7 @@
                 <circle cx="5.5" cy="5.5" r="5.5" fill="#FF8A00" />
               </svg>
               <!-- failed -->
-              <svg *ngIf="item?.trnResponseCode === '25'" width="11" height="11" viewBox="0 0 11 11" fill="none"
+              <svg  *ngIf="!['09','00'].includes(item?.trnResponseCode)" width="11" height="11" viewBox="0 0 11 11" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
                 <circle cx="5.5" cy="5.5" r="5.5" fill="#FF0000" />
               </svg>
@@ -160,7 +146,7 @@
         </td>
         <td class="px-6 py-4">
           <span class="inline-block bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
-            {{item?.trnService}}
+            {{item?.trnChannel}}
           </span>
         </td>
         <td class="px-6 py-4">
@@ -174,7 +160,7 @@
             class="inline-block bg-[#DBFFED] px-3 py-1 text-sm font-semibold text-[#35B172] mr-2 mb-2">
             Successful
           </span>
-          <span *ngIf="item?.trnResponseCode === '25'"
+          <span *ngIf="!['09','00'].includes(item?.trnResponseCode)"
             class="inline-block bg-[#FFDBDA] px-3 py-1 text-sm font-semibold text-[#FF0000] mr-2 mb-2">
             Failed
           </span>
