@@ -15,6 +15,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       pass: false,
     },
   };
+  acctType: any
   hidePassword = true;
   hideCPassword = true;
   hideOPassword = true
@@ -26,8 +27,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private genSrv: GeneralService,
     private setSrv: SettingsService,
   ) {
-    let data = this.genSrv.currentUserValue
+    let data: any = this.genSrv.currentUserValue
     this.ngForm(data)
+    this.acctType = data.customerAccountType
+    
   }
 
   ngOnInit(): void {
@@ -38,6 +41,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.profileForm = this.fb.group({
       firstName: [{ value: data.customerFirstName, disabled: true }],
       lastName: [{ value: data.customerLastName, disabled: true }],
+      customerBusinessName: [{ value: data?.customerBusinessName, disabled: true }],
       email: [{ value: data.customerEmail, disabled: true }],
       phone: [{ value: data.customerPhone, disabled: true }],
       customerOldPassword: ["", Validators.required],
@@ -79,6 +83,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.setSrv.changePassword(payload).pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
       if (data.responseCode === '00') {
         this.genSrv.sweetAlertSuccess(data.responseMessage);
+        this.genSrv.logout('/')
         this.loader.btn.pass = false;
       } else {
         let msg = data.responseMessage

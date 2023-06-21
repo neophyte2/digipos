@@ -102,6 +102,25 @@ export class InvitesComponent implements OnInit, OnDestroy {
     })
   }
 
+  reInvite(id: any) {
+    let payload = {
+      inviteCustomerEmail: id.inviteCustomerEmail
+    }
+    this.setSrv.resendInvite(payload).pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
+      if (data.responseCode === '00') {
+        this.genSrv.sweetAlertSuccess(data.responseMessage);
+        this.users()
+      } else {
+        let msg = data.responseMessage
+        this.genSrv.sweetAlertError(msg);
+      }
+    }, (err) => {
+      let msg = err
+      this.genSrv.sweetAlertError(msg);
+    })
+
+  }
+
   getItemId(id: any) {
     this.dropdown = !this.dropdown
     this.selectedItem = id;
@@ -192,10 +211,6 @@ export class InvitesComponent implements OnInit, OnDestroy {
       this.genSrv.sweetAlertError(msg);
     })
 
-  }
-
-  goToManageRole() {
-    this.router.navigateByUrl('/auth/settings/manage-roles')
   }
 
   viewRole(id: any) {

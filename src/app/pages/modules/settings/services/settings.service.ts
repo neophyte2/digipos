@@ -56,7 +56,10 @@ export class SettingsService {
 
     changeUserRole(data: any) {
         return this.http.post(`${this.api}/customer/update-role`, data);
+    }
 
+    resendInvite(invite:any){
+        return this.http.post(`${this.api}/customer/resend-invite`, invite)
     }
 
 
