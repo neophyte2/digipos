@@ -86,8 +86,8 @@ export class TerminalComponent implements OnInit, OnDestroy {
     }
     this.terminSrv.getAllTerminals(payload).pipe(takeUntil(this.unsubcribe)).subscribe((trans: any) => {
       this.terminalList = trans.data;
-    this.isloading = false
-  })
+      this.isloading = false
+    })
   }
 
   get tf() {
@@ -116,10 +116,7 @@ export class TerminalComponent implements OnInit, OnDestroy {
   }
 
   createTerminal() {
-    let payload = {
-      terminalCustomerId: this.tf['terminalCustomerId'].value,
-      terminalSerial: this.tf['terminalSerial'].value,
-    }
+    let payload = {}
     this.loader.btn.create = true;
     this.terminSrv.createTerminal(payload).pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
       if (data.responseCode === '00') {
@@ -127,18 +124,15 @@ export class TerminalComponent implements OnInit, OnDestroy {
         this.allTerminals()
         this.loader.btn.create = false;
         this.terminalForm.reset()
-        this.toggleModal();
       } else {
         let msg = data.responseMessage
         this.genSrv.sweetAlertError(msg);
         this.loader.btn.create = false;
-        this.toggleModal();
       }
     }, (err) => {
       let msg = err
       this.genSrv.sweetAlertError(msg);
       this.loader.btn.create = false;
-      this.toggleModal();
     })
   }
 

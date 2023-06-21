@@ -17,9 +17,9 @@
   </div>
   <div class="col-end-6 col-span-2 mt-10">
     <div>
-      <button (click)="toggleModal()"
+      <button (click)="createTerminal()"
         class="block w-[150px] py-[15px] rounded text-white bg-[#64154A] text-sm mx-4 text-center ">
-        + New Teminal
+        + New Teminal <span *ngIf="loader.btn.create"><i class="fa fa-spinner fa-spin"></i></span>
       </button>
     </div>
   </div>
@@ -35,10 +35,7 @@
           Terminal ID
         </th>
         <th scope="col" class="px-6 py-3">
-          Terminal User
-        </th>
-        <th scope="col" class="px-6 py-3">
-          Serial Number
+          Serial
         </th>
         <th scope="col" class="px-6 py-3">
           Location
@@ -75,10 +72,7 @@
           </div>
         </td>
         <td class="px-6 py-4">
-          {{item?.terminalCustomerName || 'N/A'}}
-        </td>
-        <td class="px-6 py-4">
-          {{item?.terminalDeviceId}}
+          {{item?.terminalSerial}}
         </td>
         <td class="px-6 py-4">
           {{item?.terminalMerchantNameLocation}}
@@ -116,9 +110,9 @@
               <div class="py-1" role="none">
                 <a class="text-gray-700 block px-4 py-2 text-sm" (click)="viewTerminal(item.terminalId)">View</a>
               </div>
-              <div class="py-1" role="none">
+              <!-- <div class="py-1" role="none">
                 <a class="text-gray-700 block px-4 py-2 text-sm">Edit</a>
-              </div>
+              </div> -->
               <div *ngIf="item?.terminalStatus === 'ACTIVE'" (click)="confirmStatus(item,'Deactivate')" class="py-1"
                 role="none">
                 <a class="text-red-700 block px-4 py-2 text-sm">Deactivate</a>
