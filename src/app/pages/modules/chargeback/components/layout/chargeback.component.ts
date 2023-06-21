@@ -5,6 +5,7 @@ import { takeUntil } from "rxjs/operators";
 import { ChargebackService } from '../../services/chargeback.service';
 import { GeneralService } from 'src/app/shared/services/general.service';
 import { Router } from '@angular/router';
+import { exportTableToCSV } from 'src/app/shared/utils/utils';
 
 @Component({
   selector: 'dp-chargeback',
@@ -24,6 +25,7 @@ export class ChargebackComponent implements OnInit, OnDestroy {
   dropdown = false
   isloading = false;
   chargebackList: any
+  exportLoading = false;
   chargebackForm!: FormGroup;
   private unsubcribe = new Subject<void>();
 
@@ -47,8 +49,8 @@ export class ChargebackComponent implements OnInit, OnDestroy {
     }
     this.chargeSrv.getAllChargeback(payload).pipe(takeUntil(this.unsubcribe)).subscribe((charge: any) => {
       this.chargebackList = charge.data;
-    this.isloading = false
-  })
+      this.isloading = false
+    })
   }
 
   get cf() {
@@ -57,7 +59,7 @@ export class ChargebackComponent implements OnInit, OnDestroy {
 
   toggleModal() {
     this.showModal = !this.showModal;
-    if(this.showModal)  this.generateReference()
+    if (this.showModal) this.generateReference()
   }
 
   viewChargeback(id: any) {
@@ -76,6 +78,32 @@ export class ChargebackComponent implements OnInit, OnDestroy {
       chargebackAmount: ['', Validators.required,],
       chargebackEvidence: ['', Validators.required,],
     });
+  }
+
+  export() {
+    this.exportLoading = true;
+    if (this.chargebackList.length > 0) {
+      const exportName = "ChargeBack";
+      const columns = [
+        { title: "ID ", value: "chargebackId" },
+        { title: "Amount", value: "chargebackAmount" },
+        { title: "Evidence", value: "chargebackEvidence" },
+        { title: "Reference", value: "chargebackReference" },
+        { title: "Transaction Reference ", value: "chargebackTransactionReference" },
+        { title: "Transaction Type", value: "chargebackTransactionType" },
+        { title: "Status", value: "chargebackStatus" },
+        { title: "Expiry Date", value: "chargebackExpiryDate" },
+        { title: "CreatedAt", value: "chargebackCreatedAt" },
+        { title: "Updated At", value: "chargebackUpdatedAt" },
+        { title: "Transaction Date ", value: "chargebackTransactionDate" },
+      ];
+      exportTableToCSV(this.chargebackList, columns, exportName);
+      this.exportLoading = false;
+    } else {
+      this.genSrv.sweetAlertError('No ChargeBack Data Available')
+      this.exportLoading = false;
+
+    }
   }
 
   generateReference() {

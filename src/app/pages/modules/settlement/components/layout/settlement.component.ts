@@ -3,10 +3,11 @@ import { FormControl, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from "rxjs/operators";
-import { tableCurrency } from 'src/app/shared/utils/utils';
+import { exportTableToCSV, tableCurrency } from 'src/app/shared/utils/utils';
 import { paymentMethods, responsesType } from 'src/app/shared/utils/data';
 import { SettlementService } from '../../services/settlement.service';
 import { Router } from '@angular/router';
+import { GeneralService } from 'src/app/shared/services/general.service';
 
 @Component({
   selector: 'dp-settlement',
@@ -28,6 +29,7 @@ export class SettlementComponent implements OnInit, OnDestroy {
   isloading = false
   method = paymentMethods
   dateRangeForm!: FormGroup;
+  exportLoading = false;
   responseList = responsesType
   year = new Date().getFullYear()
   month = (new Date().getMonth() + 1).toString().padStart(2, '0');
@@ -36,6 +38,7 @@ export class SettlementComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
+    private genSrv: GeneralService,
     private transSrvService: SettlementService,
   ) {
     var month = new Date().getMonth() + 1;
@@ -83,5 +86,26 @@ export class SettlementComponent implements OnInit, OnDestroy {
     this.unsubcribe.next();
     this.unsubcribe.complete();
   }
+
+  export() {
+    if (this.settlementList.length > 0) {
+      const exportName = "Settlement";
+      const columns = [
+        { title: " ID", value: "settlementId" },
+        { title: "Currency ", value: "settlementCurrency" },
+        { title: "Amount", value: "settlementAmount" },
+        { title: "settlement Msc", value: "settlementMsc" },
+        { title: "Payable", value: "settlementPayable" },
+        { title: "VAT ", value: "settlementVat" },
+        { title: "Status", value: "settlementStatus" },
+        { title: "CreatedAt", value: "settlementCreatedAt" },
+        { title: "Transaction Date ", value: "settlementTransactionDate" },
+      ];
+      exportTableToCSV(this.settlementList, columns, exportName);
+    } else {
+      this.genSrv.sweetAlertError('No ChargeBack Data Available')
+    }
+  }
+
 
 }
