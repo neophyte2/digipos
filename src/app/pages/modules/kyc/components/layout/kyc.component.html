@@ -278,7 +278,7 @@
                 Identity Card Number :
               </div>
               <div class="p-2">
-                <b> {{ idCardForm.controls['idCardNumber'].value | hideData  }} </b>
+                <b> {{ idCardForm.controls['idCardNumber'].value | hideData }} </b>
               </div>
             </div>
           </div>
@@ -619,8 +619,8 @@
       <!-- Upload Business Logo -->
 
       <!-- verify bank account details -->
-      <!-- <div class="mt-5 pb-6">
-        <button (click)="onLinkAccount()" type="button"
+      <div class="mt-5 pb-6">
+        <button (click)="onLinkAccount()" type="button" *ngIf="(verifyList?.bankDetailsVerified | uppercase) === 'NO'"
           class="w-full d-flex text-black bg-white transition ease-in-out delay-150 hover:-translate-y-1 hover:scale-105 duration-300 ... border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-4 text-center inline-flex items-center mr-2 mb-2">
           <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="40" height="40" rx="5" fill="#8D005F" fill-opacity="0.03" />
@@ -637,8 +637,7 @@
           <span style="padding-left: 55px;">
             {{ClickLinkAccount ? "Link Bank Account" : "Link Bank Account"}}
           </span>
-          <span
-            class="d-flex justify-end">
+          <span class="d-flex justify-end">
             <svg *ngIf="(verifyList?.addressVerified | uppercase) === 'YES' && !loader.btn.addressloader" width="25"
               height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="12.5" cy="12.5" r="12.5" fill="#64154A" />
@@ -648,7 +647,68 @@
             <span *ngIf="loader.btn.addressloader"><i style="color:black" class="fa fa-spinner fa-spin"></i></span>
           </span>
         </button>
-      </div> -->
+
+        <!-- View -->
+        <div class="mt-5" *ngIf="(verifyList?.bankDetailsVerified | uppercase) === 'YES'">
+          <div class="border border-600 p-5 rounded">
+            <div class="float-right">
+              <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12.5" cy="12.5" r="12.5" fill="#64154A" />
+                <path
+                  d="M10.16 14.8734L7.05673 11.7702L6 12.8195L10.16 16.9794L19.0901 8.04929L18.0408 7L10.16 14.8734Z"
+                  fill="white" />
+              </svg>
+            </div>
+            <div class="grid grid-cols-6 gap-4">
+              <div class="col-start-1 col-end-3">
+                <div class="flex">
+                  <div>
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect width="40" height="40" rx="5" fill="#8D005F" fill-opacity="0.03" />
+                      <path
+                        d="M17.0291 14.7865C17.1047 14.7251 17.1377 14.6353 17.1377 14.5173C17.1377 14.3992 17.1 14.3047 17.0291 14.2339C16.9583 14.163 16.8544 14.1252 16.7221 14.1205H16.179V14.8809H16.7127C16.8544 14.8809 16.9583 14.8479 17.0291 14.7865Z"
+                        fill="#8D005F" />
+                      <path
+                        d="M9.87376 16.7135H30.1262C30.2915 16.7135 30.4238 16.5813 30.4238 16.416V15.3155C30.4238 15.221 30.3813 15.1313 30.3057 15.0746L20.1748 7.56022C20.0708 7.47993 19.9244 7.47993 19.8205 7.56022L9.69901 15.0793C9.62344 15.136 9.58093 15.2257 9.58093 15.3202V16.4207C9.57621 16.5813 9.70846 16.7135 9.87376 16.7135ZM22.3521 12.8312H22.7441V13.8324H22.9L23.6651 12.8312H24.128L24.1327 12.8406L23.2447 13.9505L24.2035 15.1927H23.7076L22.9377 14.1725H22.7441V15.1927H22.3521V12.8312ZM20.0142 12.8312H20.4062L21.45 14.5315L21.4594 14.5267V12.8264H21.8514V15.188H21.4641L20.4204 13.4877L20.4109 13.4924V15.1927H20.0189V12.8312H20.0142ZM18.5311 12.8312H18.9042L19.7166 15.1927H19.3104L19.131 14.6401H18.2997L18.1202 15.1927H17.714L18.5311 12.8312ZM15.7918 12.8312H16.5663C16.8261 12.8312 17.0292 12.8831 17.1756 12.9917C17.322 13.1004 17.3976 13.2609 17.3976 13.4735C17.3976 13.5774 17.3693 13.6719 17.3079 13.7521C17.2512 13.8372 17.1662 13.8986 17.0623 13.9411C17.2134 13.9647 17.3315 14.0308 17.4118 14.1394C17.4921 14.2433 17.5346 14.3709 17.5346 14.5126C17.5346 14.7345 17.4637 14.9046 17.3173 15.0179C17.1709 15.1313 16.9725 15.1927 16.7175 15.1927H15.7918V12.8312Z"
+                        fill="#8D005F" fill-opacity="0.4" />
+                      <path
+                        d="M16.897 13.7379C16.9678 13.6813 17.0009 13.5963 17.0009 13.4924C17.0009 13.3743 16.9631 13.2893 16.8875 13.2326C16.8119 13.1759 16.7033 13.1476 16.5616 13.1476H16.1838V13.8277H16.6041C16.7269 13.8277 16.8261 13.7993 16.897 13.7379ZM18.7248 13.3837H18.7153L18.4083 14.3142H19.0271L18.7248 13.3837ZM30.7024 29.768H9.29755C9.13225 29.768 9 29.9003 9 30.0656V30.8212C9 30.9866 9.13225 31.1188 9.29755 31.1188H30.7024C30.8678 31.1188 31 30.9866 31 30.8212V30.0656C31 29.9003 30.8678 29.768 30.7024 29.768ZM10.058 28.148V28.9037C10.058 29.069 10.1902 29.2012 10.3555 29.2012H29.6445C29.8098 29.2012 29.942 29.069 29.942 28.9037V28.148C29.942 27.9827 29.8098 27.8504 29.6445 27.8504H10.3555C10.1902 27.8504 10.058 27.9827 10.058 28.148ZM25.9227 26.3202C25.8377 26.3202 25.7669 26.391 25.7669 26.476V26.9247C25.7669 27.0097 25.8377 27.0806 25.9227 27.0806H28.6054C28.6904 27.0806 28.7613 27.0097 28.7613 26.9247V26.476C28.7613 26.391 28.6904 26.3202 28.6054 26.3202H28.3409V18.3477H28.6054C28.6904 18.3477 28.7613 18.2768 28.7613 18.1918V17.7431C28.7613 17.6581 28.6904 17.5872 28.6054 17.5872H25.9227C25.8377 17.5872 25.7669 17.6581 25.7669 17.7431V18.1918C25.7669 18.2768 25.8377 18.3477 25.9227 18.3477H26.1872V26.3249H25.9227V26.3202ZM21.0816 26.3202C20.9966 26.3202 20.9257 26.391 20.9257 26.476V26.9247C20.9257 27.0097 20.9966 27.0806 21.0816 27.0806H23.7643C23.8493 27.0806 23.9201 27.0097 23.9201 26.9247V26.476C23.9201 26.391 23.8493 26.3202 23.7643 26.3202H23.4998V18.3477H23.7643C23.8493 18.3477 23.9201 18.2768 23.9201 18.1918V17.7431C23.9201 17.6581 23.8493 17.5872 23.7643 17.5872H21.0816C20.9966 17.5872 20.9257 17.6581 20.9257 17.7431V18.1918C20.9257 18.2768 20.9966 18.3477 21.0816 18.3477H21.3461V26.3249H21.0816V26.3202ZM16.2357 26.3202C16.1507 26.3202 16.0799 26.391 16.0799 26.476V26.9247C16.0799 27.0097 16.1507 27.0806 16.2357 27.0806H18.9184C19.0034 27.0806 19.0743 27.0097 19.0743 26.9247V26.476C19.0743 26.391 19.0034 26.3202 18.9184 26.3202H18.6539V18.3477H18.9184C19.0034 18.3477 19.0743 18.2768 19.0743 18.1918V17.7431C19.0743 17.6581 19.0034 17.5872 18.9184 17.5872H16.2357C16.1507 17.5872 16.0799 17.6581 16.0799 17.7431V18.1918C16.0799 18.2768 16.1507 18.3477 16.2357 18.3477H16.5002V26.3249H16.2357V26.3202ZM11.3899 26.3202C11.3049 26.3202 11.234 26.391 11.234 26.476V26.9247C11.234 27.0097 11.3049 27.0806 11.3899 27.0806H14.0726C14.1576 27.0806 14.2284 27.0097 14.2284 26.9247V26.476C14.2284 26.391 14.1576 26.3202 14.0726 26.3202H13.8081V18.3477H14.0726C14.1576 18.3477 14.2284 18.2768 14.2284 18.1918V17.7431C14.2284 17.6581 14.1576 17.5872 14.0726 17.5872H11.3899C11.3049 17.5872 11.234 17.6581 11.234 17.7431V18.1918C11.234 18.2768 11.3049 18.3477 11.3899 18.3477H11.6544V26.3249H11.3899V26.3202Z"
+                        fill="#8D005F" />
+                    </svg>
+                  </div>
+                  <div class="ml-3">
+                    Bank Deatils
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="flex">
+              <div class="p-2">
+                Account Name :
+              </div>
+              <div class="p-2">
+                <b> {{ bankForm.controls['accountName'].value }} </b>
+              </div>
+            </div>
+            <div class="flex">
+              <div class="p-2">
+                Account Number :
+              </div>
+              <div class="p-2">
+                <b> {{ bankForm.controls['accountNumber'].value | hideData }} </b>
+              </div>
+            </div>
+            <div class="flex">
+              <div class="p-2">
+                Bank Name :
+              </div>
+              <div class="p-2">
+                <b> {{ bankForm.controls['accountBankName'].value }} </b>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <!-- verify bank account details -->
 
 
@@ -793,5 +853,66 @@
     </div>
     <!-- Verify Business Logo -->
 
+    <!-- Verify Bank Details -->
+    <div class="flex items-center mb-4">
+      <svg *ngIf="(verifyList?.bankDetailsVerified | uppercase)  === 'NO'" width="25" height="25" viewBox="0 0 25 25"
+        fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12.5" cy="12.5" r="12" stroke="#737B8B"></circle>
+      </svg>
+      <svg *ngIf="(verifyList?.bankDetailsVerified | uppercase)  === 'YES'" width="25" height="25" viewBox="0 0 25 25"
+        fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12.5" cy="12.5" r="12.5" fill="#27AE60"></circle>
+      </svg>
+      <label for="default-radio-2" class="ml-2 text-sm font-medium text-gray-900">Bank Details</label>
+    </div>
+    <!-- Verify  Bank Details -->
+
+    <!-- bank -->
+    <ng-container *ngIf="visible">
+      <form [formGroup]="bankForm">
+        <div class="mb-6 mt-10">
+          <ng-select bindLabel="name" bindValue="code" formControlName="'accountBankCode"
+            [items]="bankList"></ng-select>
+          <div class="mt-2"
+            *ngIf="(bankForm.controls['accountBankCode'].dirty || bankForm.controls['accountBankCode'].touched) && bankForm.controls['accountBankCode'].invalid">
+            <span class="text-rose-700" style="font-size: 13px;"
+              *ngIf="bankForm.controls['accountBankCode'].errors?.['required']">
+              Terminal Serial Number is required.
+            </span>
+          </div>
+        </div>
+        <div class="mb-6">
+          <input oninput="event.target.value = event.target.value.replace(/[^0-9]*/g,'');"
+            formControlName="accountNumber" onkeydown="if(event.key==='.'){event.preventDefault();}"
+            placeholder="Enter Bank Account Number" id="default-input"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+          <div class="mt-2"
+            *ngIf="(bankForm.controls['accountNumber'].dirty || bankForm.controls['accountNumber'].touched) && bankForm.controls['accountNumber'].invalid">
+            <span class="text-rose-700" style="font-size: 13px;"
+              *ngIf="bankForm.controls['accountNumber'].errors?.['required']">
+              Terminal Serial Number is required.
+            </span>
+          </div>
+        </div>
+        <div class="mb-6">
+          <input placeholder="Enter Bank Name" type="text" id="default-input" formControlName="accountName"
+            class="mt-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" />
+          <div class="mt-2"
+            *ngIf="(bankForm.controls['accountName'].dirty || bankForm.controls['accountName'].touched) && bankForm.controls['accountName'].invalid">
+            <span class="text-rose-700" style="font-size: 13px;"
+              *ngIf="bankForm.controls['accountName'].errors?.['required']">
+              Terminal Serial Number is required.
+            </span>
+          </div>
+        </div>
+        <div class="flex justify-center">
+          <button type="button" (click)="completeBank()"
+            class="w-1/2 focus:outline-none text-white bg-[#64154A] hover:bg-[#64154A] focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 ">
+            Save <span *ngIf="loader.btn.bank"><i style="color:black" class="fa fa-spinner fa-spin"></i></span>
+          </button>
+        </div>
+      </form>
+    </ng-container>
+    <!-- bank -->
   </div>
 </div>

@@ -14,6 +14,7 @@ import { NgOtpInputConfig } from 'ng-otp-input';
 export class KycComponent implements OnInit {
 
   otp = ''
+  bankList: any
   cardList: any
   verifyList: any
   accountType: any
@@ -35,6 +36,7 @@ export class KycComponent implements OnInit {
   idCardForm!: FormGroup;
   addressForm!: FormGroup;
   bislogoForm!: FormGroup;
+  bankForm!: FormGroup;
 
   //Loader
   loader: any = {
@@ -45,6 +47,7 @@ export class KycComponent implements OnInit {
       cacloader: false,
       picloader: false,
       bislogoloader: false,
+      bank: false,
     },
   };
 
@@ -73,6 +76,7 @@ export class KycComponent implements OnInit {
     this.businessName = acctType.customerBusinessName
     this.getVerification();
     this.getCards();
+    this.getBankList();
   }
 
   onInitForm() {
@@ -94,12 +98,24 @@ export class KycComponent implements OnInit {
     this.bislogoForm = this.fb.group({
       logo: ['', Validators.required],
     })
+    this.bankForm = this.fb.group({
+      accountNumber: ['', Validators.required],
+      accountBankCode: ['', Validators.required],
+      accountName: ['', Validators.required],
+      accountBankName: ['']
+    })
   }
 
   getVerification() {
     this.kycSrv.verificatin().pipe(takeUntil(this.unsubcribe)).subscribe(data => {
       this.verifyList = data;
       this.setValues(data)
+    })
+  }
+
+  getBankList() {
+    this.kycSrv.getAllBankList().pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
+      this.bankList = data.data;
     })
   }
 
@@ -117,6 +133,9 @@ export class KycComponent implements OnInit {
     this.cacPhoto = { name: data && typeof data.cac === 'string' && data.cac.length > 0 ? data.cac : 'Choose File' }
     this.bislogoForm.controls['logo'].patchValue(data.logo);
     this.bislogoPhoto = { name: data && typeof data.logo === 'string' && data.logo.length > 0 ? data.logo : 'Choose File' }
+    this.bankForm.controls['accountNumber'].patchValue(data.bankDetails?.accountNumber);
+    this.bankForm.controls['accountBankName'].patchValue(data.bankDetails?.accountBankName);
+    this.bankForm.controls['accountName'].patchValue(data.bankDetails?.accountName);
   }
 
   getCards() {
@@ -316,6 +335,37 @@ export class KycComponent implements OnInit {
       let msg = err
       this.genSrv.sweetAlertError(msg);
       this.loader.btn.bislogoloader = false;
+    })
+  }
+
+  completeBank() {
+    this.loader.btn.bank = true
+    let data = {
+      accountNumber: this.bankForm.controls['accountNumber'].value,
+      accountBankCode: this.bankForm.controls['accountBankCode'].value,
+      accountName: this.bankForm.controls['accountName'].value,
+    }
+    this.kycSrv.verifyBank(data).subscribe((data: any) => {
+      if (data.responseCode === '00') {
+        this.genSrv.sweetAlertSuccess(data.responseMessage);
+        this.loader.btn.bank = false;
+        this.bankForm.reset();
+        this.getVerification()
+        this.visible = !this.visible;
+        this.ClickLinkAccount = !this.ClickLinkAccount;
+      } else {
+        let msg = data.responseMessage
+        this.genSrv.sweetAlertError(msg);
+        this.loader.btn.bank = false;
+        this.visible = !this.visible;
+        this.ClickLinkAccount = !this.ClickLinkAccount;
+      }
+    }, (err) => {
+      let msg = err
+      this.genSrv.sweetAlertError(msg);
+      this.loader.btn.bank = false;
+      this.visible = !this.visible;
+      this.ClickLinkAccount = !this.ClickLinkAccount;
     })
   }
 

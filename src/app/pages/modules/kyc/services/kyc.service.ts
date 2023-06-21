@@ -24,8 +24,12 @@ export class KycService {
         return this.http.post(`${this.api}/kyc/create-id-card`, param);
     }
 
-    verifyCac(param: any){
+    verifyCac(param: any) {
         return this.http.post(`${this.api}/kyc/create-cac`, param);
+    }
+
+    verifyBank(param: any) {
+        return this.http.post(`${this.api}/kyc/bank-account-verification`, param);
     }
 
     initiateBvn(param: any) {
@@ -39,6 +43,13 @@ export class KycService {
     getAllCards() {
         let param = { request: "ID_CARDS_TYPES" };
         return this.http.post(`${this.api}/kyc/id-card-types`, param);
+    }
+
+    getAllBankList() {
+        let param = {
+            requestType: "READ"
+        }
+        return this.http.post(`${this.api}/kyc/bank-list`, param);
     }
 
 }
