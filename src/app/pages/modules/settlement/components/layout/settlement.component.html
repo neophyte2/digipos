@@ -82,6 +82,12 @@
           AMOUNT
         </th>
         <th scope="col" class="px-6 py-3">
+          MERCHANT ID
+        </th>
+        <th scope="col" class="px-6 py-3">
+          MERCHANT NAME
+        </th>
+        <th scope="col" class="px-6 py-3">
           Amount To Settle
         </th>
         <th scope="col" class="px-6 py-3">
@@ -94,16 +100,19 @@
           Date\Time
         </th>
         <th scope="col" class="px-6 py-3">
-          Updated At
         </th>
       </tr>
     </thead>
     <tbody>
       <tr class="bg-white border-b  hover:bg-gray-100 " *ngFor="let item of settlementList">
         <td class="px-6 py-4">
-          <div class="flex p-2 rounded hover:bg-gray-100">
-            {{formatAmt(item?.settlementAmount)}}
-          </div>
+          {{formatAmt(item?.settlementAmount)}}
+        </td>
+        <td class="px-6 py-4">
+          {{item?.settlementOrganisationMid || 'N/A'}}
+        </td>
+        <td class="px-6 py-4">
+          {{item?.settlementOrganisationName || 'N/A'}}
         </td>
         <td class="px-6 py-4">
           {{formatAmt(item?.settlementPayable)}}
@@ -118,22 +127,15 @@
           {{item?.settlementCreatedAt}}
         </td>
         <td class="px-6 py-4">
-          {{item?.settlementUpdatedAt}}
+          <div class="relative inline-block text-left">
+            <div>
+              <button type="button" (click)="viewSettlement(item.settlementId)"
+                class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                View
+              </button>
+            </div>
+          </div>
         </td>
-        <!-- <td class="px-6 py-4">
-          <span *ngIf="(item?.trnSettlementStatus  | uppercase) === 'SUCCESS'"
-            class="inline-block bg-[#DBFFED] px-3 py-1 text-sm font-semibold text-[#35B172] mr-2 mb-2">
-            Successful
-          </span>
-          <span *ngIf="(item?.trnSettlementStatus | uppercase) === 'FAILED'"
-            class="inline-block bg-[#FFDBDA] px-3 py-1 text-sm font-semibold text-[#FF0000] mr-2 mb-2">
-            Failed
-          </span>
-          <span *ngIf="(item?.trnSettlementStatus | uppercase) === 'PENDING'"
-            class="inline-block bg-[#FFEDD7] px-3 py-1 text-sm font-semibold text-[#FF8A00] mr-2 mb-2">
-            Pending
-          </span>
-        </td> -->
       </tr>
     </tbody>
   </table>

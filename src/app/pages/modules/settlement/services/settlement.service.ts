@@ -15,4 +15,8 @@ export class SettlementService {
     getAllSettlement(params: any){
         return this.http.post(`${this.api}/settlement/read-by-organisation-id`, params);
     }
+
+    getSettlementById(params: any) {
+        return this.http.post(`${this.api}/settlement/read-transaction`, params);
+    }
 }

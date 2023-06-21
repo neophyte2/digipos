@@ -6,6 +6,7 @@ import { takeUntil } from "rxjs/operators";
 import { tableCurrency } from 'src/app/shared/utils/utils';
 import { paymentMethods, responsesType } from 'src/app/shared/utils/data';
 import { SettlementService } from '../../services/settlement.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'dp-settlement',
@@ -27,12 +28,6 @@ export class SettlementComponent implements OnInit, OnDestroy {
   isloading = false
   method = paymentMethods
   dateRangeForm!: FormGroup;
-  filterList = [
-    'Status',
-    'Amount',
-    'Reference',
-    'Payment Method',
-  ]
   responseList = responsesType
   year = new Date().getFullYear()
   month = (new Date().getMonth() + 1).toString().padStart(2, '0');
@@ -40,6 +35,7 @@ export class SettlementComponent implements OnInit, OnDestroy {
   private unsubcribe = new Subject<void>();
 
   constructor(
+    private router: Router,
     private transSrvService: SettlementService,
   ) {
     var month = new Date().getMonth() + 1;
@@ -61,6 +57,8 @@ export class SettlementComponent implements OnInit, OnDestroy {
     this.allSettlementList()
   }
 
+
+
   allSettlementList() {
     this.isloading = true
     let payload = {
@@ -71,6 +69,10 @@ export class SettlementComponent implements OnInit, OnDestroy {
       this.settlementList = settle.data;
       this.isloading = false
     })
+  }
+
+  viewSettlement(id: any) {
+    this.router.navigateByUrl(`/auth/settlement/${id}`)
   }
 
   formatAmt(val: any) {

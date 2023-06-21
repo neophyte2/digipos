@@ -1,0 +1,102 @@
+<!-- Filter -->
+<div class="grid grid-cols-3 gap-4">
+  <div class="col-start-1 col-end-4 mt-8">
+    <div class="">
+      <p class="text-[#64154A] cursor-pointer" (click)="goBack()">Back</p>
+    </div>
+  </div>
+  <div class="col-end-6 col-span-2 mt-10">
+    <div>
+      <!-- <button (click)="export()"
+        class=" w-[150px] py-[15px] rounded flex p-2 text-white bg-download-report text-sm mx-4 text-center ">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_537_5281)">
+            <path
+              d="M1.33325 7.33317H14.6666V13.3332C14.6666 13.51 14.5963 13.6796 14.4713 13.8046C14.3463 13.9296 14.1767 13.9998 13.9999 13.9998H1.99992C1.82311 13.9998 1.65354 13.9296 1.52851 13.8046C1.40349 13.6796 1.33325 13.51 1.33325 13.3332V7.33317ZM11.3333 1.99984H13.9999C14.1767 1.99984 14.3463 2.07008 14.4713 2.1951C14.5963 2.32012 14.6666 2.48969 14.6666 2.6665V5.99984H1.33325V2.6665C1.33325 2.48969 1.40349 2.32012 1.52851 2.1951C1.65354 2.07008 1.82311 1.99984 1.99992 1.99984H4.66659V0.666504H5.99992V1.99984H9.99992V0.666504H11.3333V1.99984Z"
+              fill="#F2F2F2" />
+          </g>
+          <defs>
+            <clipPath id="clip0_537_5281">
+              <rect width="16" height="16" fill="white" />
+            </clipPath>
+          </defs>
+        </svg> <span class="flex-1">Export Table <span *ngIf="loader.btn.download === true"><i
+              class="fa fa-spinner fa-spin"></i></span></span>
+      </button> -->
+    </div>
+  </div>
+</div>
+<!-- Filter -->
+
+<!-- TABLE -->
+<div class="relative overflow-x-auto mt-10 mb-10">
+  <table class="w-full text-sm text-left text-gray-500">
+    <thead class="text-xs text-gray-400 uppercase bg-gray-50">
+      <tr>
+        <th scope="col" class="px-6 py-3">
+          AMOUNT
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Transaction Reference
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Terminal ID
+        </th>
+        <th scope="col" class="px-6 py-3">
+          MERCHANT ID
+        </th>
+        <th scope="col" class="px-6 py-3">
+          MERCHANT NAME
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Payment Method
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Description
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Date\Time
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="bg-white border-b  hover:bg-gray-100 " *ngFor="let item of settlementList">
+        <td class="px-6 py-4">
+          {{formatAmt(item?.trnAmount)}}
+        </td>
+        <td class="px-6 py-4">
+            {{item?.trnReference}}
+        </td>
+        <td class="px-6 py-4">
+          {{item?.trnTerminalId || 'N/A'}}
+        </td>
+        <td class="px-6 py-4">
+          {{item?.trnOrganisationMid || 'N/A'}}
+        </td>
+        <td class="px-6 py-4">
+          {{item?.trnOrganisationName || 'N/A'}}
+        </td>
+        <td class="px-6 py-4">
+          <span class="inline-block bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
+            {{item?.trnChannel}}
+          </span>
+        </td>
+        <td class="px-6 py-4" style="width: 100px;">
+          {{item?.trnNarration}}
+        </td>
+        <td class="px-6 py-4">
+          {{item?.trnCreatedAt | date:'medium'}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="!isloading">
+    <div class="text-center" *ngIf="!settlementList?.length">
+      <div style="display: flex; align-items: center; justify-content: center;">
+        <img src="../../../../../assets/svgs/EmptyInbox.svg" style="width:10%;" class="mt-5">
+      </div>
+      <br> No Data Found
+    </div>
+  </div>
+</div>
+<!-- TABLE -->
