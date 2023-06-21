@@ -34,6 +34,7 @@ export class TransactionComponent implements OnInit, OnDestroy {
     'Status',
     'Amount',
     'Reference',
+    'Terminal ID',
     'Payment Method',
   ]
   responseList = responsesType
@@ -57,6 +58,7 @@ export class TransactionComponent implements OnInit, OnDestroy {
       trnService: new FormControl(null),
       trnAmount: new FormControl(''),
       trnReference: new FormControl(''),
+      trnTerminalId: new FormControl(''),
     });
 
     this.dateRangeForm.valueChanges.subscribe((data) => {
@@ -85,13 +87,21 @@ export class TransactionComponent implements OnInit, OnDestroy {
     })
   }
 
+  clearData(event: any) {
+    if (event.length === 0) {
+      this.dateRangeForm.reset()
+      this.allTransactionList()
+    }
+  }
+
   allTransactionList() {
-    this.isloading = true
-    let payload = {
+      this.isloading = true
+      let payload = {
       trnReference: this.dateRangeForm.value.trnReference,
       trnService: this.dateRangeForm.value.trnService,
       trnResponseCode: this.dateRangeForm.value.trnResponseCode,
       trnResponseMessage: '',
+      trnTerminalId: this.dateRangeForm.value.trnTerminalId,
       trnAmount: this.dateRangeForm.value.trnAmount,
       startDate: this.dateRangeForm.value.start,
       endDate: this.dateRangeForm.value.end,
