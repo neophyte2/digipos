@@ -4,7 +4,7 @@
 }
 
 .card-title {
-    font-family: 'Barlow';
+    font-family: 'Montserrat';
     font-style: normal;
     font-weight: 700;
     font-size: 23px !important;
@@ -14,14 +14,14 @@
 .card-title2 {
     margin-top: 14px !important;
     color: #063148;
-    font-family: 'Barlow';
+    font-family: 'Montserrat';
     font-style: normal;
     font-weight: 700;
     font-size: 28px !important;
 }
 
 .card-subtext {
-    font-family: 'Barlow';
+    font-family: 'Montserrat';
     font-style: normal;
     font-weight: 400;
     font-size: 16px;
@@ -31,7 +31,7 @@
 }
 
 .tr-head {
-    font-family: 'Barlow';
+    font-family: 'Montserrat';
     font-style: normal;
     font-weight: 600;
     font-size: 14px;
@@ -40,7 +40,7 @@
 }
 
 .tb-head {
-    font-family: 'Barlow';
+    font-family: 'Montserrat';
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
@@ -53,7 +53,7 @@
     height: 19px;
     left: 328px;
     top: 574px;
-    font-family: 'Barlow';
+    font-family: 'Montserrat';
     font-style: normal;
     font-weight: 600;
     font-size: 16px;

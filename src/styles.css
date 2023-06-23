@@ -257,23 +257,23 @@
 }
 
 .lightfont {
-  font-family: fontlight;
+  font-family: 'Montserrat';
 }
 
 .regularfont {
-  font-family: fontregular;
+  font-family: 'Montserrat';
 }
 
 .boldfont {
-  font-family: fontbold;
+  font-family: 'Montserrat';
 }
 
 .semiboldfont {
-  font-family: fontsemibold;
+  font-family: 'Montserrat';
 }
 
 * {
-  font-family: fontregular;
+  font-family: 'Montserrat';
 }
 
 .bnf.active {
