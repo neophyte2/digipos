@@ -65,7 +65,7 @@ export class SignInomponent implements OnInit, OnDestroy {
       username: [
         "",
         Validators.compose([
-          Validators.pattern(VALIDEMAILREGEX),
+          Validators.email
         ]),
       ],
       username2: [""],

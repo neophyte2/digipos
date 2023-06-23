@@ -64,7 +64,7 @@ export class InvitesComponent implements OnInit, OnDestroy {
         "",
         Validators.compose([
           Validators.required,
-          Validators.pattern(VALIDEMAILREGEX),
+          Validators.email,
         ]),
       ],
       customerRole: [null, Validators.required],
@@ -74,7 +74,7 @@ export class InvitesComponent implements OnInit, OnDestroy {
         { value: data?.inviteCustomerEmail, disabled: true },
         Validators.compose([
           Validators.required,
-          Validators.pattern(VALIDEMAILREGEX),
+          Validators.email,
         ]),
       ],
       invite:[{value: data?.inviteId}],

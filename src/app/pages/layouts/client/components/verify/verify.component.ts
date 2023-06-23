@@ -71,7 +71,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
         { value: this.email, disabled: true },
         Validators.compose([
           Validators.required,
-          Validators.pattern(VALIDEMAILREGEX),
+          Validators.email,
         ]),
       ],
       customerOtp: [""],
@@ -82,7 +82,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
         "",
         Validators.compose([
           Validators.required,
-          Validators.pattern(VALIDEMAILREGEX),
+          Validators.email,
         ]),
       ],
       customerPassword: ["", Validators.required],

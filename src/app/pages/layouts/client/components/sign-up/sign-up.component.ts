@@ -60,7 +60,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
         "",
         Validators.compose([
           Validators.required,
-          Validators.pattern(VALIDEMAILREGEX),
+          Validators.email,
         ]),
       ],
       customerFullName: ["", Validators.required],

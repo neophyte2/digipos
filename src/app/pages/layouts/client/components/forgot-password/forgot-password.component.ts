@@ -46,7 +46,7 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
       customerEmail: [
         "",
         Validators.compose([
-          Validators.pattern(VALIDEMAILREGEX), Validators.required
+          Validators.email, Validators.required
         ]),
       ],
     });
