@@ -261,7 +261,7 @@
 }
 
 .regularfont {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Montserrat';
 }
 
 .boldfont {
@@ -273,7 +273,7 @@
 }
 
 * {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Montserrat';
 }
 
 .bnf.active {
