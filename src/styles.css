@@ -257,7 +257,7 @@
 }
 
 .lightfont {
-  font-family: 'Montserrat';
+  font-family: fontlight;
 }
 
 .regularfont {
@@ -265,11 +265,11 @@
 }
 
 .boldfont {
-  font-family: 'Montserrat';
+  font-family: fontbold;
 }
 
 .semiboldfont {
-  font-family: 'Montserrat';
+  font-family: fontsemibold;
 }
 
 * {
