@@ -1,21 +1,21 @@
 /* General styles */
 @font-face {
-  font-family: 'Montserrat';
+  font-family: 'Montserrat', sans-serif;
   src: url(../fonts/FontsFree-Net-SF-UI-Display-Regular-1.ttf);
 }
 
 @font-face {
-  font-family: 'Montserrat';
+  font-family: 'Montserrat', sans-serif;
   src: url(../fonts/lightsfui.ttf);
 }
 
 @font-face {
-  font-family: 'Montserrat';
+  font-family: 'Montserrat', sans-serif;
   src: url(../fonts/semibold.ttf);
 }
 
 @font-face {
-  font-family: 'Montserrat';
+  font-family: 'Montserrat', sans-serif;
   src: url(../fonts/bold.ttf);
 }
 
