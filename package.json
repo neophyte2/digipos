@@ -25,6 +25,7 @@
     "google-libphonenumber": "^3.2.31",
     "intl-tel-input": "^17.0.3",
     "jquery": "^3.6.3",
+    "moment": "^2.29.4",
     "ng-otp-input": "^1.8.5",
     "ng2-charts": "^2.3.0",
     "ngx-bootstrap": "^9.0.0",
