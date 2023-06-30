@@ -31,7 +31,7 @@
               <rect width="16" height="16" fill="white" />
             </clipPath>
           </defs>
-        </svg> <span class="flex-1">Export Table
+        </svg> <span class="flex-1">Download Table
           <span *ngIf="exportLoading"><i class="fa fa-spinner fa-spin"></i></span></span>
       </button>
       </div>
@@ -52,15 +52,6 @@
     <thead class="text-xs text-gray-400 uppercase bg-gray-50">
       <tr>
         <th scope="col" class="px-6 py-3">
-          Amount
-        </th>
-        <th scope="col" class="px-6 py-3">
-          Log Code
-        </th>
-        <th scope="col" class="px-6 py-3">
-          Transaction Type
-        </th>
-        <th scope="col" class="px-6 py-3">
           Transaction Date
         </th>
         <th scope="col" class="px-6 py-3">
@@ -68,6 +59,15 @@
         </th>
         <th scope="col" class="px-6 py-3">
           Expiry Date
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Amount
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Log Code
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Transaction Type
         </th>
         <th scope="col" class="px-6 py-3">
           Status
@@ -78,6 +78,15 @@
     </thead>
     <tbody>
       <tr class="bg-white border-b  hover:bg-gray-100 " *ngFor="let item of chargebackList; let i = index">
+        <td class="px-6 py-4">
+          {{item?.chargebackTransactionDate | date:'medium'}}
+        </td>
+        <td class="px-6 py-4">
+          {{item?.chargebackCreatedAt | date:'medium'}}
+        </td>
+        <td class="px-6 py-4">
+          {{item?.chargebackExpiryDate | date:'medium'}}
+        </td>
         <td class="px-6 py-4">
           <div class="flex p-2 rounded hover:bg-gray-100">
             <div class="flex items-center h-5">
@@ -109,15 +118,6 @@
           <span class="inline-block bg-gray-200 px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">
             {{item?.chargebackTransactionType}}
           </span>
-        </td>
-        <td class="px-6 py-4">
-          {{item?.chargebackTransactionDate | date:'medium'}}
-        </td>
-        <td class="px-6 py-4">
-          {{item?.chargebackCreatedAt | date:'medium'}}
-        </td>
-        <td class="px-6 py-4">
-          {{item?.chargebackExpiryDate | date:'medium'}}
         </td>
         <td class="px-6 py-4">
           <span *ngIf="item?.chargebackStatus === 'APPROVED'"

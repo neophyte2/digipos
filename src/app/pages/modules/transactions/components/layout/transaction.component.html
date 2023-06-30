@@ -100,6 +100,9 @@
     <thead class="text-xs text-gray-400 uppercase bg-gray-50">
       <tr>
         <th scope="col" class="px-6 py-3">
+          Date\Time
+        </th>
+        <th scope="col" class="px-6 py-3">
           AMOUNT
         </th>
         <th scope="col" class="px-6 py-3">
@@ -115,15 +118,15 @@
           Description
         </th>
         <th scope="col" class="px-6 py-3">
-          Date\Time
-        </th>
-        <th scope="col" class="px-6 py-3">
           Status
         </th>
       </tr>
     </thead>
     <tbody>
       <tr class="bg-white border-b  hover:bg-gray-100 " *ngFor="let item of transactionList">
+        <td class="px-6 py-4">
+          {{item?.trnCreatedAt | date:'medium'}}
+        </td>
         <td class="px-6 py-4">
           <div class="flex p-2 rounded hover:bg-gray-100">
             <div class="flex items-center h-5">
@@ -163,9 +166,6 @@
         </td>
         <td class="px-6 py-4" style="width: 100px;">
           {{item?.trnNarration}}
-        </td>
-        <td class="px-6 py-4">
-          {{item?.trnCreatedAt | date:'medium'}}
         </td>
         <td class="px-6 py-4">
           <span *ngIf="item?.trnResponseCode === '00'"

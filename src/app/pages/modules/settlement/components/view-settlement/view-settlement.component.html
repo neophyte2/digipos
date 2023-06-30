@@ -20,7 +20,7 @@
               <rect width="16" height="16" fill="white" />
             </clipPath>
           </defs>
-        </svg> <span class="flex-1">Export Table <span *ngIf="loader.btn.download === true"><i
+        </svg> <span class="flex-1">Download Table <span *ngIf="loader.btn.download === true"><i
               class="fa fa-spinner fa-spin"></i></span></span>
       </button> -->
     </div>
@@ -33,6 +33,9 @@
   <table class="w-full text-sm text-left text-gray-500">
     <thead class="text-xs text-gray-400 uppercase bg-gray-50">
       <tr>
+        <th scope="col" class="px-6 py-3">
+          Date\Time
+        </th>
         <th scope="col" class="px-6 py-3">
           AMOUNT
         </th>
@@ -54,13 +57,13 @@
         <th scope="col" class="px-6 py-3">
           Description
         </th>
-        <th scope="col" class="px-6 py-3">
-          Date\Time
-        </th>
       </tr>
     </thead>
     <tbody>
       <tr class="bg-white border-b  hover:bg-gray-100 " *ngFor="let item of settlementList">
+        <td class="px-6 py-4">
+          {{item?.trnCreatedAt | date:'medium'}}
+        </td>
         <td class="px-6 py-4">
           {{formatAmt(item?.trnAmount)}}
         </td>
@@ -83,9 +86,6 @@
         </td>
         <td class="px-6 py-4" style="width: 100px;">
           {{item?.trnNarration}}
-        </td>
-        <td class="px-6 py-4">
-          {{item?.trnCreatedAt | date:'medium'}}
         </td>
       </tr>
     </tbody>
