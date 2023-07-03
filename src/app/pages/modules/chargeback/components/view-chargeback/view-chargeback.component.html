@@ -164,7 +164,7 @@
           class="text-red-500 bg-transparent mr-1 mb-1 px-6 py-2 hover:bg-[#64154A] font-semibold hover:text-white border border-[#64154A] hover:border-transparent rounded">
           Cancel
         </button>
-        <button (click)="confirmStatus(chargeback,'Declined')" [disabled]="chargebackForm.invalid || loader.btn.create"
+        <button (click)="confirmStatus(chargeback,'Decline')" [disabled]="chargebackForm.invalid || loader.btn.create"
           class="bil-btn-gradient bg-[#64154A] text-base font-normal grad3 w-[150px] h-[45px] first-letter text-[#F0F0F0] rounded-[5px] mr-1 mb-1  px-6 py-2 "
           type="button">
           Reject <span *ngIf="loader.btn.create"><i class="fa fa-spinner fa-spin"></i></span>
