@@ -52,7 +52,8 @@ export class ViewChargebackComponent implements OnInit, OnDestroy {
 
   ngOnForms() {
     this.chargebackForm = this.fb.group({
-      chargebackEvidence: [''],
+      chargebackEvidence: null,
+      chargebackReason: null,
     });
   }
 
@@ -66,16 +67,20 @@ export class ViewChargebackComponent implements OnInit, OnDestroy {
   }
 
   confirmStatus(data: any, statusName: string) {
-    this.genSrv.sweetAlertDecision(statusName, data.chargebackReference).then((result) => {
-      if (result.isConfirmed) {
-        if (statusName === 'Approve') {
-          this.approve()
-        } else {
-          this.declined()
+    if (this.cf['chargebackReason'].value === null && this.cf['chargebackEvidence'].value === null) {
+      this.genSrv.sweetAlertError('Kindly write a reason or Upload an Evidence');
+    }else{
+      this.genSrv.sweetAlertDecision(statusName, data.chargebackReference).then((result) => {
+        if (result.isConfirmed) {
+          if (statusName === 'Approve') {
+            this.approve()
+          } else {
+            this.declined()
+          }
         }
-
-      }
-    })
+      })
+    }
+   
   }
 
   //Upload
@@ -122,6 +127,7 @@ export class ViewChargebackComponent implements OnInit, OnDestroy {
     let payload = {
       chargebackId: this.id,
       chargeBackRejectEvidence: this.cf['chargebackEvidence'].value,
+      chargebackReason: this.cf['chargebackReason'].value,
     }
     this.loader.btn.create = true;
 

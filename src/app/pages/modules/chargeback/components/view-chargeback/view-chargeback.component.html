@@ -2,9 +2,11 @@
   <p class="text-[#64154A] cursor-pointer" (click)="goBack()">Back</p>
 </div>
 
+<!-- *ngIf="(chargeback?.chargebackStatus|uppercase) === 'PENDING'" -->
+
 <div class="float-right">
   <div class="flex items-center justify-center p-6rounded-b">
-    <button  (click)="toggleModal()" *ngIf="(chargeback?.chargebackStatus|uppercase) === 'PENDING'"
+    <button (click)="toggleModal()" 
       class="text-red-500 bg-transparent mr-1 mb-1 px-6 py-2 hover:bg-[#64154A] font-semibold hover:text-white border border-[#64154A] hover:border-transparent rounded">
       Decline
     </button>
@@ -15,8 +17,8 @@
     </button>
   </div>
 </div>
-<br *ngIf="(chargeback?.chargebackStatus|uppercase) === 'PENDING'"/>
-<br *ngIf="(chargeback?.chargebackStatus|uppercase) === 'PENDING'"/>
+<br *ngIf="(chargeback?.chargebackStatus|uppercase) === 'PENDING'" />
+<br *ngIf="(chargeback?.chargebackStatus|uppercase) === 'PENDING'" />
 
 <div class="grid place-items-center mt-6">
   <div class="inline-grid grid-cols-1 gap-4">
@@ -124,7 +126,7 @@
       <!--header-->
       <div class="flex items-center justify-center p-5 border-b border-solid border-slate-200 rounded-t text-center">
         <h3 class="text-3xl font-semibold text-[#64154A]">
-          Create New Chargeback
+          Reject Chargeback
         </h3>
       </div>
       <!--body-->
@@ -140,16 +142,18 @@
             <input (change)="browseFile($event,'evidence')"
               class="upload block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50"
               id="file" type="file" accept="image/*" />
-              <div class="mt-2"
-              *ngIf="(cf['chargebackEvidence'].dirty || cf['chargebackEvidence'].touched) && cf['chargebackEvidence'].invalid">
-              <span class="text-rose-700" style="font-size: 13px;"
-                *ngIf="cf['chargebackEvidence'].errors?.['required']">
-                Evidence is required.
-              </span>
-            </div>
           </div>
           <div class="mt-1 text-sm text-[#677189]">
             JPG, PDF, JPEG, PNG are accepted. Max file size 5MB
+          </div>
+
+          <div class="flex flex-col input-wrap relative lg:mb-7 md:mb-7  sm:mb-6  mb-6 mt-7">
+            <textarea  id="Reason" rows="10" cols="50" formControlName="chargebackReason" class="brd  w-full peer h-[150px] mt-2 bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0 relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)] invalid:border-rose-700 invalid:text-rose-700
+                focus:invalid:border-rose-700 focus:invalid:ring-rose-700" placeholder="Reason" ></textarea>
+            <label htmlFor="Reason"
+              class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
+              Reason for Decline
+            </label>
           </div>
 
         </form>
@@ -160,10 +164,10 @@
           class="text-red-500 bg-transparent mr-1 mb-1 px-6 py-2 hover:bg-[#64154A] font-semibold hover:text-white border border-[#64154A] hover:border-transparent rounded">
           Cancel
         </button>
-        <button (click)="confirmStatus(chargeback,'Declined')" [disabled]="chargebackForm.invalid  || loader.btn.create"
-          class="bil-btn-gradient bg-[#64154A] text-base font-normal grad3 w-[120px] h-[45px] first-letter text-[#F0F0F0] rounded-[5px] mr-1 mb-1  px-6 py-2 "
+        <button (click)="confirmStatus(chargeback,'Declined')" [disabled]="chargebackForm.invalid || loader.btn.create"
+          class="bil-btn-gradient bg-[#64154A] text-base font-normal grad3 w-[150px] h-[45px] first-letter text-[#F0F0F0] rounded-[5px] mr-1 mb-1  px-6 py-2 "
           type="button">
-          Create <span *ngIf="loader.btn.create"><i class="fa fa-spinner fa-spin"></i></span>
+          Reject <span *ngIf="loader.btn.create"><i class="fa fa-spinner fa-spin"></i></span>
         </button>
       </div>
     </div>
