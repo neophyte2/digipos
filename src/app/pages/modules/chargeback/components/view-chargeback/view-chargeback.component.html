@@ -2,11 +2,11 @@
   <p class="text-[#64154A] cursor-pointer" (click)="goBack()">Back</p>
 </div>
 
-<!-- *ngIf="(chargeback?.chargebackStatus|uppercase) === 'PENDING'" -->
+<!--  -->
 
 <div class="float-right">
   <div class="flex items-center justify-center p-6rounded-b">
-    <button (click)="toggleModal()" 
+    <button (click)="toggleModal()"  *ngIf="(chargeback?.chargebackStatus|uppercase) === 'PENDING'"
       class="text-red-500 bg-transparent mr-1 mb-1 px-6 py-2 hover:bg-[#64154A] font-semibold hover:text-white border border-[#64154A] hover:border-transparent rounded">
       Decline
     </button>
