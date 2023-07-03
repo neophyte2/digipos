@@ -19,21 +19,21 @@
     <div class="grid grid-cols-1 gap-4">
       <div>
         <button (click)="export()"
-        class=" w-[150px] py-[15px] rounded flex p-2 text-white bg-download-report text-sm mx-4 text-center ">
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g clip-path="url(#clip0_537_5281)">
-            <path
-              d="M1.33325 7.33317H14.6666V13.3332C14.6666 13.51 14.5963 13.6796 14.4713 13.8046C14.3463 13.9296 14.1767 13.9998 13.9999 13.9998H1.99992C1.82311 13.9998 1.65354 13.9296 1.52851 13.8046C1.40349 13.6796 1.33325 13.51 1.33325 13.3332V7.33317ZM11.3333 1.99984H13.9999C14.1767 1.99984 14.3463 2.07008 14.4713 2.1951C14.5963 2.32012 14.6666 2.48969 14.6666 2.6665V5.99984H1.33325V2.6665C1.33325 2.48969 1.40349 2.32012 1.52851 2.1951C1.65354 2.07008 1.82311 1.99984 1.99992 1.99984H4.66659V0.666504H5.99992V1.99984H9.99992V0.666504H11.3333V1.99984Z"
-              fill="#F2F2F2" />
-          </g>
-          <defs>
-            <clipPath id="clip0_537_5281">
-              <rect width="16" height="16" fill="white" />
-            </clipPath>
-          </defs>
-        </svg> <span class="flex-1">Download Table
-          <span *ngIf="exportLoading"><i class="fa fa-spinner fa-spin"></i></span></span>
-      </button>
+          class=" w-[150px] py-[15px] rounded flex p-2 text-white bg-download-report text-sm mx-4 text-center ">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_537_5281)">
+              <path
+                d="M1.33325 7.33317H14.6666V13.3332C14.6666 13.51 14.5963 13.6796 14.4713 13.8046C14.3463 13.9296 14.1767 13.9998 13.9999 13.9998H1.99992C1.82311 13.9998 1.65354 13.9296 1.52851 13.8046C1.40349 13.6796 1.33325 13.51 1.33325 13.3332V7.33317ZM11.3333 1.99984H13.9999C14.1767 1.99984 14.3463 2.07008 14.4713 2.1951C14.5963 2.32012 14.6666 2.48969 14.6666 2.6665V5.99984H1.33325V2.6665C1.33325 2.48969 1.40349 2.32012 1.52851 2.1951C1.65354 2.07008 1.82311 1.99984 1.99992 1.99984H4.66659V0.666504H5.99992V1.99984H9.99992V0.666504H11.3333V1.99984Z"
+                fill="#F2F2F2" />
+            </g>
+            <defs>
+              <clipPath id="clip0_537_5281">
+                <rect width="16" height="16" fill="white" />
+              </clipPath>
+            </defs>
+          </svg> <span class="flex-1">Download Table
+            <span *ngIf="exportLoading"><i class="fa fa-spinner fa-spin"></i></span></span>
+        </button>
       </div>
       <!-- <div>
         <button (click)="toggleModal()"
@@ -148,112 +148,11 @@
   </table>
   <div *ngIf="!isloading">
     <div class="text-center" *ngIf="!chargebackList?.length">
-     <div style="display: flex; align-items: center; justify-content: center;">
-      <img src="../../../../../assets/svgs/EmptyInbox.svg" style="width:10%;" class="mt-5">
-     </div>
+      <div style="display: flex; align-items: center; justify-content: center;">
+        <img src="../../../../../assets/svgs/EmptyInbox.svg" style="width:10%;" class="mt-5">
+      </div>
       <br> No Data Found
     </div>
   </div>
 </div>
 <!-- TABLE -->
-
-
-<!-- create -->
-<div *ngIf="showModal"
-  class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
-  <div class="relative w-auto my-6 mx-auto max-w-3xl">
-    <!--content-->
-    <div
-      class="border-0 rounded-lg shadow-lg relative flex flex-col w-[500px] bg-white outline-none focus:outline-none">
-      <!--header-->
-      <div class="flex items-center justify-center p-5 border-b border-solid border-slate-200 rounded-t text-center">
-        <h3 class="text-3xl font-semibold text-[#64154A]">
-          Create New Chargeback
-        </h3>
-      </div>
-      <!--body-->
-      <div class="relative p-6 flex-auto">
-        <form [formGroup]="chargebackForm">
-          <div class="mt-10">
-            <div class="flex flex-col input-wrap relative lg:mb-14 md:mb-14 sm:mb-12 mb-12">
-              <input type="text" id="reference" formControlName="chargebackReference" class="brd peer h-[52px] mt-2 cursor-not-allowed w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0 relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)] invalid:border-rose-700 invalid:text-rose-700
-                focus:invalid:border-rose-700 focus:invalid:ring-rose-700" placeholder="Reference" />
-              <label htmlFor="reference"
-                class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
-                Reference
-              </label>
-              <div class="mt-2"
-                *ngIf="cf['chargebackReference'].invalid && (cf['chargebackReference'].dirty || cf['chargebackReference'].touched) ">
-                <span class="text-rose-700" style="font-size: 13px;"
-                  *ngIf="cf['chargebackReference'].errors?.['required']">
-                  Reference is required.
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div class="flex flex-col input-wrap relative lg:mb-14 md:mb-14 sm:mb-12 mb-12">
-            <input type="text" id="TransactionReference" formControlName="chargebackTransactionReference" class="brd peer h-[52px] mt-2  w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0 relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)] invalid:border-rose-700 invalid:text-rose-700
-                focus:invalid:border-rose-700 focus:invalid:ring-rose-700" placeholder="Transaction Reference" />
-            <label htmlFor="TransactionReference"
-              class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
-              Transaction Reference
-            </label>
-            <div class="mt-2"
-              *ngIf="(cf['chargebackTransactionReference'].dirty || cf['chargebackTransactionReference'].touched) && cf['chargebackTransactionReference'].invalid">
-              <span class="text-rose-700" style="font-size: 13px;"
-                *ngIf="cf['chargebackTransactionReference'].errors?.['required']">
-                Transaction Reference is required.
-              </span>
-            </div>
-          </div>
-
-          <div class="flex flex-col input-wrap relative lg:mb-14 md:mb-14 sm:mb-12 mb-12">
-            <input decimalOnly id="amount" formControlName="chargebackAmount" class="brd peer h-[52px] mt-2  w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0 relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)] invalid:border-rose-700 invalid:text-rose-700
-                focus:invalid:border-rose-700 focus:invalid:ring-rose-700" placeholder="Amount" />
-            <label htmlFor="amount"
-              class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
-              Amount
-            </label>
-            <div class="mt-2"
-              *ngIf="(cf['chargebackAmount'].dirty || cf['chargebackAmount'].touched) && cf['chargebackAmount'].invalid">
-              <span class="text-rose-700" style="font-size: 13px;" *ngIf="cf['chargebackAmount'].errors?.['required']">
-                Amount is required.
-              </span>
-            </div>
-          </div>
-
-          <div class="flex flex-col input-wrap relative lg:mb-1 md:mb-14 sm:mb-12 mb-12">
-            <input type="text" id="evidence" formControlName="chargebackEvidence" class="brd peer h-[52px] mt-2  w-[100%] bg-[rgba(0,0,0,0.05)] focus:outline-0 focus:ring-0 relative z-0 rounded-[5px] px-5 border-0 placeholder:text-[rgba(0,0,0,0.5)] invalid:border-rose-700 invalid:text-rose-700
-                focus:invalid:border-rose-700 focus:invalid:ring-rose-700" placeholder="Evidence Provided" />
-            <label htmlFor="serial"
-              class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
-              Evidence Provided
-            </label>
-            <div class="mt-2"
-              *ngIf="(cf['chargebackEvidence'].dirty || cf['chargebackEvidence'].touched) && cf['chargebackEvidence'].invalid">
-              <span class="text-rose-700" style="font-size: 13px;"
-                *ngIf="cf['chargebackEvidence'].errors?.['required']">
-                Evidence is required.
-              </span>
-            </div>
-          </div>
-
-        </form>
-      </div>
-      <!--footer-->
-      <div class="flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b">
-        <button (click)="toggleModal()"
-          class="text-red-500 bg-transparent mr-1 mb-1 px-6 py-2 hover:bg-[#64154A] font-semibold hover:text-white border border-[#64154A] hover:border-transparent rounded">
-          Cancel
-        </button>
-        <button (click)="createTerminal()" [disabled]="chargebackForm.invalid  || loader.btn.create"
-          class="bil-btn-gradient bg-[#64154A] text-base font-normal grad3 w-[120px] h-[45px] first-letter text-[#F0F0F0] rounded-[5px] mr-1 mb-1  px-6 py-2 "
-          type="button">
-          Create <span *ngIf="loader.btn.create"><i class="fa fa-spinner fa-spin"></i></span>
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
-<div *ngIf="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
