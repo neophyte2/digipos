@@ -4,11 +4,11 @@
 
 <div class="float-right">
   <div class="flex items-center justify-center p-6rounded-b">
-    <button  (click)="toggleModal()"
+    <button  (click)="toggleModal()" *ngIf="(chargeback?.chargebackStatus|uppercase) === 'PENDING'"
       class="text-red-500 bg-transparent mr-1 mb-1 px-6 py-2 hover:bg-[#64154A] font-semibold hover:text-white border border-[#64154A] hover:border-transparent rounded">
       Decline
     </button>
-    <button (click)="confirmStatus(chargeback,'Approve')"
+    <button (click)="confirmStatus(chargeback,'Approve')" *ngIf="(chargeback?.chargebackStatus|uppercase) === 'PENDING'"
       class="bil-btn-gradient bg-[#64154A] text-base font-normal grad3 w-[120px] h-[45px] first-letter text-[#F0F0F0] rounded-[5px] mr-1 mb-1  px-6 py-2 "
       type="button">
       Accept
@@ -113,8 +113,6 @@
   </div>
 </div>
 
-<!-- *ngIf="(chargeback?.chargebackStatus|uppercase) === 'PENDING'"
-*ngIf="(chargeback?.chargebackStatus|uppercase) === 'PENDING'" -->
 
 <!-- create -->
 <div *ngIf="showModal"
