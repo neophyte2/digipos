@@ -22,6 +22,15 @@ export class TerminalComponent implements OnInit, OnDestroy {
       create: false,
     },
   };
+  filterList = [
+    'Status',
+    'Terminal ID',
+  ]
+  responseList = [
+    'PENDING',
+    'ACTIVE',
+    'INACTIVE',
+  ]
   selectedItem: any
   userList: any
   query: any
@@ -29,6 +38,7 @@ export class TerminalComponent implements OnInit, OnDestroy {
   showModal = false;
   dropdown = false
   terminalList: any
+  filter: any[] = [];
   dateRangeForm!: FormGroup;
   terminalForm!: FormGroup;
   year = new Date().getFullYear()
@@ -48,6 +58,8 @@ export class TerminalComponent implements OnInit, OnDestroy {
     this.dateRangeForm = new FormGroup({
       start: new FormControl(`${this.year}-${this.month}-01`),
       end: new FormControl(`${this.year}-${this.month}-${last_day}`),
+      terminalId: new FormControl(''),
+      terminalStatus: new FormControl(''),
     });
     this.dateRangeForm.valueChanges.subscribe((data) => {
       if (data?.start && data?.end) {
@@ -83,6 +95,8 @@ export class TerminalComponent implements OnInit, OnDestroy {
     let payload = {
       startDate: this.dateRangeForm.value.start,
       endDate: this.dateRangeForm.value.end,
+      terminalId: this.dateRangeForm.value.terminalId,
+      terminalStatus: this.dateRangeForm.value.terminalStatus,
     }
     this.terminSrv.getAllTerminals(payload).pipe(takeUntil(this.unsubcribe)).subscribe((trans: any) => {
       this.terminalList = trans.data;
@@ -106,6 +120,14 @@ export class TerminalComponent implements OnInit, OnDestroy {
   getItemId(id: any) {
     this.dropdown = !this.dropdown
     this.selectedItem = id;
+  }
+
+  clearData(event: any) {
+    if (event.length === 0) {
+      this.dateRangeForm.controls['terminalId'].patchValue(''), 
+      this.dateRangeForm.controls['terminalStatus'].patchValue(''), 
+      this.allTerminals()
+    }
   }
 
   ngOnForms() {

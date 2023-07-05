@@ -22,6 +22,15 @@ export class SettlementComponent implements OnInit, OnDestroy {
       pageLoader: false,
     },
   };
+  filterList = [
+    // 'Status',
+    'Amount',
+  ]
+  responseList = [
+    'PENDING',
+    'REJECTED',
+    'AUTHORIZED',
+  ]
   query: any
   cardDataList: any
   filter: any[] = [];
@@ -30,7 +39,6 @@ export class SettlementComponent implements OnInit, OnDestroy {
   method = paymentMethods
   dateRangeForm!: FormGroup;
   exportLoading = false;
-  responseList = responsesType
   year = new Date().getFullYear()
   month = (new Date().getMonth() + 1).toString().padStart(2, '0');
   day = new Date().getDate();
@@ -46,6 +54,8 @@ export class SettlementComponent implements OnInit, OnDestroy {
     this.dateRangeForm = new FormGroup({
       start: new FormControl(`${this.year}-${this.month}-01`),
       end: new FormControl(`${this.year}-${this.month}-${last_day}`),
+      settlementAmount: new FormControl(null),
+      // settlementStatus: new FormControl(''),
     });
     this.dateRangeForm.valueChanges.subscribe((data) => {
       if (data?.start && data?.end) {
@@ -60,13 +70,21 @@ export class SettlementComponent implements OnInit, OnDestroy {
     this.allSettlementList()
   }
 
-
+  clearData(event: any) {
+    if (event.length === 0) {
+      // this.dateRangeForm.controls['settlementStatus'].patchValue('')
+      this.dateRangeForm.controls['settlementAmount'].patchValue(null)
+      this.allSettlementList()
+    }
+  }
 
   allSettlementList() {
     this.isloading = true
     let payload = {
       startDate: this.dateRangeForm.value.start,
       endDate: this.dateRangeForm.value.end,
+      settlementAmount: this.dateRangeForm.value.settlementAmount,
+      // settlementStatus: this.dateRangeForm.value.settlementStatus,
     }
     this.transSrvService.getAllSettlement(payload).pipe(takeUntil(this.unsubcribe)).subscribe((settle: any) => {
       this.settlementList = settle.data;

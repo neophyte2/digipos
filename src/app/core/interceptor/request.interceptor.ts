@@ -48,7 +48,7 @@ export class RequestInterceptor implements HttpInterceptor {
   }
 
   isValidUrl(url: string) {
-    if (url.includes('localhost') || url.includes('digipos') || url.includes('https://ys898230m6.execute-api.us-east-1.amazonaws.com/')) {
+    if (url.includes('localhost') || url.includes('digipos') || url.includes('https://sandbox3.coralpay.com:9091/digipos/')) {
       return true
     } else {
       return false

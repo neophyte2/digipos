@@ -13,7 +13,15 @@ export const paymentMethods = [
   { name: 'USSD', value: 'USSD' },
   { name: 'PWBT', value: 'PWBT' },
   { name: 'CARD', value: 'CARD' },
-  {name:'WALLET',value:'WALLET'}
+  // {name:'WALLET',value:'WALLET'}
+]
+
+export const paymentMethods2 = [
+  { name: 'NQR', value: 'NQR' },
+  { name: 'USSD', value: 'USSD' },
+  { name: 'PWBT', value: 'PWBT' },
+  { name: 'CARD', value: 'CARD' },
+  {name:'VAS',value:'VAS'}
 ]
 
 export const responsesType = [

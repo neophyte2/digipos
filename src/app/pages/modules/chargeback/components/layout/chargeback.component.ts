@@ -1,11 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from "rxjs/operators";
 import { ChargebackService } from '../../services/chargeback.service';
 import { GeneralService } from 'src/app/shared/services/general.service';
 import { Router } from '@angular/router';
 import { exportTableToCSV } from 'src/app/shared/utils/utils';
+import { paymentMethods2 } from 'src/app/shared/utils/data';
+import * as moment from 'moment';
 
 @Component({
   selector: 'dp-chargeback',
@@ -20,13 +22,30 @@ export class ChargebackComponent implements OnInit, OnDestroy {
       create: false,
     },
   };
+  filterList = [
+    'Status',
+    'Amount',
+    'Reference',
+    'Transaction Type',
+    'Transaction Reference',
+  ]
+  query: any
+  method = paymentMethods2
   selectedItem: any
   showModal = false;
   dropdown = false
   isloading = false;
   chargebackList: any
   exportLoading = false;
+  dateRangeForm!: FormGroup;
   chargebackForm!: FormGroup;
+  filter: any[] = [];
+  responseList = [
+    'PENDING',
+    'DECLINED',
+    'APPROVED',
+  ]
+  year = new Date().getFullYear()
   private unsubcribe = new Subject<void>();
 
   constructor(
@@ -35,6 +54,22 @@ export class ChargebackComponent implements OnInit, OnDestroy {
     private readonly fb: FormBuilder,
     private chargeSrv: ChargebackService,
   ) {
+    this.dateRangeForm = new FormGroup({
+      start: new FormControl(`${this.year}-01-01`),
+      end: new FormControl(`${this.year}-12-31`),
+      chargebackAmount: new FormControl(null),
+      chargebackReference: new FormControl(''),
+      chargebackStatus: new FormControl(''),
+      chargebackTransactionReference: new FormControl(''),
+      chargebackTransactionType: new FormControl(''),
+    });
+
+    this.dateRangeForm.valueChanges.subscribe((data) => {
+      if (data?.start && data?.end) {
+        this.query = { startDate: moment(data?.start).format("YYYY-MM-DD"), endDate: moment(data?.end).format("YYYY-MM-DD") }
+        this.allChargeback();
+      }
+    });
   }
 
   ngOnInit(): void {
@@ -46,11 +81,30 @@ export class ChargebackComponent implements OnInit, OnDestroy {
   allChargeback() {
     this.isloading = true
     let payload = {
+      endDate: this.dateRangeForm.value.end,
+      startDate: this.dateRangeForm.value.start,
+      chargebackAmount: this.dateRangeForm.value.chargebackAmount,
+      chargebackStatus: this.dateRangeForm.value.chargebackStatus,
+      chargebackReference: this.dateRangeForm.value.chargebackReference,
+      chargebackTransactionType: this.dateRangeForm.value.chargebackTransactionType,
+      chargebackTransactionReference: this.dateRangeForm.value.chargebackTransactionReference,
     }
     this.chargeSrv.getAllChargeback(payload).pipe(takeUntil(this.unsubcribe)).subscribe((charge: any) => {
       this.chargebackList = charge.data;
       this.isloading = false
     })
+  }
+
+  clearData(event: any) {
+    if (event.length === 0) {
+      this.dateRangeForm.controls['chargebackAmount'].patchValue(null)
+      this.dateRangeForm.controls['chargebackReference'].patchValue('')
+      this.dateRangeForm.controls['chargebackStatus'].patchValue('')
+      this.dateRangeForm.controls['chargebackStatus'].patchValue('')
+      this.dateRangeForm.controls['chargebackTransactionReference'].patchValue('')
+      this.dateRangeForm.controls['chargebackTransactionType'].patchValue('')
+      this.allChargeback()
+    }
   }
 
   get cf() {
