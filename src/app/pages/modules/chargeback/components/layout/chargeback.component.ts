@@ -46,6 +46,8 @@ export class ChargebackComponent implements OnInit, OnDestroy {
     'APPROVED',
   ]
   year = new Date().getFullYear()
+  month = (new Date().getMonth() + 1).toString().padStart(2, '0');
+  day = new Date().getDate();
   private unsubcribe = new Subject<void>();
 
   constructor(
@@ -54,9 +56,11 @@ export class ChargebackComponent implements OnInit, OnDestroy {
     private readonly fb: FormBuilder,
     private chargeSrv: ChargebackService,
   ) {
+    var month = new Date().getMonth() + 1;
+    var last_day = new Date(this.year, month, 0).getDate();
     this.dateRangeForm = new FormGroup({
-      start: new FormControl(`${this.year}-01-01`),
-      end: new FormControl(`${this.year}-12-31`),
+      start: new FormControl(`${this.year}-${this.month}-01`),
+      end: new FormControl(`${this.year}-${this.month}-${last_day}`),
       chargebackAmount: new FormControl(null),
       chargebackReference: new FormControl(''),
       chargebackStatus: new FormControl(''),
