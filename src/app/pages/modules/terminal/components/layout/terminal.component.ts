@@ -42,8 +42,6 @@ export class TerminalComponent implements OnInit, OnDestroy {
   dateRangeForm!: FormGroup;
   terminalForm!: FormGroup;
   year = new Date().getFullYear()
-  month = (new Date().getMonth() + 1).toString().padStart(2, '0');
-  day = new Date().getDate();
   private unsubcribe = new Subject<void>();
 
   constructor(
@@ -53,11 +51,9 @@ export class TerminalComponent implements OnInit, OnDestroy {
     private terminSrv: TerminalService,
     private userShdSrv: UserSharedService,
   ) {
-    var month = new Date().getMonth() + 1;
-    var last_day = new Date(this.year, month, 0).getDate();
     this.dateRangeForm = new FormGroup({
-      start: new FormControl(`${this.year}-${this.month}-01`),
-      end: new FormControl(`${this.year}-${this.month}-${last_day}`),
+      start: new FormControl(`${this.year}-01-01`),
+      end: new FormControl(`${this.year}-12-31`),
       terminalId: new FormControl(''),
       terminalStatus: new FormControl(''),
     });
