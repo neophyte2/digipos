@@ -93,22 +93,26 @@ export class ViewSettlementComponent implements OnInit, OnDestroy {
 
   export() {
     if (this.settlementList.length > 0) {
-      const exportName = "Settlement";
+      const exportName = "Settlement-Transaction";
       const columns = [
-        { title: " ID", value: "settlementId" },
-        { title: "Organisation ID", value: "settlementOrganisationId" },
-        { title: "Currency ", value: "settlementCurrency" },
-        { title: "Amount", value: "settlementAmount" },
-        { title: "settlement Msc", value: "settlementMsc" },
-        { title: "Payable", value: "settlementPayable" },
-        { title: "VAT ", value: "settlementVat" },
-        { title: "Status", value: "settlementStatus" },
-        { title: "CreatedAt", value: "settlementCreatedAt" },
-        { title: "Transaction Date ", value: "settlementTransactionDate" },
+        { title: " ID", value: "trnId" },
+        { title: "Currency ", value: "trnCurrency" },
+        { title: "Amount", value: "trnAmount" },
+        { title: "Service", value: "trnService" },
+        { title: "Reference", value: "trnReference" },
+        { title: "Account Number", value: "trnCrAccountNumber" },
+        { title: "Channel", value: "trnChannel" },
+        { title: "Terminal Id", value: "trnTerminalId" },
+        { title: "Transaction Msc", value: "trnMsc" },
+        { title: "Narration ", value: "trnNarration" },
+        { title: "Payable", value: "trnPayable" },
+        { title: "FEE ", value: "trnFee" },
+        { title: "Status", value: "trnSettlementStatus" },
+        { title: "CreatedAt", value: "trnCreatedAt" },
       ];
       exportTableToCSV(this.settlementList, columns, exportName);
     } else {
-      this.genSrv.sweetAlertError('No ChargeBack Data Available')
+      this.genSrv.sweetAlertError('No Settlement Transaction Data Available')
     }
   }
 

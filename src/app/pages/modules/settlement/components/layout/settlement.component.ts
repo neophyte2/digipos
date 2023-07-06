@@ -121,7 +121,7 @@ export class SettlementComponent implements OnInit, OnDestroy {
       ];
       exportTableToCSV(this.settlementList, columns, exportName);
     } else {
-      this.genSrv.sweetAlertError('No ChargeBack Data Available')
+      this.genSrv.sweetAlertError('No Settlement Data Available')
     }
   }
 

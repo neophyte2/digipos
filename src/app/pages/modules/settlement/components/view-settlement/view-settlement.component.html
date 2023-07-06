@@ -7,7 +7,7 @@
   </div>
   <div class="col-end-6 col-span-2 mt-10">
     <div>
-      <!-- <button (click)="export()"
+      <button (click)="export()"
         class=" w-[150px] py-[15px] rounded flex p-2 text-white bg-download-report text-sm mx-4 text-center ">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clip-path="url(#clip0_537_5281)">
@@ -20,9 +20,8 @@
               <rect width="16" height="16" fill="white" />
             </clipPath>
           </defs>
-        </svg> <span class="flex-1">Download Table <span *ngIf="loader.btn.download === true"><i
-              class="fa fa-spinner fa-spin"></i></span></span>
-      </button> -->
+        </svg> <span class="flex-1"> Download Table </span>
+      </button>
     </div>
   </div>
 </div>
@@ -44,9 +43,6 @@
         </th>
         <th scope="col" class="px-6 py-3">
           Terminal ID
-        </th>
-        <th scope="col" class="px-6 py-3">
-          MERCHANT ID
         </th>
         <th scope="col" class="px-6 py-3">
           MERCHANT NAME
@@ -72,9 +68,6 @@
         </td>
         <td class="px-6 py-4">
           {{item?.trnTerminalId || 'N/A'}}
-        </td>
-        <td class="px-6 py-4">
-          {{item?.trnOrganisationMid || 'N/A'}}
         </td>
         <td class="px-6 py-4">
           {{item?.trnOrganisationName || 'N/A'}}
