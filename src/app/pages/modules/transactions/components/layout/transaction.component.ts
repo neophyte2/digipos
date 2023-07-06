@@ -55,7 +55,7 @@ export class TransactionComponent implements OnInit, OnDestroy {
       start: new FormControl(`${this.year}-${this.month}-01`),
       end: new FormControl(`${this.year}-${this.month}-${last_day}`),
       trnResponseCode: new FormControl(null),
-      trnService: new FormControl(null),
+      trnChannel: new FormControl(''),
       trnAmount: new FormControl(''),
       trnReference: new FormControl(''),
       trnTerminalId: new FormControl(''),
@@ -90,7 +90,7 @@ export class TransactionComponent implements OnInit, OnDestroy {
   clearData(event: any) {
     if (event.length === 0) {
       this.dateRangeForm.controls['trnReference'].patchValue('')
-      this.dateRangeForm.controls['trnService'].patchValue('')
+      this.dateRangeForm.controls['trnChannel'].patchValue('')
       this.dateRangeForm.controls['trnResponseCode'].patchValue('')
       this.dateRangeForm.controls['trnResponseMessage'].patchValue('')
       this.dateRangeForm.controls['trnTerminalId'].patchValue('')
@@ -103,7 +103,7 @@ export class TransactionComponent implements OnInit, OnDestroy {
       this.isloading = true
       let payload = {
       trnReference: this.dateRangeForm.value.trnReference,
-      trnService: this.dateRangeForm.value.trnService,
+      trnChannel: this.dateRangeForm.value.trnChannel,
       trnResponseCode: this.dateRangeForm.value.trnResponseCode,
       trnResponseMessage: '',
       trnTerminalId: this.dateRangeForm.value.trnTerminalId,
@@ -134,7 +134,7 @@ export class TransactionComponent implements OnInit, OnDestroy {
 
     let payload = {
       trnReference: this.dateRangeForm.value.trnReference,
-      trnService: this.dateRangeForm.value.trnService,
+      trnChannel: this.dateRangeForm.value.trnChannel,
       trnResponseCode: this.dateRangeForm.value.trnResponseCode,
       trnResponseMessage: '',
       trnAmount: this.dateRangeForm.value.trnAmount,
