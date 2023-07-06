@@ -89,7 +89,12 @@ export class TransactionComponent implements OnInit, OnDestroy {
 
   clearData(event: any) {
     if (event.length === 0) {
-      this.dateRangeForm.reset()
+      this.dateRangeForm.controls['trnReference'].patchValue('')
+      this.dateRangeForm.controls['trnService'].patchValue('')
+      this.dateRangeForm.controls['trnResponseCode'].patchValue('')
+      this.dateRangeForm.controls['trnResponseMessage'].patchValue('')
+      this.dateRangeForm.controls['trnTerminalId'].patchValue('')
+      this.dateRangeForm.controls['trnAmount'].patchValue(null)
       this.allTransactionList()
     }
   }
