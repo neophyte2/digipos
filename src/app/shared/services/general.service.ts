@@ -126,6 +126,10 @@ export class GeneralService {
     return Swal.fire("Submitted", msg, "success");
   }
 
+  sweetAlertSuccessCopy(msg: any) {
+    return Swal.fire("Copied", msg, "success");
+  }
+
   /**
    * INFO alert 
    * for creation , update

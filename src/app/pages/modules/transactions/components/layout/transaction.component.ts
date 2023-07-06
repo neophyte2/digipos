@@ -164,7 +164,7 @@ export class TransactionComponent implements OnInit, OnDestroy {
   async copyWallet(toCopy: any) {
     try {
       await navigator.clipboard.writeText(toCopy);
-      this.genSrv.sweetAlertSuccess('Copied to clipboard')
+      this.genSrv.sweetAlertSuccessCopy('Copied to clipboard')
     } catch (err) {
       this.genSrv.sweetAlertError('Failed to copy')
     }
