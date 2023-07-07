@@ -126,7 +126,7 @@ export class ViewChargebackComponent implements OnInit, OnDestroy {
   declined() {
     let payload = {
       chargebackId: this.id,
-      chargeBackRejectEvidence: this.cf['chargebackEvidence'].value,
+      chargebackRejectEvidence: this.cf['chargebackEvidence'].value,
       chargebackReason: this.cf['chargebackReason'].value,
     }
     this.loader.btn.create = true;
