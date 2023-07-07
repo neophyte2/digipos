@@ -93,6 +93,9 @@
           Vat
         </th>
         <th scope="col" class="px-6 py-3">
+          Status
+        </th>
+        <th scope="col" class="px-6 py-3">
         </th>
       </tr>
     </thead>
@@ -118,6 +121,20 @@
         </td>
         <td class="px-6 py-4">
           {{item?.settlementVat}}
+        </td>
+        <td class="px-6 py-4">
+          <span *ngIf="(item?.settlementStatus | uppercase) === 'AUTHORIZED'"
+            class="inline-block bg-[#DBFFED] px-3 py-1 text-sm font-semibold text-[#35B172] mr-2 mb-2">
+            {{item?.settlementStatus}}
+          </span>
+          <span *ngIf="(item?.settlementStatus | uppercase) === 'REJECTED'"
+            class="inline-block bg-[#FFDBDA] px-3 py-1 text-sm font-semibold text-[#FF0000] mr-2 mb-2">
+            {{item?.settlementStatus}}
+          </span>
+          <span *ngIf="(item?.settlementStatus | uppercase) === 'PENDING'"
+            class="inline-block bg-[#FFEDD7] px-3 py-1 text-sm font-semibold text-[#FF8A00] mr-2 mb-2">
+            {{item?.settlementStatus}}
+          </span>
         </td>
         <td class="px-6 py-4">
           <div class="relative inline-block text-left">
