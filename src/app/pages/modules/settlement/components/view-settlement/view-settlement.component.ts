@@ -108,7 +108,7 @@ export class ViewSettlementComponent implements OnInit, OnDestroy {
         { title: "Payable", value: "trnPayable" },
         { title: "FEE ", value: "trnFee" },
         { title: "Status", value: "trnSettlementStatus" },
-        { title: "CreatedAt", value: "trnCreatedAt" },
+        { title: "CreatedAt", value: "trnDate" },
       ];
       exportTableToCSV(this.settlementList, columns, exportName);
     } else {
