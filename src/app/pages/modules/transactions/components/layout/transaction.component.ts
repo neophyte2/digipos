@@ -122,7 +122,7 @@ export class TransactionComponent implements OnInit, OnDestroy {
     swal.fire({
       icon: 'info',
       title: 'Transaction Download',
-      html: 'Processing Datatable Download to Excel',
+      html: 'Loading ...',
       showConfirmButton: false,
       allowOutsideClick: false,
       allowEscapeKey: false,
