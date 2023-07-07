@@ -56,7 +56,7 @@ export class TransactionComponent implements OnInit, OnDestroy {
       end: new FormControl(`${this.year}-${this.month}-${last_day}`),
       trnResponseCode: new FormControl(null),
       trnChannel: new FormControl(''),
-      trnAmount: new FormControl(''),
+      trnAmount: new FormControl(null),
       trnReference: new FormControl(''),
       trnTerminalId: new FormControl(''),
     });
