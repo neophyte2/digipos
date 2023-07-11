@@ -1,12 +1,15 @@
-<h1 class="font-medium">Hi {{businessName}} 👋, Take a minute to set up your account</h1>
+<h1 *ngIf="(verifyList?.allVerified | uppercase) === 'NO'" class="font-medium">Hi {{businessName}} 👋, Take a minute to
+  set up your account</h1>
 
-<div class="mt-4 text-[#677189] text-sm font-medium">
+<div *ngIf="(verifyList?.allVerified | uppercase) === 'NO'" class="mt-4 text-[#677189] text-sm font-medium">
   <p>
     Your account has been created, and you can accept payment. We only need to
     verify your account so <br />
     that it is fully functional. The steps below will get you started.
   </p>
 </div>
+
+<h1 *ngIf="(verifyList?.allVerified | uppercase) === 'YES'" class="font-medium">Hi {{businessName}} 👋 </h1>
 
 <div class="mt-7 grid gap-6 sm:grid-cols-3 pb-10">
   <div class="col-span-2">
