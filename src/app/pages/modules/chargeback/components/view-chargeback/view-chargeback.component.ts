@@ -94,11 +94,9 @@ export class ViewChargebackComponent implements OnInit, OnDestroy {
       const reader: FileReader = new FileReader();
       reader.onload = (e: any) => {
         const contents: string = e.target.result;
-        this.base64Contents = contents.replace(/^data:image\/(png|jpg);base64,/, "");
+        this.base64Contents = contents
         if (this.base64Contents) {
-          if (type === 'evidence') {
             this.chargebackForm.controls['chargebackEvidence'].patchValue(this.base64Contents);
-          }
         }
       };
       reader.readAsDataURL(fileName);
