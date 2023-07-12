@@ -1,13 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import * as moment from 'moment';
+import { FormBuilder } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from "rxjs/operators";
-import { exportTableToCSV, tableCurrency } from 'src/app/shared/utils/utils';
-import { paymentMethods, responsesType } from 'src/app/shared/utils/data';
+import { tableCurrency } from 'src/app/shared/utils/utils';
 import { SettlementService } from '../../services/settlement.service';
 import { GeneralService } from 'src/app/shared/services/general.service';
 import { ActivatedRoute } from '@angular/router';
+import swal from 'sweetalert2';
 
 @Component({
   selector: 'dp-view-settlement',
@@ -92,28 +91,38 @@ export class ViewSettlementComponent implements OnInit, OnDestroy {
 
 
   export() {
-    if (this.settlementList.length > 0) {
-      const exportName = "Settlement-Transaction";
-      const columns = [
-        { title: " ID", value: "trnId" },
-        { title: "Currency ", value: "trnCurrency" },
-        { title: "Amount", value: "trnAmount" },
-        { title: "Service", value: "trnService" },
-        { title: "Reference", value: "trnReference" },
-        { title: "Account Number", value: "trnCrAccountNumber" },
-        { title: "Channel", value: "trnChannel" },
-        { title: "Terminal Id", value: "trnTerminalId" },
-        { title: "Transaction Msc", value: "trnMsc" },
-        { title: "Narration ", value: "trnNarration" },
-        { title: "Payable", value: "trnPayable" },
-        { title: "FEE ", value: "trnFee" },
-        { title: "Status", value: "trnSettlementStatus" },
-        { title: "CreatedAt", value: "trnDate" },
-      ];
-      exportTableToCSV(this.settlementList, columns, exportName);
-    } else {
-      this.genSrv.sweetAlertError('No Settlement Transaction Data Available')
+    this.loader.download = true
+    swal.fire({
+      icon: 'info',
+      title: 'Settlement Download',
+      html: 'Loading ...',
+      showConfirmButton: false,
+      allowOutsideClick: false,
+      allowEscapeKey: false,
+      allowEnterKey: false,
+      didOpen: () => {
+        swal.showLoading(swal.getDenyButton());
+      }
+    })
+    let payload = {
+      settlementId: this.id
     }
+    this.settleService.settlementDownload(payload).pipe(takeUntil(this.unsubcribe)).subscribe((trans: any) => {
+      if (trans.responseCode === '00') {
+        swal.close()
+        this.genSrv.sweetAlertSuccess(trans.responseMessage);
+      } else {
+        let msg = trans.responseMessage
+        swal.close()
+        this.genSrv.sweetAlertError(msg);
+        this.loader.btn.download = false;
+      }
+    }, (err) => {
+      let msg = err
+      swal.close()
+      this.genSrv.sweetAlertError(msg);
+      this.loader.btn.download = false;
+    })
   }
 
 }

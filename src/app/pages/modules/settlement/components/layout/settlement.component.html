@@ -123,11 +123,11 @@
           {{item?.settlementVat}}
         </td>
         <td class="px-6 py-4">
-          <span *ngIf="(item?.settlementStatus | uppercase) === 'AUTHORIZED'"
+          <span *ngIf="(item?.settlementStatus | uppercase) === 'SUCCESS'"
             class="inline-block bg-[#DBFFED] px-3 py-1 text-sm font-semibold text-[#35B172] mr-2 mb-2">
             {{item?.settlementStatus}}
           </span>
-          <span *ngIf="(item?.settlementStatus | uppercase) === 'REJECTED'"
+          <span *ngIf="(item?.settlementStatus | uppercase) === 'FAILED'"
             class="inline-block bg-[#FFDBDA] px-3 py-1 text-sm font-semibold text-[#FF0000] mr-2 mb-2">
             {{item?.settlementStatus}}
           </span>

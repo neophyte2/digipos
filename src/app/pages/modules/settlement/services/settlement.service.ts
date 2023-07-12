@@ -19,4 +19,8 @@ export class SettlementService {
     getSettlementById(params: any) {
         return this.http.post(`${this.api}/settlement/read-transaction`, params);
     }
+
+    settlementDownload(params: any){
+        return this.http.post(`${this.api}/settlement/download-transaction`, params);
+    }
 }
