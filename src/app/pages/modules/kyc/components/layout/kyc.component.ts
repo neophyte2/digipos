@@ -382,7 +382,7 @@ export class KycComponent implements OnInit {
       const reader: FileReader = new FileReader();
       reader.onload = (e: any) => {
         const contents: string = e.target.result;
-        this.base64Contents = contents.replace(/^data:image\/(png|jpg);base64,/, "");
+        this.base64Contents = contents
         if (this.base64Contents) {
           if (type === 'idcard') this.idCardForm.controls['idCardImageUrl'].patchValue(this.base64Contents);
           if (type === 'cac') this.cacForm.controls['cacPdfUrl'].patchValue(this.base64Contents);
