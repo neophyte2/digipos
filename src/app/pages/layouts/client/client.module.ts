@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClientRoutingModule } from './client-routing.module';
-import { SignInomponent } from './components/sign-in/sign-in.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
@@ -14,7 +14,7 @@ import { AcceptInviteComponent } from './components/accept-invite/accept-invite.
 
 @NgModule({
   declarations: [
-    SignInomponent,
+    SignInComponent,
     SignUpComponent,
     VerifyComponent,
     ForgetPasswordComponent,

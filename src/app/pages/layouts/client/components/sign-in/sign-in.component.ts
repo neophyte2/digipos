@@ -14,7 +14,7 @@ import { ClientService } from '../../service/client.service';
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.css']
 })
-export class SignInomponent implements OnInit, OnDestroy {
+export class SignInComponent implements OnInit, OnDestroy {
 
   location: any
   deviceInfo: any

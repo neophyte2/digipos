@@ -78,4 +78,6 @@ export class ClientService {
         let apiKey = '15e8830cb9d0c089ef30c4bde7d9cffd927ddac568b33f98df3b065f';
         return this.http.get('https://api.ipdata.co?api-key=' + apiKey);
     }
+
+    
 }
