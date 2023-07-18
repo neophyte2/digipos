@@ -12,7 +12,7 @@
         </svg>Profile
       </a>
     </li>
-    <li class="mr-2">
+    <li class="mr-2" *ngIf="_isRouteEnabled(['USER|READ'])">
       <a [ngClass]="{'active-tab': title === 'Teams'}" (click)="tileName('Teams')"
         class="inline-flex p-4 rounded-t-lg border-b-2 border-transparent hover:text-blue-600 hover:border-blue-300 group cursor-pointer"
         aria-current="page">
@@ -31,7 +31,7 @@
   <div *ngIf="title === 'Profile'" >
     <dp-profile></dp-profile>
   </div>
-  <div *ngIf="title === 'Teams'" >
+  <div *ngIf="title === 'Teams' && _isRouteEnabled(['USER|READ'])">
     <dp-teams></dp-teams>
   </div>
 </div>

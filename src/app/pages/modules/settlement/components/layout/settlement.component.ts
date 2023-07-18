@@ -125,5 +125,6 @@ export class SettlementComponent implements OnInit, OnDestroy {
     }
   }
 
+  _isRouteEnabled = (route: string[]) => this.genSrv.isRouteEnabled(route)
 
 }

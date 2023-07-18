@@ -44,7 +44,7 @@
     </form>
   </div>
   <div class="col-end-6 col-span-2 mt-10">
-    <div>
+    <div *ngIf="_isRouteEnabled(['SETTLEMENT|READ'])">
       <button (click)="export()"
       class=" w-[150px] py-[15px] rounded flex p-2 text-white bg-download-report text-sm mx-4 text-center ">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -138,7 +138,7 @@
         </td>
         <td class="px-6 py-4">
           <div class="relative inline-block text-left">
-            <div>
+            <div *ngIf="_isRouteEnabled(['SETTLEMENT|READ'])">
               <button type="button" (click)="viewSettlement(item.settlementId)"
                 class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                 View

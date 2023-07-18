@@ -164,4 +164,14 @@ export class GeneralService {
   goBack() {
     this.location.back();
   }
+
+  isRouteEnabled(authorities: string[]): any {
+    const details: any = this.userDetails
+    if (details) {
+      const authority = details.privileges
+      const foundAuthorities = authority.filter((x: any) => x.includes(authorities));
+      return foundAuthorities.length > 0;
+    }
+    return false;
+  }
 }

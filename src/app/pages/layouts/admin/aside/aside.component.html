@@ -4,13 +4,13 @@
   <div class="h-full px-3 py-4 overflow-y-auto bg-background">
     <div class="flex mb-7">
       <img src="../../../../../assets/images/DigiPos.svg" alt="logo" /><span class="text-white pl-1">
-        <p *ngIf="accountType === 'BUSINESS'">ADMIN</p>
+        <p *ngIf="accountType === 'BUSINESS'">BUSINESS</p>
         <p *ngIf="accountType === 'MERCHANT'">MERCHANT</p>
       </span>
     </div>
     <ul class="space-y-2">
       <p class="text-white text-[12px]">BASE ANALYTICS</p>
-      <li>
+      <li *ngIf="_isRouteEnabled(['DASHBOARD|READ'])">
         <div [ngClass]="{'active-menu': this.router.url.includes('dashboard')}" routerLink="dashboard"
           class="flex p-header items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-white hover:text-[#64154A] ">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -32,7 +32,7 @@
           <span class="flex-1 ml-3 whitespace-nowrap">Wallet</span>
         </a>
       </li> -->
-      <li>
+      <li *ngIf="_isRouteEnabled(['TRANSACTION|READ'])">
         <a [ngClass]="{'active-menu': this.router.url.includes('transactions')}" routerLink="transactions"
           class="flex p-header items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-white hover:text-[#64154A] ">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -54,7 +54,7 @@
           <span class="flex-1 ml-3 whitespace-nowrap">Refund</span>
         </a>
       </li> -->
-      <li>
+      <li *ngIf="_isRouteEnabled(['CHARGE_BACK|READ'])">
         <a [ngClass]="{'active-menu': this.router.url.includes('chargeback')}" routerLink="chargeback"
           class="flex p-header items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-white hover:text-[#64154A] ">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -65,7 +65,7 @@
           <span class="flex-1 ml-3 whitespace-nowrap">Chargeback</span>
         </a>
       </li>
-      <li>
+      <li *ngIf="_isRouteEnabled(['SETTLEMENT|READ'])">
         <a [ngClass]="{'active-menu': this.router.url.includes('settlement')}" routerLink="settlement"
           class="flex p-header items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-white hover:text-[#64154A] ">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -76,7 +76,7 @@
           <span class="flex-1 ml-3 whitespace-nowrap">Settlement</span>
         </a>
       </li>
-      <li>
+      <li *ngIf="_isRouteEnabled(['TERMINAL|READ'])">
         <a [ngClass]="{'active-menu': this.router.url.includes('terminal')}" routerLink="terminal"
           class="flex p-header items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-white hover:text-[#64154A] ">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -98,7 +98,7 @@
           <span class="flex-1 ml-3 whitespace-nowrap">Compliance</span>
         </a>
       </li> -->
-      <li>
+      <li *ngIf="_isRouteEnabled(['KYC|READ'])">
         <a [ngClass]="{'active-menu': this.router.url.includes('kyc')}" routerLink="kyc" 
           class="flex p-header items-center p-2 text-base font-normal text-white rounded-lg  hover:bg-white hover:text-[#64154A] ">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

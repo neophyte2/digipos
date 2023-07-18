@@ -264,4 +264,5 @@ export class ChargebackComponent implements OnInit, OnDestroy {
     this.unsubcribe.complete();
   }
 
+  _isRouteEnabled = (route: string[]) => this.genSrv.isRouteEnabled(route)
 }

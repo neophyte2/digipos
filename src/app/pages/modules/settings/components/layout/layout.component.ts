@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { GeneralService } from 'src/app/shared/services/general.service';
 
 @Component({
   selector: 'dp-layout',
@@ -10,7 +11,9 @@ export class LayoutComponent implements OnInit {
 
   title = 'Profile'
 
-  constructor() { };
+  constructor(
+    private genSrv :GeneralService
+  ) { };
 
   ngOnInit(): void {
   }
@@ -18,5 +21,7 @@ export class LayoutComponent implements OnInit {
   tileName(name:any){
     this.title = name;
   }
+
+  _isRouteEnabled = (route: string[]) => this.genSrv.isRouteEnabled(route)
 
 }

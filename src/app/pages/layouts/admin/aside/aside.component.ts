@@ -22,4 +22,6 @@ export class AsideComponent implements OnInit {
     this.accountType = acctType.customerAccountType
   }
 
+  _isRouteEnabled = (route: string[]) => this.genSrv.isRouteEnabled(route)
+
 }
