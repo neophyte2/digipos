@@ -84,6 +84,7 @@ export class AcceptInviteComponent implements OnInit, OnDestroy {
     this.gustSrv.acceptInvitation(payload).pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
       if (data.responseCode === '00') {
         setTimeout(() => {
+          this.genSrv.logout('/')
           this.router.navigate(["/"]);
           this.genSrv.sweetAlertSuccess(data.responseMessage);
           this.loader.btn.accept = false;
