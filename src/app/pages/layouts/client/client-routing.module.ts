@@ -12,10 +12,10 @@ const routes: Routes = [
     path: "",
     component: SignInComponent
   },
-  {
-    path: "signup",
-    component: SignUpComponent
-  },
+  // {
+  //   path: "signup",
+  //   component: SignUpComponent
+  // },
   {
     path: "verify-enroll",
     component: VerifyComponent

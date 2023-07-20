@@ -174,7 +174,7 @@ export class KycComponent implements OnInit {
       this.loader.btn.bvnloader = true;
       this.kycSrv.initiateBvn(value).subscribe((data: any) => {
         if (data.responseCode === '00') {
-          $(`#bvn`).click();
+          $('#bvn').click()
           this.genSrv.sweetAlertSuccess("An OTP was sent to your mail for Verification");
         } else {
           let msg = data.responseMessage

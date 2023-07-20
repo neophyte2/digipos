@@ -1,5 +1,6 @@
 <div class="bg-bg2 rounded">
   <div class="p-4 w-full text-sm text-secondary" *ngIf="(isVerified.allVerified | uppercase) === 'NO'">
+  <a routerLink="/auth/kyc">
     <div class="flex">
       <div class="flex-initial text-center m-2">
         <svg width="26" height="29" viewBox="0 0 26 29" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -9,10 +10,10 @@
         </svg>
       </div>
       <div class="flex-initial text-center py-2 m-2">
-        You’re required to complete your profile update to continue to access
-        amazing features on your dashboard. Please do so now
+        You’re required to complete your Kyc profile update to continue to access amazing features on your dashboard. Please do so now on the app
       </div>
     </div>
+  </a>
   </div>
 </div>
 

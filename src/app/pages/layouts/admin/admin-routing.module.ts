@@ -3,7 +3,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { ClientGuard } from '../client/service/client-guard.service';
 import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import { KycCompleteGuard } from '../client/service/kyc-complete.guard';
 
 const routes: Routes = [
   {
@@ -15,10 +14,10 @@ const routes: Routes = [
         path: 'dashboard',
         component: DashboardComponent,
       },
-      {
-        path: 'kyc',
-        loadChildren: () => import('../../modules/kyc/kyc.module').then(m => m.KycModule)
-      },
+      // {
+      //   path: 'kyc',
+      //   loadChildren: () => import('../../modules/kyc/kyc.module').then(m => m.KycModule)
+      // },
       {
         path: 'transactions',
         // canActivate: [KycCompleteGuard],

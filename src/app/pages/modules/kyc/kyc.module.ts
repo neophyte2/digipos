@@ -8,9 +8,9 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { HideDataPipe } from 'src/app/shared/utils/hide-data.pipe';
 
 const routes: Routes = [
-  {
-    path: '', component: KycComponent,
-  }
+  // {
+  //   path: '', component: KycComponent,
+  // }
 ];
 
 @NgModule({

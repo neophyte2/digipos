@@ -641,7 +641,7 @@
             {{ClickLinkAccount ? "Link Bank Account" : "Link Bank Account"}}
           </span>
           <span class="d-flex justify-end">
-            <svg *ngIf="(verifyList?.addressVerified | uppercase) === 'YES' && !loader.btn.addressloader" width="25"
+            <svg *ngIf="(verifyList?.bankDetailsVerified | uppercase) === 'YES' && !loader.btn.addressloader" width="25"
               height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="12.5" cy="12.5" r="12.5" fill="#64154A" />
               <path d="M10.16 14.8734L7.05673 11.7702L6 12.8195L10.16 16.9794L19.0901 8.04929L18.0408 7L10.16 14.8734Z"
@@ -717,7 +717,7 @@
 
       <!-- Modal toggle -->
       <button data-modal-target="defaultModal" data-modal-toggle="defaultModal" id="bvn"
-        class="hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+        class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
         type="button">
         Toggle modal
       </button>
