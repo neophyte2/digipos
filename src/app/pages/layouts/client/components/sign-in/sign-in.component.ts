@@ -101,7 +101,7 @@ export class SignInComponent implements OnInit, OnDestroy {
       countryCode: this.location?.calling_code,
       latitude: this.location?.latitude,
       ipAddress: this.location.ip,
-      source: 'MERCHAT_WEB',
+      source: 'MERCHANT_WEB',
       devicePlatform: this.deviceInfo.deviceType,
       deviceId: '',
       deviceName: this.deviceInfo.device,
@@ -111,6 +111,7 @@ export class SignInComponent implements OnInit, OnDestroy {
   }
 
   login() {
+    this.genSrv.clearStorage()
     this.loader.btn.login = true;
     let payload = this.result()
     if (this.loginForm.invalid) {

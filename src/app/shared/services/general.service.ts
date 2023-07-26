@@ -72,10 +72,15 @@ export class GeneralService {
    */
   logout(value: any) {
     // remove user from local storage to log user out
+    this.clearStorage();
+    this.route.navigate([value])
+  }
+
+  clearStorage() {
+    // remove user from local storage to log user out
     localStorage.removeItem(this.storageKey);
     localStorage.removeItem(this.verifyKey);
     this.currentUserSubject.next(null);
-    this.route.navigate([value])
   }
 
   /**
