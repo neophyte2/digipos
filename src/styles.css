@@ -445,7 +445,7 @@
 .input_label::before {
   content: "";
   position: absolute;
-  background-image: url("./assets//svgs/chked.svg");
+  background-image: url("./assets/svgs/chked.svg");
   background-size: cover;
   width: 30px;
   height: 30px;
