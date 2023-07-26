@@ -1,5 +1,5 @@
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
@@ -48,7 +48,7 @@ export class ClientService {
      * @param payload 
      * @returns data
      */
-    initiateReset(payload: any){
+    initiateReset(payload: any) {
         return this.http.post(`${this.api}/authentication/initiate-password-reset`, payload);
     }
 
@@ -57,7 +57,7 @@ export class ClientService {
      * @param payload 
      * @returns data
      */
-    confirmPasswordReset(payload: any){
+    confirmPasswordReset(payload: any) {
         return this.http.post(`${this.api}/authentication/complete-password-reset`, payload);
     }
 
@@ -69,7 +69,7 @@ export class ClientService {
     completeEnrollment(payload: any) {
         return this.http.post(`${this.api}/authentication/complete-enrollment`, payload);
     }
-    
+
     /**
      * 
      * @returns datas for geo location, ip address and country code
@@ -79,5 +79,17 @@ export class ClientService {
         return this.http.get('https://api.ipdata.co?api-key=' + apiKey);
     }
 
-    
+    uploadPicture(payload: any, auth: any) {
+        console.log(payload);
+        
+        // Set up the request headers with the Bearer token
+        const headers = new HttpHeaders({
+            Authorization: `${auth}`
+        });
+
+        // Make the HTTP POST request with the provided payload and headers
+        return this.http.post(`${this.api}/kyc/create-picture`, payload, { headers });
+    }
+
+
 }

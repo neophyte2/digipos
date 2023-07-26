@@ -3,9 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { AcceptInviteComponent } from './components/accept-invite/accept-invite.component';
 import { ForgetPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
-import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { VerifyComponent } from './components/verify/verify.component';
 import { LivenessComponent } from './components/liveness/liveness.component';
+import { ResponseComponent } from './components/response/response.component';
 
 const routes: Routes = [
   {
@@ -35,6 +35,14 @@ const routes: Routes = [
   {
     path: "check",
     component: LivenessComponent
+  },
+  {
+    path: "success",
+    component: ResponseComponent
+  },
+  {
+    path: "error",
+    component: ResponseComponent
   },
 ];
 

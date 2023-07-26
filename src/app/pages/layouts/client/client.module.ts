@@ -11,6 +11,7 @@ import { VerifyComponent } from './components/verify/verify.component';
 import { NgOtpInputModule } from 'ng-otp-input';
 import { ForgetPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { AcceptInviteComponent } from './components/accept-invite/accept-invite.component';
+import { ResponseComponent } from './components/response/response.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { AcceptInviteComponent } from './components/accept-invite/accept-invite.
     VerifyComponent,
     ForgetPasswordComponent,
     AcceptInviteComponent,
+    ResponseComponent,
   ],
   imports: [
     FormsModule,
