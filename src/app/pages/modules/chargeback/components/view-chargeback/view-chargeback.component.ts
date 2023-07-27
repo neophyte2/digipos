@@ -67,9 +67,9 @@ export class ViewChargebackComponent implements OnInit, OnDestroy {
   }
 
   confirmStatus(data: any, statusName: string) {
-    if (this.cf['chargebackReason'].value === null && this.cf['chargebackEvidence'].value === null) {
+    if (this.cf['chargebackReason'].value === null && this.cf['chargebackEvidence'].value === null && statusName !== 'Approve' ){
       this.genSrv.sweetAlertError('Kindly write a reason or Upload an Evidence');
-    }else{
+    } else {
       this.genSrv.sweetAlertDecision(statusName, data.chargebackReference).then((result) => {
         if (result.isConfirmed) {
           if (statusName === 'Approve') {
@@ -80,7 +80,6 @@ export class ViewChargebackComponent implements OnInit, OnDestroy {
         }
       })
     }
-   
   }
 
   //Upload
@@ -96,7 +95,7 @@ export class ViewChargebackComponent implements OnInit, OnDestroy {
         const contents: string = e.target.result;
         this.base64Contents = contents
         if (this.base64Contents) {
-            this.chargebackForm.controls['chargebackEvidence'].patchValue(this.base64Contents);
+          this.chargebackForm.controls['chargebackEvidence'].patchValue(this.base64Contents);
         }
       };
       reader.readAsDataURL(fileName);

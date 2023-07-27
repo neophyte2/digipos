@@ -21,6 +21,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   hideOPassword = true
   profileForm!: FormGroup;
   private unsubcribe = new Subject<void>();
+  passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d@$!%*#?&]{8,}$/;
 
   constructor(
     private fb: FormBuilder,
@@ -30,7 +31,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     let data: any = this.genSrv.currentUserValue
     this.ngForm(data)
     this.acctType = data.customerAccountType
-    
+
   }
 
   ngOnInit(): void {
@@ -45,8 +46,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
       email: [{ value: data.customerEmail, disabled: true }],
       phone: [{ value: data.customerPhone, disabled: true }],
       customerOldPassword: ["", Validators.required],
-      customerPassword: ["", Validators.required],
-      customerPasswordConfirmation: ["", Validators.required],
+      customerPassword: ["", [Validators.required, Validators.pattern(this.passwordPattern)]],
+      customerPasswordConfirmation: ["", [Validators.required, Validators.pattern(this.passwordPattern)]],
     });
   }
 

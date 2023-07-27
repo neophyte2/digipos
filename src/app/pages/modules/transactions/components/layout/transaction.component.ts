@@ -92,7 +92,6 @@ export class TransactionComponent implements OnInit, OnDestroy {
       this.dateRangeForm.controls['trnReference'].patchValue('')
       this.dateRangeForm.controls['trnChannel'].patchValue('')
       this.dateRangeForm.controls['trnResponseCode'].patchValue('')
-      this.dateRangeForm.controls['trnResponseMessage'].patchValue('')
       this.dateRangeForm.controls['trnTerminalId'].patchValue('')
       this.dateRangeForm.controls['trnAmount'].patchValue(null)
       this.allTransactionList()
@@ -105,7 +104,6 @@ export class TransactionComponent implements OnInit, OnDestroy {
       trnReference: this.dateRangeForm.value.trnReference,
       trnChannel: this.dateRangeForm.value.trnChannel,
       trnResponseCode: this.dateRangeForm.value.trnResponseCode,
-      trnResponseMessage: '',
       trnTerminalId: this.dateRangeForm.value.trnTerminalId,
       trnAmount: this.dateRangeForm.value.trnAmount,
       startDate: this.dateRangeForm.value.start,
@@ -136,7 +134,6 @@ export class TransactionComponent implements OnInit, OnDestroy {
       trnReference: this.dateRangeForm.value.trnReference,
       trnChannel: this.dateRangeForm.value.trnChannel,
       trnResponseCode: this.dateRangeForm.value.trnResponseCode,
-      trnResponseMessage: '',
       trnAmount: this.dateRangeForm.value.trnAmount,
     }
     this.transSrvService.transactionDownload(payload).pipe(takeUntil(this.unsubcribe)).subscribe((trans: any) => {

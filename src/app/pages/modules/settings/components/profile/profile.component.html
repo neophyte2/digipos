@@ -164,6 +164,10 @@
                 aria-hidden="true"></i>
             </div>
           </div>
+          <div class="text-rose-700 mt-2" *ngIf="pf['customerPassword'].errors?.['pattern']">
+            Password must meet complexity requirements: At least 8 characters, one uppercase letter, one lowercase
+            letter, and one number.
+          </div>
           <div class="mt-2"
             *ngIf="pf['customerPassword'].invalid && (pf['customerPassword'].dirty || pf['customerPassword'].touched) ">
             <span class="text-rose-700" style="font-size: 13px;" *ngIf="pf['customerPassword'].errors?.['required']">
@@ -195,6 +199,10 @@
           <span id="matchPassworError" class="text-rose-700 mt-2" *ngIf="matchPassword">
             Password does not match
           </span>
+          <div class="text-rose-700 mt-2" *ngIf="pf['customerPasswordConfirmation'].errors?.['pattern']">
+            Password must meet complexity requirements: At least 8 characters, one uppercase letter, one lowercase
+            letter, and one number.
+          </div>
           <div class="mt-2"
             *ngIf="pf['customerPasswordConfirmation'].invalid && (pf['customerPasswordConfirmation'].dirty || pf['customerPasswordConfirmation'].touched) ">
             <span class="text-rose-700" style="font-size: 13px;"
