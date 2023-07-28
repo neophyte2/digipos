@@ -10,18 +10,23 @@ import { JwtExpiryInterceptor } from './core/interceptor/jwt-handler.interceptor
 import { RequestInterceptor } from './core/interceptor/request.interceptor';
 import { SharedModule } from './shared/shared.module';
 
+import { NgIdleKeepaliveModule } from '@ng-idle/keepalive';
+import { NgIdleModule } from '@ng-idle/core';
+
 @NgModule({
   declarations: [
     AppComponent,
   ],
   imports: [
+    FormsModule,
     BrowserModule,
     HttpClientModule,
-    FormsModule,
-    BrowserAnimationsModule,
     ReactiveFormsModule,
     SharedModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgIdleModule.forRoot(),
+    BrowserAnimationsModule,
+    NgIdleKeepaliveModule.forRoot(), // use NgIdleModule.forRoot() if not using keepalive
   ],
   providers: [
     {
