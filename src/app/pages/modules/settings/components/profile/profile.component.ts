@@ -21,7 +21,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   hideOPassword = true
   profileForm!: FormGroup;
   private unsubcribe = new Subject<void>();
-  passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])[a-zA-Z\d@$!%*#?&]{8,}$/;
+  private passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>?])[a-zA-Z\d!@#$%^&*()_+[\]{};':"\\|,.<>?]{8,}$/;
 
   constructor(
     private fb: FormBuilder,

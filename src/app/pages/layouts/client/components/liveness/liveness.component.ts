@@ -75,15 +75,13 @@ export class LivenessComponent implements OnInit {
           this.clntSrv.uploadPicture(payload, link).subscribe((data: any) => {
             if (data.responseCode === '00') {
               swal.close()
-              this.genSrv.sweetAlertSuccess(data.responseMessage);
-              this.router.navigate(["/success"]);
+              window.location.href = 'https://sandbox3.coralpay.com:9091/merchantportal/#/success'
             } else {
-              this.genSrv.sweetAlertError(data.responseMessage);
-              this.router.navigate(["/success"]);
+              window.location.href = 'https://sandbox3.coralpay.com:9091/merchantportal/#/success'
             }
           })
         } else {
-          this.router.navigate(["/error"]);
+          window.location.href = 'https://sandbox3.coralpay.com:9091/merchantportal/#/error'
         }
       }
 
