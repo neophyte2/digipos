@@ -42,6 +42,9 @@
           Transaction Reference
         </th>
         <th scope="col" class="px-6 py-3">
+          CBA Reference
+        </th>
+        <th scope="col" class="px-6 py-3">
           Terminal ID
         </th>
         <th scope="col" class="px-6 py-3">
@@ -64,7 +67,10 @@
           {{formatAmt(item?.trnAmount)}}
         </td>
         <td class="px-6 py-4">
-            {{item?.trnReference}}
+          {{item?.trnReference}}
+        </td>
+        <td class="px-6 py-4">
+          {{item?.trnCbaReference}}
         </td>
         <td class="px-6 py-4">
           {{item?.trnTerminalId || 'N/A'}}
