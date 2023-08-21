@@ -33,6 +33,7 @@ export class AcceptInviteComponent implements OnInit, OnDestroy {
   CountryISO = CountryISO;
   PhoneNumberFormat = PhoneNumberFormat;
   preferredCountries: CountryISO[] = [];
+  private passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>?])[a-zA-Z\d!@#$%^&*()_+[\]{};':"\\|,.<>? ]{8,}$/;
 
   constructor(
     private fb: FormBuilder,
@@ -64,8 +65,8 @@ export class AcceptInviteComponent implements OnInit, OnDestroy {
       customerCountryCode: [""],
       customerCountry: [""],
       customerPhone: ["", Validators.required],
-      customerPassword: ["", Validators.required],
-      customerConfirmPassword: ["", Validators.required],
+      customerPassword: ["", [Validators.required, Validators.pattern(this.passwordPattern)]],
+      customerConfirmPassword: ["", [Validators.required, Validators.pattern(this.passwordPattern)]],
     });
   }
 

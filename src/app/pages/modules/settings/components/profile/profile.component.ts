@@ -99,7 +99,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     })
   }
 
-
   ngOnDestroy() {
     this.unsubcribe.next();
     this.unsubcribe.complete();

@@ -124,6 +124,10 @@
                                         class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
                                         Password
                                     </label>
+                                    <div class="text-rose-700 mt-2" *ngIf="sf['customerPassword'].errors?.['pattern']">
+                                        Password must meet complexity requirements: At least 8 characters, one uppercase letter, one lowercase
+                                        letter,one symbol, and one number.
+                                      </div>
                                     <div class="mt-2"
                                         *ngIf="sf['customerPassword'].invalid && (sf['customerPassword'].dirty || sf['customerPassword'].touched) ">
                                         <span class="text-rose-700" style="font-size: 13px;"
@@ -150,6 +154,10 @@
                                     <span id="matchPassworError" class="text-rose-700 mt-2" *ngIf="matchPassword">
                                         Password does not match
                                     </span>
+                                    <div class="text-rose-700 mt-2" *ngIf="sf['customerConfirmPassword'].errors?.['pattern']">
+                                        Password must meet complexity requirements: At least 8 characters, one uppercase letter, one lowercase
+                                        letter,one symbol, and one number.
+                                      </div>
                                     <div class="mt-2"
                                         *ngIf="sf['customerConfirmPassword'].invalid && (sf['customerConfirmPassword'].dirty || sf['customerConfirmPassword'].touched) ">
                                         <span class="text-rose-700" style="font-size: 13px;"
