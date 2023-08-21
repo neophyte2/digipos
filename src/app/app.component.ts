@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
 
   inActivity(remainingSeconds: any) {
     // this.idle.setIdle(1800);
-    this.idle.setTimeout(30);
+    this.idle.setTimeout(10);
     this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
 
     this.idle.onIdleEnd.subscribe(() => {
