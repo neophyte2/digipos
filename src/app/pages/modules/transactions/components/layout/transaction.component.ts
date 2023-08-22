@@ -135,6 +135,8 @@ export class TransactionComponent implements OnInit, OnDestroy {
       trnChannel: this.dateRangeForm.value.trnChannel,
       trnResponseCode: this.dateRangeForm.value.trnResponseCode,
       trnAmount: this.dateRangeForm.value.trnAmount,
+      startDate: this.dateRangeForm.value.start,
+      endDate: this.dateRangeForm.value.end,
     }
     this.transSrvService.transactionDownload(payload).pipe(takeUntil(this.unsubcribe)).subscribe((trans: any) => {
       if (trans.responseCode === '00') {

@@ -1,6 +1,5 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { GeneralService } from './shared/services/general.service';
-import { Router } from '@angular/router';
 import { Idle, DEFAULT_INTERRUPTSOURCES } from '@ng-idle/core';
 import { Keepalive } from '@ng-idle/keepalive';
 
@@ -10,87 +9,70 @@ import { Keepalive } from '@ng-idle/keepalive';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'digipos';
-  signUpLoginView = true;
 
-  idleState = 'Not started.';
+  title = 'digipos';
+
+  idleState = "NOT_STARTED";
+  //@ts-ignore
+  countdown: number = null;
+  //@ts-ignore
+  lastPing: Date = null;
   timedOut = false;
-  lastPing?: Date = undefined;
-  origin = window.location.origin;
-  pathname = window.location.pathname;
 
   constructor(
-    private router: Router,
     public gs: GeneralService,
     private idle: Idle,
     private keepalive: Keepalive,
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
-    let remainingSeconds = 30;
-
-
-    this.inActivity(remainingSeconds)
+    setTimeout(() => {
+      this.inActivity();
+    }, 10000);
   }
 
-  inActivity(remainingSeconds: any) {
-    // this.idle.setIdle(1800);
-    this.idle.setTimeout(10);
-    this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES);
+  inActivity() {
+    // set idle parameters
+    this.idle.setIdle(600); // how long can they be inactive before considered idle, in seconds
+    this.idle.setTimeout(600); // how long can they be idle before considered timed out, in seconds
+    this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES); // provide sources that will "interrupt" aka provide events indicating the user is active
 
-    this.idle.onIdleEnd.subscribe(() => {
-      this.idleState = 'No longer this.idle.'
-      this.reset();
-    });
-
-    this.idle.onTimeout.subscribe(() => {
-      this.idleState = 'Timed out!';
-      console.log(this.idleState);
-      this.timedOut = true;
-      // document.getElementById('closeTimoutModal').click()
-      this.gs.clearStorage()
-      this.gs.logout('/')
-      this.router.navigate(['/login'], { queryParams: { showTimeoutModal: true } }).then(() => {
-        window.location.reload();
-      });
-    });
-
+    // do something when the user becomes idle
     this.idle.onIdleStart.subscribe(() => {
-      console.log('started');
-
-      this.idleState = 'You\'ve gone idle!'
-      console.log(this.idleState);
-      //  document.getElementById('openTimeoutModal').click()
+      this.idleState = "IDLE";
     });
 
-    //  this.idle.onTimeoutWarning.subscribe((countdown) => {
-    //    this.idleState = 'You will time out in ' + countdown + ' seconds!'
-    //  });
+    // do something when the user is no longer idle
+    this.idle.onIdleEnd.subscribe(() => {
+      this.idleState = "NOT_IDLE";
+      //@ts-ignore
+      this.countdown = null;
+      this.cd.detectChanges(); // how do i avoid this kludge?
+    });
 
-    this.keepalive.interval(15);
+    // do something when the user has timed out
+    this.idle.onTimeout.subscribe(() => {
+      this.idleState = "TIMED_OUT"
+      this.gs.logout('/')
+    });
 
-    this.keepalive.onPing.subscribe(() => this.lastPing = new Date());
+    // do something as the timeout countdown does its thing
+    this.idle.onTimeoutWarning.subscribe(seconds => this.countdown = seconds);
+
+    // set keepalive parameters, omit if not using keepalive
+    this.keepalive.interval(15); // will ping at this interval while not idle, in seconds
+    this.keepalive.onPing.subscribe(() => {
+      this.lastPing = new Date()
+    }); // do something when it pings
+
     const currentUser: any = this.gs.userDetails;
-    console.log(currentUser);
-
     if (currentUser && currentUser.token && currentUser.token !== null) {
-      console.log(currentUser);
       this.idle.watch()
-      const interval = setInterval(() => {
-        if (remainingSeconds > 0) {
-          console.log(`Time remaining: ${remainingSeconds} seconds`);
-          remainingSeconds--;
-        } else {
-          console.log("Countdown finished!");
-          clearInterval(interval); // Stop the interval once the countdown is finished
-        }
-      }, 1000);
-      console.log('start');
       this.timedOut = false;
     } else {
       this.idle.stop();
     }
-
   }
 
   reset() {
@@ -101,6 +83,5 @@ export class AppComponent implements OnInit {
 
   stay() {
     this.reset();
-    // document.getElementById('closeTimoutModal').click()
   }
 }
