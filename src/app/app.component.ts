@@ -34,8 +34,8 @@ export class AppComponent implements OnInit {
 
   inActivity() {
     // set idle parameters
-    this.idle.setIdle(600); // how long can they be inactive before considered idle, in seconds
-    this.idle.setTimeout(600); // how long can they be idle before considered timed out, in seconds
+    this.idle.setIdle(300); // how long can they be inactive before considered idle, in seconds
+    this.idle.setTimeout(300); // how long can they be idle before considered timed out, in seconds
     this.idle.setInterrupts(DEFAULT_INTERRUPTSOURCES); // provide sources that will "interrupt" aka provide events indicating the user is active
 
     // do something when the user becomes idle
