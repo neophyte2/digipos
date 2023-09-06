@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from "rxjs/operators";
 import { tableCurrency } from 'src/app/shared/utils/utils';
@@ -7,6 +7,8 @@ import { SettlementService } from '../../services/settlement.service';
 import { GeneralService } from 'src/app/shared/services/general.service';
 import { ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
+import * as moment from 'moment';
+import { paymentMethods, responsesType } from 'src/app/shared/utils/data';
 
 @Component({
   selector: 'dp-view-settlement',
@@ -29,8 +31,21 @@ export class ViewSettlementComponent implements OnInit, OnDestroy {
   showModal = false;
   settlementList: any
   dropdown = false
+  method = paymentMethods
+  dateRangeForm!: FormGroup;
+  filterList = [
+    'Status',
+    'Amount',
+    'Reference',
+    'Terminal ID',
+    'Payment Method',
+  ]
+  responseList = responsesType
   year = new Date().getFullYear()
+  month = (new Date().getMonth() + 1).toString().padStart(2, '0');
+  day = new Date().getDate();
   private unsubcribe = new Subject<void>();
+  filter: any[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -38,13 +53,41 @@ export class ViewSettlementComponent implements OnInit, OnDestroy {
     private readonly fb: FormBuilder,
     private settleService: SettlementService,
   ) {
+    var month = new Date().getMonth() + 1;
+    var last_day = new Date(this.year, month, 0).getDate();
+    this.dateRangeForm = new FormGroup({
+      start: new FormControl(`${this.year}-${this.month}-01`),
+      end: new FormControl(`${this.year}-${this.month}-${last_day}`),
+      trnResponseCode: new FormControl(null),
+      trnChannel: new FormControl(''),
+      trnAmount: new FormControl(null),
+      trnReference: new FormControl(''),
+      trnTerminalId: new FormControl(''),
+    });
 
+    this.dateRangeForm.valueChanges.subscribe((data) => {
+      if (data?.start && data?.end) {
+        this.query = { startDate: moment(data?.start).format("YYYY-MM-DD"), endDate: moment(data?.end).format("YYYY-MM-DD") }
+        this.settlementByID(this.id)
+      }
+    });
   }
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
     this.id = this.route.snapshot.params['id'];
     this.settlementByID(this.id)
+  }
+
+  clearData(event: any) {
+    if (event.length === 0) {
+      this.dateRangeForm.controls['trnReference'].patchValue('')
+      this.dateRangeForm.controls['trnChannel'].patchValue('')
+      this.dateRangeForm.controls['trnResponseCode'].patchValue('')
+      this.dateRangeForm.controls['trnTerminalId'].patchValue('')
+      this.dateRangeForm.controls['trnAmount'].patchValue(null)
+      this.settlementByID(this.id)
+    }
   }
 
   goBack() {
@@ -54,7 +97,14 @@ export class ViewSettlementComponent implements OnInit, OnDestroy {
   settlementByID(id: any) {
     this.isloading = true
     let payload = {
-      settlementId: id
+      settlementId: id,
+      trnReference: this.dateRangeForm.value.trnReference,
+      trnChannel: this.dateRangeForm.value.trnChannel,
+      trnResponseCode: this.dateRangeForm.value.trnResponseCode,
+      trnTerminalId: this.dateRangeForm.value.trnTerminalId,
+      trnAmount: this.dateRangeForm.value.trnAmount,
+      startDate: this.dateRangeForm.value.start,
+      endDate: this.dateRangeForm.value.end,
     }
     this.settleService.getSettlementById(payload).pipe(takeUntil(this.unsubcribe)).subscribe((settle: any) => {
       this.settlementList = settle.data;

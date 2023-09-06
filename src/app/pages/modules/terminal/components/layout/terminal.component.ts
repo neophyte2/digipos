@@ -3,7 +3,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import * as moment from 'moment';
 import { Subject } from 'rxjs';
 import { takeUntil } from "rxjs/operators";
-import { tableCurrency, VALIDEMAILREGEX } from 'src/app/shared/utils/utils';
 import { TerminalService } from '../../services/terminal.service';
 import { GeneralService } from 'src/app/shared/services/general.service';
 import { UserSharedService } from 'src/app/shared/services/userShared.service';
@@ -27,7 +26,6 @@ export class TerminalComponent implements OnInit, OnDestroy {
     'Terminal ID',
   ]
   responseList = [
-    'PENDING',
     'ACTIVE',
     'INACTIVE',
   ]

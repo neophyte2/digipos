@@ -1,9 +1,74 @@
-<!-- Filter -->
+<!-- Go Back -->
 <div class="grid grid-cols-3 gap-4">
   <div class="col-start-1 col-end-4 mt-8">
     <div class="">
       <p class="text-[#64154A] cursor-pointer" (click)="goBack()">Back</p>
     </div>
+  </div>
+  <div class="col-end-6 col-span-2 mt-10">
+  </div>
+</div>
+<!-- Go Back -->
+
+<!-- Filter -->
+<div class="grid grid-cols-3 gap-4">
+  <div class="col-start-1 col-end-4 mt-8">
+    <form [formGroup]="dateRangeForm">
+      <div class="md:flex my-3 hidden items-end flex-wrap ">
+        <div class="mr-3 w-[33%]">
+          <label for="" class="block text-sm text-gray-400 regularfont">Filter By</label>
+          <ng-select [multiple]="true" (change)="clearData($event)" [(ngModel)]="filter"
+            [ngModelOptions]="{ standalone: true }" [items]="filterList">
+            <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
+              <div class="ng-value" *ngFor="let item of items | slice: 0:2">
+                <span class="ng-value-label">{{ item }}</span>
+                <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+              </div>
+              <div class="ng-value" *ngIf="items.length > 2">
+                <span class="ng-value-label">{{ items.length - 2 }} more...</span>
+              </div>
+            </ng-template>
+          </ng-select>
+        </div>
+        <div class="mr-3">
+          <label for="from" class="block text-sm text-gray-400 regularfont">From</label>
+          <input type="date" formControlName="start"
+            class="lg:w-[150px] h-[39px] text-gray-400 py-[15px] text-xs border border-gray-300 rounded  focus:outline-0 focus:ring-0 brd">
+        </div>
+        <div class="mr-3"><label for="from" class="block text-sm text-gray-400 regularfont">To</label>
+          <input type="date" formControlName="end"
+            class="lg:w-[150px] h-[39px] text-gray-400 py-[15px] text-xs border border-gray-300 rounded focus:outline-0 focus:ring-0 brd">
+        </div>
+      </div>
+      <div class="md:flex my-3 hidden items-end flex-wrap ">
+        <br>
+        <div class="mr-3 mt-3 w-[20%]" *ngIf="filter.includes('Status')">
+          <label for="" class="block text-sm text-gray-400 regularfont">Filter By Staus</label>
+          <ng-select formControlName="trnResponseCode" [items]="responseList" bindLabel="name" bindValue="value">
+          </ng-select>
+        </div>
+        <div class="mr-3 mt-3 " *ngIf="filter.includes('Amount')">
+          <label for="amt" class="block text-sm text-gray-400 regularfont">Filter By Amount</label>
+          <input formControlName="trnAmount" decimalOnly style="padding-left: 10px;"
+            class="lg:w-[150px] h-[39px] text-gray-400 py-[15px] text-xs border border-gray-300 rounded focus:outline-0 focus:ring-0 brd">
+        </div>
+        <div class="mr-3 mt-3" *ngIf="filter.includes('Reference')">
+          <label for="amt" class="block text-sm text-gray-400 regularfont">Filter By Reference</label>
+          <input formControlName="trnReference" style="padding-left: 10px;"
+            class="lg:w-[250px] h-[39px] text-gray-400 py-[15px] text-xs border border-gray-300 rounded focus:outline-0 focus:ring-0 brd">
+        </div>
+        <div class="mr-3 mt-3" *ngIf="filter.includes('Terminal ID')">
+          <label for="amt" class="block text-sm text-gray-400 regularfont">Filter By Terminal ID</label>
+          <input formControlName="trnTerminalId" style="padding-left: 10px;"
+            class="lg:w-[250px] h-[39px] text-gray-400 py-[15px] text-xs border border-gray-300 rounded focus:outline-0 focus:ring-0 brd">
+        </div>
+        <div class="mr-3 mt-3 w-[25%]" *ngIf="filter.includes('Payment Method')">
+          <label for="" class="block text-sm text-gray-400 regularfont">Filter By Payment Method</label>
+          <ng-select formControlName="trnChannel" [items]="method" bindLabel="name" bindValue="value">
+          </ng-select>
+        </div>
+      </div>
+    </form>
   </div>
   <div class="col-end-6 col-span-2 mt-10">
     <div>
