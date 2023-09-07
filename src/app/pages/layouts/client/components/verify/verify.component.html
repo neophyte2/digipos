@@ -43,7 +43,7 @@
                                 </p>
                             </div>
 
-                            <div *ngIf="name.includes('enroll')">
+                            <div *ngIf="name === '#/verify-enroll'">
                                 <form [formGroup]="verifyEnrollForm">
                                     <div>
                                         <div class="flex flex-col input-wrap relative lg:mb-14 md:mb-14 sm:mb-12 mb-12">
@@ -107,7 +107,7 @@
                                 </form>
                             </div>
 
-                            <div *ngIf="name.includes('reset')">
+                            <div *ngIf="name === '#/verify-reset'">
                                 <form [formGroup]="verifyResetForm">
                                     <div>
                                         <div class="flex flex-col input-wrap relative lg:mb-14 md:mb-14 sm:mb-12 mb-12">

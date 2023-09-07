@@ -47,7 +47,7 @@ export class VerifyComponent implements OnInit, OnDestroy {
     private genSrv: GeneralService,
     private activatedRoute: ActivatedRoute,
   ) {
-    this.name = window.location.pathname;
+    this.name = window.location.hash;
   }
 
   ngOnInit(): void {
