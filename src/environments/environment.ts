@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseApiUrl:'https://sandbox3.coralpay.com:9091/digipos/dev'
+  baseApiUrl:'https://sandbox3.coralpay.com:9091/digipos/dev',
+  VerifyPublicKey:'647629fcf552280cb22005b9'
 };
 
 /*

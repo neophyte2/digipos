@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
-  baseApiUrl:'https://sandbox3.coralpay.com:9091/digipos/dev'
+  baseApiUrl:'https://digipos.coralpay.com/digipos/prod',
+  VerifyPublicKey:'647629fcf552280cb22005b9'
   
 };

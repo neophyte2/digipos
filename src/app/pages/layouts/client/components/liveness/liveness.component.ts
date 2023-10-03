@@ -29,7 +29,7 @@ export class LivenessComponent implements OnInit {
     //@ts-ignore
     const YVSDK = window.YouverifySDK as any;
     const livenessCheckModule = new YVSDK.liveness({
-      publicMerchantKey: `647629fcf552280cb22005b9`,
+      publicMerchantKey: environment.VerifyPublicKey,
 
       // true if environment is in development mode. Default to false    
       dev: environment.production,
@@ -37,7 +37,7 @@ export class LivenessComponent implements OnInit {
       //Customize your form using prefered greeting texts and colours(This is Optional)
       appearance: {
         greeting: 'We will need to perform a liveness test. It will only take a moment.',
-        actionText: 'Perform liveness test',
+        actionText: 'Perform liveness Check',
         buttonBackgroundColor: '#46B2C8',
         buttonTextColor: '#fffff',
         primaryColor: '#46B2C8'
