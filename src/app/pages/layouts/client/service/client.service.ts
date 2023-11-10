@@ -79,6 +79,10 @@ export class ClientService {
         return this.http.get('https://api.ipdata.co?api-key=' + apiKey);
     }
 
+    getIp() {
+        return this.http.get('https://api.ipify.org?format=json');
+    }
+
     uploadPicture(payload: any, auth: any) {
         console.log(payload);
         

@@ -6,7 +6,6 @@ import { SearchCountryField, CountryISO, PhoneNumberFormat } from 'ngx-intl-tel-
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { GeneralService } from 'src/app/shared/services/general.service';
-import { VALIDEMAILREGEX } from 'src/app/shared/utils/utils';
 import { ClientService } from '../../service/client.service';
 
 @Component({
@@ -34,18 +33,20 @@ export class SignInComponent implements OnInit, OnDestroy {
   CountryISO = CountryISO;
   PhoneNumberFormat = PhoneNumberFormat;
   preferredCountries: CountryISO[] = [];
+  ipAddress: any
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private gustSrv: ClientService,
     private genSrv: GeneralService,
-    private deviceService: DeviceDetectorService
+    private deviceService: DeviceDetectorService,
   ) {
     // redirect to home if already logged in
     if (this.genSrv.currentUserValue) {
       this.router.navigate(["/auth/dashboard"]);
     }
+
   }
 
   ngOnInit(): void {
@@ -74,6 +75,9 @@ export class SignInComponent implements OnInit, OnDestroy {
   }
 
   getGeoLocation() {
+    this.gustSrv.getIp().subscribe((response: any) => {
+      this.ipAddress = response.ip;
+    });
     this.gustSrv.getLocation().pipe(takeUntil(this.unsubcribe)).subscribe((data: any) => {
       this.location = data
     })
@@ -100,7 +104,7 @@ export class SignInComponent implements OnInit, OnDestroy {
       customerPushId: '',
       countryCode: this.location?.calling_code,
       latitude: this.location?.latitude,
-      ipAddress: this.location.ip,
+      ipAddress: this.ipAddress,
       source: 'MERCHANT_WEB',
       devicePlatform: this.deviceInfo.deviceType,
       deviceId: '',
