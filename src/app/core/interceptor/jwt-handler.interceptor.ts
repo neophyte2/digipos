@@ -12,6 +12,8 @@ export class JwtExpiryInterceptor implements HttpInterceptor {
     ) { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    console.log({r: req});
+    
     return next.handle(req).pipe(
       map((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {

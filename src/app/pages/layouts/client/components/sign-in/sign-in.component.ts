@@ -46,7 +46,6 @@ export class SignInComponent implements OnInit, OnDestroy {
     if (this.genSrv.currentUserValue) {
       this.router.navigate(["/auth/dashboard"]);
     }
-
   }
 
   ngOnInit(): void {
