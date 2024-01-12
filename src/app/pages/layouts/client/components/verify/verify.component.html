@@ -4,8 +4,7 @@
             <div class="w-[98%] h-full mx-auto md:w-[85%] pt-[45px] lg:w-[70%]">
 
                 <a class="flex items-center justify-center digipos_cont">
-                    <img src='assets/images/digipos_logo.png' alt="digipos-logo"
-                        class="digiposlogo" />
+                    <img src='assets/images/digipos_logo.png' alt="digipos-logo" class="digiposlogo" />
                 </a>
 
                 <div class=" w-full h-fit mt-[40px]">
@@ -43,7 +42,7 @@
                                 </p>
                             </div>
 
-                            <div *ngIf="name === '#/verify-enroll'">
+                            <div *ngIf="name.includes('#/verify-enroll')">
                                 <form [formGroup]="verifyEnrollForm">
                                     <div>
                                         <div class="flex flex-col input-wrap relative lg:mb-14 md:mb-14 sm:mb-12 mb-12">
@@ -107,7 +106,7 @@
                                 </form>
                             </div>
 
-                            <div *ngIf="name === '#/verify-reset'">
+                            <div *ngIf="name.includes('#/verify-reset')">
                                 <form [formGroup]="verifyResetForm">
                                     <div>
                                         <div class="flex flex-col input-wrap relative lg:mb-14 md:mb-14 sm:mb-12 mb-12">

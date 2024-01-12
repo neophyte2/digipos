@@ -84,7 +84,6 @@ export class ClientService {
     }
 
     uploadPicture(payload: any, auth: any) {
-        console.log(payload);
         
         // Set up the request headers with the Bearer token
         const headers = new HttpHeaders({

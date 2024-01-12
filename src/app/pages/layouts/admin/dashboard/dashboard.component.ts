@@ -106,6 +106,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   cardsData() {
     let payload = {
+      status: 'success',
       startDate: this.dateRangeForm.value.start,
       endDate: this.dateRangeForm.value.end,
     }
