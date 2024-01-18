@@ -4,6 +4,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { GeneralService } from 'src/app/shared/services/general.service';
 import { UserSharedService } from 'src/app/shared/services/userShared.service';
 import { SettingsService } from '../../../services/settings.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'dp-users',
@@ -27,8 +28,9 @@ export class UsersComponent implements OnInit, OnDestroy {
   private unsubcribe = new Subject<void>();
 
   constructor(
-    private setSrv: SettingsService,
+    private router: Router,
     private genSrv: GeneralService,
+    private setSrv: SettingsService,
     private userShdSrv: UserSharedService,
   ) { }
 
@@ -41,7 +43,7 @@ export class UsersComponent implements OnInit, OnDestroy {
     this.isloading = true
     this.userShdSrv.getUserByOrg().pipe(takeUntil(this.unsubcribe)).subscribe((user: any) => {
       this.userList = user.data;
-      this.isloading =false
+      this.isloading = false
     })
   }
 
@@ -106,6 +108,10 @@ export class UsersComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.unsubcribe.next();
     this.unsubcribe.complete();
+  }
+
+  goTo(id: any) {
+    this.router.navigate(["/auth//settings/user-log/" + id]);
   }
 
   _isRouteEnabled = (route: string[]) => this.genSrv.isRouteEnabled(route)

@@ -20,34 +20,32 @@ const routes: Routes = [
       // },
       {
         path: 'transactions',
-        // canActivate: [KycCompleteGuard],
         loadChildren: () => import('../../modules/transactions/transaction.module').then(m => m.TransactionModule)
       },
       {
         path: 'refund',
-        // canActivate: [KycCompleteGuard],
         loadChildren: () => import('../../modules/refund/refund.module').then(m => m.RefundModule)
       },
       {
         path: 'chargeback',
-        // canActivate: [KycCompleteGuard],
         loadChildren: () => import('../../modules/chargeback/chargeback.module').then(m => m.ChargenModule)
       },
       {
         path: 'settlement',
-        // canActivate: [KycCompleteGuard],
         loadChildren: () => import('../../modules/settlement/settlement.module').then(m => m.SettlementModule)
       },
       {
         path: 'terminal',
-        // canActivate: [KycCompleteGuard],
         loadChildren: () => import('../../modules/terminal/terminal.module').then(m => m.TerminalModule)
       },
       {
         path: 'settings',
-        // canActivate: [KycCompleteGuard],
         loadChildren: () => import('../../modules/settings/settings.module').then(m => m.SettingsModule)
       },
+      {
+        path: 'audit-log',
+        loadChildren: () => import('../../modules/audit-log/audit-log.module').then(m => m.AuditLogModule)
+      }
     ]
   },
 ];

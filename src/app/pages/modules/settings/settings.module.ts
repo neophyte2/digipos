@@ -10,6 +10,7 @@ import { TeamComponent } from './components/teams/teams.component';
 import { UsersComponent } from './components/teams/users/users.component';
 import { InvitesComponent } from './components/teams/invites/invites.component';
 import { ViewRoleComponent } from './components/teams/view-role/view-role.component';
+import { AuditLogsComponent } from '../audit-log/components/layout/audit-log.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,9 @@ const routes: Routes = [
   },
   {
     path: 'view-role/:id', component: ViewRoleComponent,
+  },
+  {
+    path: 'user-log/:id', component: AuditLogsComponent,
   }
 ];
 

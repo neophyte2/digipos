@@ -1,0 +1,90 @@
+<!-- Filter -->
+<p *ngIf="id" class="text-[#64154A] cursor-pointer" (click)="goBack()">Back</p>
+<div class="grid grid-cols-3 gap-4">
+  <div class="col-start-1 col-end-4 mt-8">
+    <form [formGroup]="dateRangeForm">
+      <div class="md:flex my-3 hidden items-end flex-wrap ">
+
+        <div class="mr-3">
+          <label for="from" class="block text-sm text-gray-400 regularfont">From</label>
+          <input type="date" formControlName="start"
+            class="lg:w-[150px] h-[39px] text-gray-400 py-[15px] text-xs border border-gray-300 rounded  focus:outline-0 focus:ring-0 brd">
+        </div>
+        <div class="mr-3"><label for="from" class="block text-sm text-gray-400 regularfont">To</label>
+          <input type="date" formControlName="end"
+            class="lg:w-[150px] h-[39px] text-gray-400 py-[15px] text-xs border border-gray-300 rounded focus:outline-0 focus:ring-0 brd">
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="col-end-6 col-span-2 mt-10">
+    <div class="grid grid-cols-1 gap-4">
+      <!-- <div>
+        <button (click)="toggleModal()"
+          class="block w-[150px] py-[15px] rounded text-white bg-[#64154A] text-sm mx-4 text-center ">
+          + New Chargeback
+        </button>
+      </div> -->
+    </div>
+  </div>
+</div>
+<!-- Filter -->
+
+<!-- TABLE -->
+<div class="relative mt-10 mb-10">
+  <table class="w-full text-sm text-left text-gray-500">
+    <thead class="text-xs text-gray-400 uppercase bg-gray-50">
+      <tr>
+        <th scope="col" class="px-6 py-3">
+          Full Name
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Email
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Created Date
+        </th>
+        <!-- <th scope="col" class="px-6 py-3">
+          Updated Date
+        </th> -->
+        <th scope="col" class="px-6 py-3">
+          Module
+        </th>
+        <th scope="col" class="px-6 py-3">
+          Action
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="bg-white border-b  hover:bg-gray-100 " *ngFor="let item of auditLogList; let i = index">
+        <td class="px-6 py-4">
+          {{item?.auditFullName}}
+        </td>
+        <td class="px-6 py-4">
+          {{item?.auditEmail}}
+        </td>
+        <td class="px-6 py-4">
+          {{item?.auditCreatedAt | date:'medium'}}
+        </td>
+        <!-- <td class="px-6 py-4">
+          {{item?.auditUpdatedAt | date:'medium'}}
+        </td> -->
+        <td class="px-6 py-4">
+          {{item?.auditModule}}
+        </td>
+        <td class="px-6 py-4">
+          {{item?.auditAction}}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div *ngIf="!isloading">
+    <div class="text-center" *ngIf="!auditLogList?.length">
+      <div style="display: flex; align-items: center; justify-content: center;">
+        <img src="assets/svgs/EmptyInbox.svg" style="width:10%;" class="mt-5">
+      </div>
+      <br> No Data Found
+    </div>
+  </div>
+</div>
+<!-- TABLE -->
