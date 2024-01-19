@@ -67,8 +67,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
   query: any
   isVerified: any
   translength: any
-  cardDataList: any
+  cardDataPen: any
+  cardDataFail: any
   isloading = false
+  cardDataSuccess: any
   transactionList: any
   dateRangeForm!: FormGroup;
   year = new Date().getFullYear()
@@ -89,7 +91,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.dateRangeForm.valueChanges.subscribe((data) => {
       if (data?.start && data?.end) {
         this.query = { startDate: moment(data?.start).format("YYYY-MM-DD"), endDate: moment(data?.end).format("YYYY-MM-DD") }
-        this.cardsData();
+        this.cardsDataSuccess();
+        this.cardsDataFail()
+        this.cardsDataPend()
         this.getChart();
         this.allTransactionList();
       }
@@ -98,13 +102,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     window.scrollTo(0, 0);
-    this.cardsData();
+    this.cardsDataSuccess();
+    this.cardsDataFail()
+    this.cardsDataPend()
     this.getChart();
     this.allTransactionList();
     this.isVerified = this.genSrv.currentVerifyValue
   }
 
-  cardsData() {
+  cardsDataSuccess() {
     let payload = {
       status: 'success',
       startDate: this.dateRangeForm.value.start,
@@ -112,7 +118,33 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
     this.transShrdService.stats(payload).pipe(takeUntil(this.unsubcribe)).subscribe((resp: any) => {
       if (resp.responseCode === '00') {
-        this.cardDataList = resp.data
+        this.cardDataSuccess = resp.data
+      }
+    })
+  }
+
+  cardsDataFail() {
+    let payload = {
+      status: 'failed',
+      startDate: this.dateRangeForm.value.start,
+      endDate: this.dateRangeForm.value.end,
+    }
+    this.transShrdService.stats(payload).pipe(takeUntil(this.unsubcribe)).subscribe((resp: any) => {
+      if (resp.responseCode === '00') {
+        this.cardDataFail = resp.data
+      }
+    })
+  }
+
+  cardsDataPend() {
+    let payload = {
+      status: 'pending',
+      startDate: this.dateRangeForm.value.start,
+      endDate: this.dateRangeForm.value.end,
+    }
+    this.transShrdService.stats(payload).pipe(takeUntil(this.unsubcribe)).subscribe((resp: any) => {
+      if (resp.responseCode === '00') {
+        this.cardDataPen = resp.data
       }
     })
   }
