@@ -1,12 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NgOtpInputConfig } from 'ng-otp-input';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { GeneralService } from 'src/app/shared/services/general.service';
-import { VALIDEMAILREGEX } from 'src/app/shared/utils/utils';
-import { ClientService } from '../../service/client.service';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'dp-terms-condition',
