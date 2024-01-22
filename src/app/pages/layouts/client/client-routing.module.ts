@@ -6,6 +6,7 @@ import { SignInComponent } from './components/sign-in/sign-in.component';
 import { VerifyComponent } from './components/verify/verify.component';
 import { LivenessComponent } from './components/liveness/liveness.component';
 import { ResponseComponent } from './components/response/response.component';
+import { TermsConditionComponent } from './components/terms-condition/terms-condition.component';
 
 const routes: Routes = [
   {
@@ -44,6 +45,10 @@ const routes: Routes = [
     path: "error",
     component: ResponseComponent
   },
+  {
+    path: "terms",
+    component: TermsConditionComponent
+  }
 ];
 
 @NgModule({

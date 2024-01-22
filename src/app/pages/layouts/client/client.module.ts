@@ -12,15 +12,17 @@ import { NgOtpInputModule } from 'ng-otp-input';
 import { ForgetPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { AcceptInviteComponent } from './components/accept-invite/accept-invite.component';
 import { ResponseComponent } from './components/response/response.component';
+import { TermsConditionComponent } from './components/terms-condition/terms-condition.component';
 
 @NgModule({
   declarations: [
     SignInComponent,
     SignUpComponent,
     VerifyComponent,
-    ForgetPasswordComponent,
-    AcceptInviteComponent,
     ResponseComponent,
+    AcceptInviteComponent,
+    TermsConditionComponent,
+    ForgetPasswordComponent,
   ],
   imports: [
     FormsModule,
