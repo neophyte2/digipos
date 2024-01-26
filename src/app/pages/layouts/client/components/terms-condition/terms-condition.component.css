@@ -202,23 +202,42 @@ section {
 }
 
 
-ul.circle {
+ol.circle {
     list-style-type: circle;
-  }
-  
-  ul.square {
-    list-style-type: square;
-  }
-  
-  ol.upper-roman {
-    list-style-type: upper-roman;
-  }
-  
-  ol.lower-alpha {
-    list-style-type: lower-alpha;
-  }
+    font-weight: 700;
+}
 
-  ol.upper-alpha {
+ol.square {
+    list-style-type: square;
+    font-weight: 700;
+}
+
+ol.upper-roman {
+    list-style-type: upper-roman;
+    font-weight: 700;
+}
+
+ol.lower-alpha {
+    list-style-type: lower-alpha;
+    font-weight: 700;
+}
+
+ol.upper-alpha {
     list-style-type: upper-alpha;
     font-weight: 700;
-  }
+}
+
+ol.numeric {
+    list-style-type: numeric;
+    font-weight: 700;
+}
+
+ol.outside {
+    list-style-position: outside;
+    font-weight: 700;
+}
+
+ol.inside {
+    list-style-position: inside;
+    font-weight: 700;
+}

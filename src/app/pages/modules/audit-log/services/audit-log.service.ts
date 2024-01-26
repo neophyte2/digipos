@@ -17,6 +17,6 @@ export class AuditLogService {
     }
 
     getAuditLogsUserID(params: any){
-        return this.http.post(`${this.api}/audit-log/read-by-organisation-id`, params);
+        return this.http.post(`${this.api}/audit-log/read-by-user-id`, params);
     }
 }
