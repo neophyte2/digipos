@@ -93,6 +93,9 @@
             <div *ngIf="dropdown && item.customerId == selectedItem"
               class=" cursor-pointer absolute right-0 z-10 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
               role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+              <div class="py-1" role="none" *ngIf="_isRouteEnabled(['USER|UPDATE'])">
+                <a class="text-gray-700 block px-4 py-2 text-sm" (click)="changeRoleModal(item)">Change Role</a>
+              </div>
               <div class="py-1" role="none"
                 *ngIf="item?.customerStatus === 'INACTIVE' || item?.customerStatus === 'PENDING'  && _isRouteEnabled(['USER|UPDATE'])">
                 <a class="text-green-700 block px-4 py-2 text-sm" (click)="confirmStatus(item,'Activate')">
@@ -103,11 +106,6 @@
                 *ngIf="item?.customerStatus === 'ACTIVE' && _isRouteEnabled(['USER|UPDATE'])">
                 <a class="text-red-700 block px-4 py-2 text-sm" (click)="confirmStatus(item,'Deactivate')">
                   Deactivate
-                </a>
-              </div>
-              <div class="py-1" role="none">
-                <a class="text-gray-700 block px-4 py-2 text-sm" (click)="goTo(item.customerId)">
-                  Audit Log
                 </a>
               </div>
             </div>
@@ -126,3 +124,54 @@
   </div>
 </div>
 <!-- TABLE -->
+
+
+<!-- Update Role -->
+<div *ngIf="updateModal"
+  class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex">
+  <div class="relative w-auto my-6 mx-auto max-w-3xl">
+    <!--content-->
+    <div
+      class="border-0 rounded-lg shadow-lg relative flex flex-col w-[500px] bg-white outline-none focus:outline-none">
+      <!--header-->
+      <div class="flex items-center justify-center p-5 border-b border-solid border-slate-200 rounded-t text-center">
+        <h3 class="text-3xl font-semibold text-[#64154A]">
+          Change Role
+        </h3>
+      </div>
+      <!--body-->
+      <div class="relative p-6 flex-auto">
+        <form [formGroup]="roleForm">
+
+          <div class="flex flex-col input-wrap relative mt-5 mb-7">
+            <ng-select placeholder="Select Role" formControlName="customerRole" [items]="roleList" bindLabel="roleName"
+              bindValue="roleId">
+            </ng-select>
+            <label htmlFor="pwd"
+              class="font-normal form-label ease-in-out duration-300  px-1  whitespace-nowrap text-[14px]">
+              Role
+            </label>
+            <div class="mt-2" *ngIf="ulf['customerRole'].invalid && (ulf['customerRole'].dirty || ulf['customerRole'].touched) ">
+              <span class="text-rose-700" style="font-size: 13px;" *ngIf="ulf['customerRole'].errors?.['required']">
+                Role is required.
+              </span>
+            </div>
+          </div>
+        </form>
+      </div>
+      <!--footer-->
+      <div class="flex items-center justify-center p-6 border-t border-solid border-slate-200 rounded-b">
+        <button (click)="changeRoleModal()"
+          class="text-red-500 bg-transparent mr-1 mb-1  px-6 py-2 hover:bg-[#64154A] font-semibold hover:text-white border border-[#64154A] hover:border-transparent rounded">
+          Cancel
+        </button>
+        <button (click)="changeRole()" [disabled]="roleForm.invalid  || loader.btn.update"
+          class="bil-btn-gradient bg-[#64154A] text-base font-normal grad3 w-[200px] h-[45px] first-letter text-[#F0F0F0] rounded-[5px] mr-1 mb-1  px-6 py-2 "
+          type="button">
+          Change Role <span *ngIf="loader.btn.update"><i class="fa fa-spinner fa-spin"></i></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="updateModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>

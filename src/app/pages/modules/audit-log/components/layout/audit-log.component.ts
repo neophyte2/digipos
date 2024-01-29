@@ -63,7 +63,6 @@ export class AuditLogsComponent implements OnInit, OnDestroy {
       auditModule: ''
     }
     this.auditSrv.getAllAuditLogs(payload).subscribe((audit: any) => {
-      console.log(audit);
       this.auditLogList = audit.data;
       this.isloading = false
     })
@@ -77,7 +76,6 @@ export class AuditLogsComponent implements OnInit, OnDestroy {
       auditModule: ''
     }
     this.auditSrv.getAuditLogsUserID(payload).subscribe((audit: any) => {
-      console.log(audit);
       this.auditLogList = audit.data;
       this.isloading = false
     })

@@ -53,7 +53,7 @@ export class SettingsService {
     changeInviteRole(data: any) {
         return this.http.post(`${this.api}/customer/change-invite-role`, data);
     }
-
+    
     changeUserRole(data: any) {
         return this.http.post(`${this.api}/customer/update-role`, data);
     }
