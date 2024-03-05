@@ -187,6 +187,10 @@
             class="inline-block bg-[#FFEDD7] px-3 py-1 text-sm font-semibold text-[#FF8A00] mr-2 mb-2">
             {{item?.chargebackStatus}}
           </span>
+          <span *ngIf="item?.chargebackStatus === 'REPRESENTED'"
+            class="inline-block bg-[#FFEDD7] px-3 py-1 text-sm font-semibold text-[#FF8A00] mr-2 mb-2">
+            {{item?.chargebackStatus}}
+          </span>
         </td>
         <td class="px-6 py-4">
           <div class="relative inline-block text-left">
